@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>东山岛柔性钙钛矿产业项目</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-gray-300 font-sans antialiased">
+
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
+            <a href="#home" class="text-xl font-bold text-white tracking-wider">东山<span class="text-cyan-400">钛柔</span></a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#home" class="nav-link text-gray-300 hover:text-white transition-colors duration-300 relative py-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-cyan-400 after:transform after:scale-x-0 after:origin-bottom-right after:transition-transform after:duration-300 after:ease-out hover:after:scale-x-100 hover:after:origin-bottom-left">首页</a>
+                <a href="#technology" class="nav-link text-gray-300 hover:text-white transition-colors duration-300 relative py-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-cyan-400 after:transform after:scale-x-0 after:origin-bottom-right after:transition-transform after:duration-300 after:ease-out hover:after:scale-x-100 hover:after:origin-bottom-left">技术揭秘</a>
+                <a href="#market" class="nav-link text-gray-300 hover:text-white transition-colors duration-300 relative py-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-cyan-400 after:transform after:scale-x-0 after:origin-bottom-right after:transition-transform after:duration-300 after:ease-out hover:after:scale-x-100 hover:after:origin-bottom-left">市场洞察</a>
+                <a href="#project" class="nav-link text-gray-300 hover:text-white transition-colors duration-300 relative py-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-cyan-400 after:transform after:scale-x-0 after:origin-bottom-right after:transition-transform after:duration-300 after:ease-out hover:after:scale-x-100 hover:after:origin-bottom-left">东山岛项目</a>
+                <a href="#significance" class="nav-link text-gray-300 hover:text-white transition-colors duration-300 relative py-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-cyan-400 after:transform after:scale-x-0 after:origin-bottom-right after:transition-transform after:duration-300 after:ease-out hover:after:scale-x-100 hover:after:origin-bottom-left">项目意义</a>
+                <a href="#progress" class="nav-link text-gray-300 hover:text-white transition-colors duration-300 relative py-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-cyan-400 after:transform after:scale-x-0 after:origin-bottom-right after:transition-transform after:duration-300 after:ease-out hover:after:scale-x-100 hover:after:origin-bottom-left">最新进展</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-white z-50">
+                <i data-lucide="menu" id="menu-icon-open" class="w-7 h-7"></i>
+                <i data-lucide="x" id="menu-icon-close" class="w-7 h-7 hidden"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden fixed top-0 left-0 w-full h-screen bg-gray-900/95 backdrop-blur-lg flex flex-col items-center justify-center space-y-6 transition-transform duration-300 ease-in-out transform -translate-x-full">
+            <a href="#home" class="nav-link text-2xl text-white hover:text-cyan-400 transition-colors">首页</a>
+            <a href="#technology" class="nav-link text-2xl text-white hover:text-cyan-400 transition-colors">技术揭秘</a>
+            <a href="#market" class="nav-link text-2xl text-white hover:text-cyan-400 transition-colors">市场洞察</a>
+            <a href="#project" class="nav-link text-2xl text-white hover:text-cyan-400 transition-colors">东山岛项目</a>
+            <a href="#significance" class="nav-link text-2xl text-white hover:text-cyan-400 transition-colors">项目意义</a>
+            <a href="#progress" class="nav-link text-2xl text-white hover:text-cyan-400 transition-colors">最新进展</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden bg-gray-950">
+            <div class="absolute inset-0 bg-black opacity-60 z-10"></div>
+            <img src="https://r2.flowith.net/files/o/1749999106652-abstract_high_tech_digital_art_background_index_3@1536x1024.png" alt="Abstract high-tech digital art background" class="absolute inset-0 w-full h-full object-cover z-0">
+            <div class="text-center z-20 px-4 relative fade-in-up">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight">轻薄柔韧，光伏未来</h1>
+                <p class="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto">东山岛柔性钙钛矿项目，汇聚顶尖技术与产业资源，以颠覆性创新开启能源新纪元，助力东山岛绿色发展。</p>
+            </div>
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20">
+                <a href="#technology">
+                    <i data-lucide="arrow-down" class="w-8 h-8 text-white animate-bounce"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Technology Section -->
+        <section id="technology" class="py-20 md:py-28 bg-gray-900">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-16 fade-in-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight relative inline-block after:content-[''] after:block after:w-1/2 after:h-1 after:bg-cyan-500 after:mx-auto after:mt-2 after:rounded-full">技术揭秘</h2>
+                    <p class="text-lg text-gray-400 max-w-2xl mx-auto">探索第三代光伏技术的奥秘，揭示柔性钙钛矿的颠覆性潜力。</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-20">
+                    <div class="prose prose-invert max-w-none fade-in-up">
+                        <h3>钙钛矿基础：ABX₃ 结构</h3>
+                        <p>钙钛矿最初指化学式为 CaTiO₃ 的矿物，现泛指具 ABX₃ 化学通式的物质。在太阳能电池中，A位通常为有机阳离子（如CH₃NH₃⁺），B位为金属阳离子（如Pb²⁺），X位为卤族阴离子（I⁻, Cl⁻, Br⁻）。这种独特的晶体结构赋予其高吸光系数、低激子束缚能和长载流子扩散长度等优异光电性能，且带隙可调，是高效光伏转换的基础。</p>
+                    </div>
+                    <div id="interactive-abx3" class="flex items-center justify-center rounded-xl overflow-hidden bg-gray-900 aspect-square max-h-[350px] md:max-h-[400px] mx-auto fade-in-up">
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-20">
+                    <div id="working-principle-diagram" class="h-80 order-2 md:order-1 fade-in-up">
+                    </div>
+                    <div class="prose prose-invert max-w-none order-1 md:order-2 fade-in-up">
+                        <h3>工作原理：光生伏特效应</h3>
+                        <p>钙钛矿太阳能电池基于光生伏特效应工作。当阳光照射时，钙钛矿层吸收光子产生电子-空穴对。由于激子束缚能低，它们迅速成为自由载流子，被电子和空穴传输层分离并收集，最终通过电极输出电流，实现光能到电能的高效转换。</p>
+                        <ol>
+                           <li><strong class="text-cyan-400">光子吸收:</strong> 产生电子-空穴对。</li>
+                           <li><strong class="text-cyan-400">激子扩散:</strong> 形成自由载流子。</li>
+                           <li><strong class="text-cyan-400">载流子分离:</strong> 分别被传输层收集。</li>
+                           <li><strong class="text-cyan-400">电荷收集:</strong> 通过电极输出电流。</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="text-center mb-16 mt-24 fade-in-up">
+                    <h3 class="text-3xl font-bold text-white mb-2">技术突破与优势</h3>
+                    <p class="text-gray-400">效率与稳定性的飞跃，开启柔性应用新篇章。</p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+                    <div class="fade-in-up bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-cyan-500/10 hover:shadow-lg hover:-translate-y-2">
+                        <i data-lucide="zap" class="w-10 h-10 text-cyan-400 mb-4"></i>
+                        <h4 class="font-bold text-xl text-white">效率新高</h4>
+                        <p>单结效率达27.3%，叠层效率破34.85%。华柔科技20cm²模组效率超20%，达国际一流水平。</p>
+                    </div>
+                    <div class="fade-in-up bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-cyan-500/10 hover:shadow-lg hover:-translate-y-2">
+                        <i data-lucide="shield-check" class="w-10 h-10 text-green-400 mb-4"></i>
+                        <h4 class="font-bold text-xl text-white">稳定性增强</h4>
+                        <p>通过组分优化与先进封装，华柔产品T90寿命超6000小时，满足商业化应用要求。</p>
+                    </div>
+                    <div class="fade-in-up bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-cyan-500/10 hover:shadow-lg hover:-translate-y-2">
+                        <i data-lucide="git-merge" class="w-10 h-10 text-amber-400 mb-4"></i>
+                        <h4 class="font-bold text-xl text-white">轻薄柔韧</h4>
+                        <p>重量<1kg/m²，厚度<0.15mm，可弯曲集成于任意表面，开创光伏应用新形态。</p>
+                    </div>
+                    <div class="fade-in-up bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-cyan-500/10 hover:shadow-lg hover:-translate-y-2">
+                        <i data-lucide="cloud-sun" class="w-10 h-10 text-purple-400 mb-4"></i>
+                        <h4 class="font-bold text-xl text-white">弱光高效</h4>
+                        <p>室内或阴天等弱光环境下发电效率超25%，为物联网、消费电子提供理想电源。</p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800/50 rounded-xl p-4 sm:p-8 fade-in-up">
+                    <h4 class="text-2xl font-bold text-white text-center mb-6">光电转换效率发展历程</h4>
+                    <div class="h-[22rem] sm:h-96">
+                        <canvas id="efficiency-timeline-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Market Insight Section -->
+        <section id="market" class="py-20 md:py-28 bg-gray-950">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-16 fade-in-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight relative inline-block after:content-[''] after:block after:w-1/2 after:h-1 after:bg-cyan-500 after:mx-auto after:mt-2 after:rounded-full">市场洞察</h2>
+                    <p class="text-lg text-gray-400 max-w-2xl mx-auto">把握全球能源变革脉搏，洞见柔性钙钛矿的蓝海机遇。</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-20">
+                    <div class="prose prose-invert max-w-none fade-in-up">
+                        <h3>全球市场规模与趋势</h3>
+                        <p>随着技术成熟与成本下降，钙钛矿太阳能电池市场正迎来爆发式增长。预计到2030年，全球钙钛矿设备新增市场空间将达830.6亿元（年复合增长率约80%），组件市场空间达1816亿元（年复合增长率约108%）。中国作为全球最大的太阳能市场，产业化进程全球领先，多家企业已建成百兆瓦级中试线并规划GW级产线。</p>
+                    </div>
+                    <div class="h-[22rem] sm:h-96 bg-gray-800/50 rounded-xl p-2 sm:p-4 fade-in-up">
+                        <canvas id="market-size-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="text-center mb-16 mt-24 fade-in-up">
+                    <h3 class="text-3xl font-bold text-white mb-2">柔性钙钛矿：开辟蓝海市场</h3>
+                    <p class="text-gray-400">柔性钙钛矿并非与晶硅技术在传统市场竞争，而是以其独特优势，开创全新高附加值应用场景。</p>
+                </div>
+                
+                <div id="application-scenarios" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-gray-800/50 rounded-lg border border-transparent hover:border-cyan-500/50 transition-all duration-300 overflow-hidden shadow-lg fade-in-up">
+                        <img src="https://images.unsplash.com/photo-1615529328331-f8917597711f?q=80&w=1974&auto=format&fit=crop" alt="建筑整合光伏 (BIPV)" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="font-bold text-xl text-white mt-2 mb-3">建筑整合光伏 (BIPV)</h4>
+                            <p class="text-gray-400 text-sm">将柔性电池无缝集成于建筑幕墙、屋顶瓦片等，使建筑自身成为绿色发电站，美观与功能兼备。</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800/50 rounded-lg border border-transparent hover:border-cyan-500/50 transition-all duration-300 overflow-hidden shadow-lg fade-in-up">
+                        <img src="https://images.unsplash.com/photo-1610792595015-d4a6c4a85a4a?q=80&w=1935&auto=format&fit=crop" alt="消费电子产品" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="font-bold text-xl text-white mt-2 mb-3">消费电子产品</h4>
+                            <p class="text-gray-400 text-sm">为手机、可穿戴设备、充电宝等提供轻便的自充电解决方案，彻底告别电量焦虑。</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800/50 rounded-lg border border-transparent hover:border-cyan-500/50 transition-all duration-300 overflow-hidden shadow-lg fade-in-up">
+                        <img src="https://images.unsplash.com/photo-1632383130639-5091e9b21952?q=80&w=2071&auto=format&fit=crop" alt="新能源交通" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="font-bold text-xl text-white mt-2 mb-3">新能源交通</h4>
+                            <p class="text-gray-400 text-sm">集成于车顶、车身，为电动汽车提供辅助电源，增加续航里程，或为车载设备供电。</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800/50 rounded-lg border border-transparent hover:border-cyan-500/50 transition-all duration-300 overflow-hidden shadow-lg fade-in-up">
+                        <img src="https://images.unsplash.com/photo-1622501092143-7ec97ab3c41e?q=80&w=1964&auto=format&fit=crop" alt="便携式能源" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="font-bold text-xl text-white mt-2 mb-3">便携式能源</h4>
+                            <p class="text-gray-400 text-sm">可卷曲的户外发电毯、太阳能背包等，为野外探险、应急救援提供可靠的离网电力。</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800/50 rounded-lg border border-transparent hover:border-cyan-500/50 transition-all duration-300 overflow-hidden shadow-lg fade-in-up">
+                        <img src="https://images.unsplash.com/photo-1581452424546-21a5b4a4136e?q=80&w=2070&auto=format&fit=crop" alt="物联网 (IoT) 供电" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="font-bold text-xl text-white mt-2 mb-3">物联网 (IoT) 供电</h4>
+                            <p class="text-gray-400 text-sm">凭借出色的弱光性能，为室内外的无线传感器、智能标签等海量物联网设备提供永久续航。</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800/50 rounded-lg border border-transparent hover:border-cyan-500/50 transition-all duration-300 overflow-hidden shadow-lg fade-in-up">
+                        <img src="https://images.unsplash.com/photo-1614728263952-84ea256ec676?q=80&w=1974&auto=format&fit=crop" alt="航空航天" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="font-bold text-xl text-white mt-2 mb-3">航空航天</h4>
+                            <p class="text-gray-400 text-sm">其极高的功重比是卫星、平流层飞艇、无人机等航空航天器的理想能源翼，大幅提升续航能力。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dongshan Island Project Section -->
+        <section id="project" class="py-20 md:py-28 bg-gray-900">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-16 fade-in-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight relative inline-block after:content-[''] after:block after:w-1/2 after:h-1 after:bg-cyan-500 after:mx-auto after:mt-2 after:rounded-full">东山岛项目</h2>
+                    <p class="text-lg text-gray-400 max-w-2xl mx-auto">技术、资本与地方资源的完美结合，打造世界级柔性钙钛矿产业基地。</p>
+                </div>
+
+                <div class="text-center mb-16 fade-in-up">
+                    <h3 class="text-2xl font-bold text-white mb-4">项目架构与团队</h3>
+                    <p class="text-gray-400 max-w-3xl mx-auto">采用清晰的两层合资架构，整合技术、管理、资本与地方资源，确保项目高效运营与长期发展。</p>
+                </div>
+                <div id="project-architecture-diagram" class="mb-20 fade-in-up">
+                </div>
+
+                <div class="grid lg:grid-cols-5 gap-8 md:gap-12 items-start">
+                    <div class="lg:col-span-2 fade-in-up">
+                        <h3 class="text-2xl font-bold text-white mb-4">投资与建设</h3>
+                        <p class="text-gray-400 mb-6">“东山钛柔”计划总投资1.6亿元人民币，建设一条国际领先的100MW柔性钙钛矿太阳能电池生产线，采用华柔光电的核心专利技术，实现高度自动化与成本控制。</p>
+                        <div class="h-64 sm:h-72 bg-gray-800/50 rounded-xl p-4">
+                            <canvas id="investment-pie-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-3 prose prose-invert max-w-none fade-in-up">
+                        <h3>销售策略与产品应用</h3>
+                        <p>我们采取双轨并行的销售策略，确保稳健增长与高价值回报：</p>
+                        <ul>
+                            <li><strong>稳定基础订单:</strong> 瞄准日本市场约7GW的特定柔性薄膜电池需求，通过现有渠道实现“生产即销售”，保障初期现金流与产能利用率。</li>
+                            <li><strong>拓展新兴蓝海:</strong> 聚焦消费级及创新应用，与行业伙伴联合开发定制化产品，获取高额附加值。
+                                <ul>
+                                    <li><strong>消费级产品:</strong> 钙钛矿车膜/车顶、手机壳、充电宝、户外发电毯等。</li>
+                                    <li><strong>BIPV/IoT应用:</strong> 光伏瓦片、幕墙单元、室内无线传感器自供电方案等。</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <img src="https://r2.flowith.net/files/o/1749999147366-next_generation_flexible_perovskite_solar_panels_integration_index_1@1536x1024.png" alt="Next-generation flexible perovskite solar panels" class="my-8 rounded-lg shadow-lg w-full object-cover">
+                        <h3>“3+2”股权回购方案</h3>
+                        <p>为保障政府资本安全退出与项目长期发展，我们设计了“3+2”股权回购模式。项目运营满三年后，由战略投资方“福建钛柔”在两年内分期回购政府股份。此方案既保障了政府引导基金的绩效与循环，也赋予了企业在成熟期更强的市场化运作能力。</p>
+                    </div>
+                </div>
+
+                <div class="mt-24 fade-in-up">
+                     <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-white mb-4">财务可行性预测</h3>
+                        <p class="text-gray-400 max-w-3xl mx-auto">基于审慎预测，项目展现出强劲的盈利能力和健康的财务状况，为“3+2”回购方案提供坚实数据支撑。</p>
+                     </div>
+                     <div class="bg-gray-800/50 rounded-xl p-4 sm:p-8">
+                        <div class="h-[22rem] sm:h-96">
+                            <canvas id="financial-forecast-chart"></canvas>
+                        </div>
+                        <div class="mt-6 text-center text-green-400 font-semibold text-base md:text-lg">
+                           <p>五年累计净利润预计达到 <span class="text-xl md:text-2xl font-bold">14,295</span> 万元，超越 <span class="lg:text-xl">1.4</span> 亿元的政府资本回购目标。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Significance Section -->
+        <section id="significance" class="py-20 md:py-28 bg-gray-950">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-16 fade-in-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight relative inline-block after:content-[''] after:block after:w-1/2 after:h-1 after:bg-cyan-500 after:mx-auto after:mt-2 after:rounded-full">项目意义</h2>
+                    <p class="text-lg text-gray-400 max-w-2xl mx-auto">不止于商业成功，更是驱动东山岛经济社会长远发展的战略引擎。</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+                    <div class="prose prose-invert max-w-none fade-in-up">
+                        <h3>经济贡献：驱动增长与升级</h3>
+                        <ul>
+                            <li><strong>构建产业集群:</strong> 催生全新的高科技产业集群，优化东山岛产业结构。</li>
+                            <li><strong>贡献财政税收:</strong> 满产后年净利润预计3975万元，年所得税超1300万元，提供可持续财政来源。</li>
+                            <li><strong>拉动GDP增长:</strong> 1.6亿固定资产投资及持续的工业产值，成为新经济增长引擎。</li>
+                            <li><strong>吸引外部资本:</strong> 引入先进技术、管理经验与外部投资，提升区域资本吸引力。</li>
+                        </ul>
+                    </div>
+                     <div class="prose prose-invert max-w-none fade-in-up">
+                        <h3>社会效益：促进发展与提升形象</h3>
+                        <ul>
+                           <li><strong>创造高质量就业:</strong> 提供大量高薪、高技术含量的就业岗位，优化人才结构。</li>
+                           <li><strong>实现“双碳”目标:</strong> 增加清洁能源供给，助力东山岛打造绿色低碳发展示范区。</li>
+                           <li><strong>提升区域品牌:</strong> 打造国内领先的柔性钙钛矿生产基地，形成新的区域发展名片。</li>
+                           <li><strong>促进产学研合作:</strong> 推动科技成果转化，构建区域创新生态。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="my-16 flex justify-center fade-in-up">
+                    <img src="https://r2.flowith.net/files/o/1749999066076-future_east_island_powered_by_clean_energy_index_2@1024x1024.png" alt="Future vision of East Island powered by clean energy" class="rounded-xl shadow-2xl max-w-3xl w-full">
+                </div>
+                 <div class="bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl p-8 text-center text-white fade-in-up">
+                    <h3 class="text-3xl font-bold mb-3">互利共赢的政企合作典范</h3>
+                    <p class="text-lg max-w-4xl mx-auto">“东山钛柔”项目是东山岛抓住新一轮能源革命和产业变革机遇的关键一步，将为建设更加繁荣、绿色、创新的现代化海岛提供强大支撑。</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Latest Progress Section -->
+        <section id="progress" class="py-20 md:py-28 bg-gray-900">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-16 fade-in-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight relative inline-block after:content-[''] after:block after:w-1/2 after:h-1 after:bg-cyan-500 after:mx-auto after:mt-2 after:rounded-full">最新进展</h2>
+                    <p class="text-lg text-gray-400 max-w-2xl mx-auto">实时追踪项目动态，见证每一个里程碑的诞生。</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-gray-800/50 rounded-lg border border-transparent hover:border-cyan-500/50 transition-all duration-300 overflow-hidden shadow-lg fade-in-up">
+                        <img src="https://images.unsplash.com/photo-1620359187313-a29242568112?q=80&w=1974&auto=format&fit=crop" alt="奠基仪式" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <span class="text-xs text-cyan-400">2025年6月10日</span>
+                            <h4 class="font-bold text-lg text-white mt-2 mb-2">项目正式签约</h4>
+                            <p class="text-gray-400 text-sm">东山钛柔科技发展有限公司正式成立，标志着项目进入实质性启动阶段。</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800/50 rounded-lg border border-transparent hover:border-cyan-500/50 transition-all duration-300 overflow-hidden shadow-lg fade-in-up">
+                        <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop" alt="团队会议" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <span class="text-xs text-cyan-400">2025年5月15日</span>
+                            <h4 class="font-bold text-lg text-white mt-2 mb-2">核心团队组建完成</h4>
+                            <p class="text-gray-400 text-sm">汇聚华柔科技、锆辉太阳能、新欧亚科技的精英力量，核心管理与技术团队已全部到位。</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800/50 rounded-lg border border-transparent hover:border-cyan-500/50 transition-all duration-300 overflow-hidden shadow-lg fade-in-up">
+                        <img src="https://images.unsplash.com/photo-1617861213697-897751b3437b?q=80&w=2070&auto=format&fit=crop" alt="技术认证" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <span class="text-xs text-cyan-400">2025年4月20日</span>
+                            <h4 class="font-bold text-lg text-white mt-2 mb-2">核心技术获国际认证</h4>
+                            <p class="text-gray-400 text-sm">项目所采用的柔性钙钛矿核心技术获得TÜV莱茵权威认证，效率与稳定性达世界领先水平。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-950 border-t border-gray-800">
+        <div class="container mx-auto px-6 py-8 text-center text-gray-500">
+            <p>&copy; <span id="current-year"></span> 东山岛钛柔科技发展有限公司. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="https://esm.run/framer-motion"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+    overflow-x: hidden; /* Prevent horizontal scroll on small screens */
+}
+
+/* Style for header on scroll, controlled by JS */
+#header.header-scrolled {
+    background-color: rgba(17, 24, 39, 0.9); /* bg-gray-900/90 */
+    backdrop-blur: 8px;
+    border-bottom-width: 1px;
+    border-color: rgb(55 65 81 / 1); /* border-gray-700 */
+}
+
+/* For the JS-driven active nav link highlighting */
+.nav-link.active::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+/* Responsive chart containers */
+canvas {
+    max-width: 100%;
+    height: auto !important; /* Important to override Chart.js inline styles */
+}

@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>万联天泽脑科学产业投资基金方案</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0c0a09; 
+            color: #E2E8F0;
+            overflow: hidden;
+        }
+        
+        #presentation-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            z-index: 3;
+        }
+
+        #presentation-container::before,
+        #presentation-container::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+        }
+        
+        #presentation-container::before {
+            background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.05), rgba(255, 255, 255, 0) 50%);
+            z-index: 1;
+        }
+        
+        #presentation-container::after {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuOCIgbnVtT2N0YXZlcz0iMSIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNub2lzZSkiIG9wYWNpdHk9IjAuMDI1Ii8+PC9zdmc+');
+            z-index: 2;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4vw 5vw;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.8s;
+            overflow: hidden;
+        }
+
+        .slide-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.1;
+            z-index: -1;
+            background-color: #0c0a09;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .bento-card {
+             border-radius: 1.5rem;
+             background-color: rgba(255, 255, 255, 0.03);
+             border: 1px solid rgba(255, 255, 255, 0.1);
+             padding: 1.5rem;
+             backdrop-filter: blur(12px);
+             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+    </style>
+</head>
+<body>
+    <div id="presentation-container">
+        
+        <section class="slide">
+            <img src="https://cebsit.cas.cn/xwen/mtsm/2019n/202204/W020220401640394473368.jpg" alt="Brain Science Background" class="slide-bg">
+            <div class="text-center">
+                <div data-animate class="mb-8 flex justify-center items-center gap-6">
+                    <span class="text-xl font-semibold text-slate-300">万联天泽资本</span>
+                </div>
+                <h1 data-animate class="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-teal-400 to-green-400">万联天泽脑科学产业投资基金</h1>
+                <p data-animate class="mt-6 text-lg md:text-2xl font-light text-slate-400 max-w-4xl mx-auto">投资未被满足的巨大需求，赋能前沿创新，共创健康中国</p>
+                <p data-animate class="mt-12 text-sm text-slate-500">2025年06月</p>
+            </div>
+        </section>
+
+        <section class="slide">
+            <div class="w-full max-w-4xl">
+                <h2 data-animate class="text-4xl md:text-5xl font-bold tracking-tight text-slate-100 text-center">重要提示</h2>
+                <div data-animate class="mt-8 text-slate-400 text-lg space-y-4 prose prose-invert prose-lg max-w-none">
+                    <ul>
+                        <li>本演示文稿仅供参考，不构成任何投资要约或承诺。</li>
+                        <li>基金的投资存在风险，基金过往业绩不预示其未来表现。</li>
+                        <li>本文件内容基于现有信息，可能存在变动，最终方案以正式法律文件为准。</li>
+                        <li>本文件为商业机密，未经许可不得复制、传播或用于商业目的。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <img src="https://imagepphcloud.thepaper.cn/pph/image/304/361/87.jpg" alt="Mental Health Background" class="slide-bg">
+            <div class="w-full max-w-6xl text-center">
+                <h2 data-animate class="text-4xl md:text-6xl font-bold tracking-tight text-slate-100">投资蓝海：为何聚焦脑科学与精神健康？</h2>
+                <p data-animate class="mt-4 text-lg md:text-2xl font-light text-slate-400 max-w-3xl mx-auto">精神健康问题已成为全球性的重大公共卫生挑战与经济议题，其中蕴藏着巨大的产业机遇。</p>
+                <div data-animate class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                    <div class="bento-card">
+                        <i data-lucide="globe" class="w-8 h-8 text-blue-400 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-slate-200">庞大患者群体</h3>
+                        <p class="mt-2 text-slate-400">全球近10亿人受精神障碍困扰，中国患者基数庞大（如抑郁症患者近亿），需求远未被满足。</p>
+                    </div>
+                     <div class="bento-card">
+                        <i data-lucide="trending-up" class="w-8 h-8 text-blue-400 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-slate-200">核心投资目的</h3>
+                        <p class="mt-2 text-slate-400">汇聚资本力量，精准投资精神科学产业，在实现卓越财务回报的同时，为“健康中国”战略贡献价值。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <img src="https://st4.depositphotos.com/12678588/40437/v/1600/depositphotos_404370140-stock-illustration-mental-health-psychology-vector-concept.jpg" alt="Neuron Background" class="slide-bg">
+            <div class="w-full max-w-6xl">
+                <h2 data-animate class="text-4xl md:text-6xl font-bold tracking-tight text-slate-100 text-center">难以忽视的挑战：精神疾病的当下困境</h2>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                    <div data-animate class="bento-card">
+                        <h3 class="text-xl font-semibold text-slate-200 flex items-center gap-3"><i data-lucide="activity" class="text-red-400"></i>流行病学严峻</h3>
+                        <p class="mt-3 text-slate-400">全球患病率约13%，疾病类型多样，严重影响患者功能与生活质量，并为家庭带来沉重照护负担。</p>
+                    </div>
+                    <div data-animate class="bento-card">
+                        <h3 class="text-xl font-semibold text-slate-200 flex items-center gap-3"><i data-lucide="flag" class="text-red-400"></i>中国面临特殊挑战</h3>
+                        <ul class="mt-3 text-slate-400 list-disc list-inside space-y-2">
+                           <li>患病基数巨大：抑郁症估算超5600万</li>
+                           <li>服务资源匮乏且分布不均</li>
+                           <li>治疗率、知晓率双低</li>
+                           <li>预防、治疗、康复服务体系脱节</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <img src="https://www.cnstock.com/image/202202/23/20220224080809783.png" alt="Economic Chart Background" class="slide-bg">
+            <div class="w-full max-w-6xl text-center">
+                <h2 data-animate class="text-4xl md:text-6xl font-bold tracking-tight text-slate-100">隐形的巨额开销：精神疾病的经济负担</h2>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div data-animate class="bento-card">
+                        <p class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">$2.5万亿</p>
+                        <p class="mt-2 text-slate-300">2010年全球经济负担</p>
+                    </div>
+                    <div data-animate class="bento-card">
+                        <p class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-rose-500">$6万亿</p>
+                        <p class="mt-2 text-slate-300">预计2030年将飙升至</p>
+                    </div>
+                    <div data-animate class="bento-card">
+                         <p class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-500">5倍回报</p>
+                         <p class="mt-2 text-slate-300">每投资1美元于治疗</p>
+                    </div>
+                </div>
+                 <p data-animate class="mt-8 text-lg text-slate-400">生产力损失等间接成本远高于直接医疗费用（占比超70%），投资于有效干预具备巨大的经济回报潜力。</p>
+            </div>
+        </section>
+
+        <section class="slide">
+            <img src="https://news.ecust.edu.cn/_upload/article/images/bb/0a/46b507e64dc28270dab341759c97/e44a6447-3834-49a3-b879-3fe2f1f201a0.png" alt="Lab Research Background" class="slide-bg">
+            <div class="w-full max-w-6xl text-center">
+                <h2 data-animate class="text-4xl md:text-6xl font-bold tracking-tight text-slate-100">破局在望：精神科学产业的投资机遇</h2>
+                 <p data-animate class="mt-4 text-lg md:text-2xl font-light text-slate-400 max-w-3xl mx-auto">巨大未满足需求与前沿技术融合，催生了革命性的产业创新机遇。</p>
+                <div class="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div data-animate class="bento-card text-center"><i data-lucide="atom" class="mx-auto w-8 h-8 mb-3 text-sky-400"></i><p>创新药物<br>&基因疗法</p></div>
+                    <div data-animate class="bento-card text-center"><i data-lucide="cpu" class="mx-auto w-8 h-8 mb-3 text-sky-400"></i><p>高端医疗器械<br>&技术</p></div>
+                    <div data-animate class="bento-card text-center"><i data-lucide="smartphone" class="mx-auto w-8 h-8 mb-3 text-sky-400"></i><p>数字疗法<br>&智能平台</p></div>
+                    <div data-animate class="bento-card text-center"><i data-lucide="heart-pulse" class="mx-auto w-8 h-8 mb-3 text-sky-400"></i><p>专业康复<br>&护理服务</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <img src="https://thumbs.dreamstime.com/b/business-growth-graph-bar-arrow-direction-financial-growth-vision-upward-investment-return-rate-increase-159062253.jpg" alt="Business Growth Background" class="slide-bg">
+            <div class="w-full max-w-6xl text-center">
+                <h2 data-animate class="text-4xl md:text-6xl font-bold tracking-tight text-slate-100">产业资本融合：基石LP“粤万年青”的远见</h2>
+                 <p data-animate class="mt-4 text-lg md:text-2xl font-light text-slate-400 max-w-3xl mx-auto">知名医药上市公司“粤万年青”作为本基金基石LP，实现“产业+资本”的深度融合与双向赋能。</p>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div data-animate>
+                        <i data-lucide="line-chart" class="w-10 h-10 text-blue-400 mx-auto mb-4"></i>
+                        <h3 class="text-xl font-semibold text-slate-200">第二增长曲线</h3>
+                        <p class="mt-2 text-slate-400">将精神疾病诊疗视为核心战略，开拓新业务增长点。</p>
+                    </div>
+                    <div data-animate>
+                        <i data-lucide="link" class="w-10 h-10 text-blue-400 mx-auto mb-4"></i>
+                        <h3 class="text-xl font-semibold text-slate-200">资本纽带</h3>
+                        <p class="mt-2 text-slate-400">借助基金，深度链接、赋能精神科学领域的创新企业。</p>
+                    </div>
+                    <div data-animate>
+                        <i data-lucide="recycle" class="w-10 h-10 text-blue-400 mx-auto mb-4"></i>
+                        <h3 class="text-xl font-semibold text-slate-200">双向赋能</h3>
+                        <p class="mt-2 text-slate-400">为基金提供坚实产业背景和潜在退出路径，加速自身创新布局。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <img src="https://thumbs.dreamstime.com/b/business-growth-graph-bar-arrow-direction-financial-growth-vision-upward-investment-return-rate-increase-159062253.jpg" alt="Business Elements Background" class="slide-bg">
+            <div class="w-full max-w-6xl">
+                <h2 data-animate class="text-4xl md:text-6xl font-bold tracking-tight text-slate-100 text-center">基金设置：核心要素与机制</h2>
+                <div class="mt-12 grid grid-cols-2 md:grid-cols-3 gap-6 text-left">
+                    <div data-animate class="bento-card">
+                        <h3 class="text-lg font-semibold text-slate-200">基金名称</h3>
+                        <p class="mt-1 text-slate-400">万联天泽脑科学产业投资基金</p>
+                    </div>
+                     <div data-animate class="bento-card">
+                        <h3 class="text-lg font-semibold text-slate-200">组织形式</h3>
+                        <p class="mt-1 text-slate-400">有限合伙制 (LP/GP)</p>
+                    </div>
+                    <div data-animate class="bento-card">
+                        <h3 class="text-lg font-semibold text-slate-200">基金管理人 (GP)</h3>
+                        <p class="mt-1 text-slate-400">万联天泽资本投资有限公司</p>
+                    </div>
+                    <div data-animate class="bento-card">
+                        <h3 class="text-lg font-semibold text-slate-200">基金规模</h3>
+                        <p class="mt-1 text-blue-400 text-xl font-bold">人民币5亿元</p>
+                    </div>
+                    <div data-animate class="bento-card">
+                        <h3 class="text-lg font-semibold text-slate-200">存续期限</h3>
+                        <p class="mt-1 text-slate-400">7年 (投资期4年 + 退出期3年)</p>
+                    </div>
+                     <div data-animate class="bento-card">
+                        <h3 class="text-lg font-semibold text-slate-200">门槛收益率 (Hurdle)</h3>
+                        <p class="mt-1 text-slate-400">8% (IRR)</p>
+                    </div>
+                     <div data-animate class="bento-card">
+                        <h3 class="text-lg font-semibold text-slate-200">管理费</h3>
+                        <p class="mt-1 text-slate-400">2% / 年</p>
+                    </div>
+                     <div data-animate class="bento-card">
+                        <h3 class="text-lg font-semibold text-slate-200">收益分配 (Carry)</h3>
+                        <p class="mt-1 text-slate-400">GP 20% / LP 80%</p>
+                    </div>
+                    <div data-animate class="bento-card">
+                        <h3 class="text-lg font-semibold text-slate-200">LP结构</h3>
+                        <p class="mt-1 text-slate-400">粤万年青 20%<br>万联天泽 20%<br>机构LP等 60%</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="slide">
+            <img src="https://thumbs.dreamstime.com/b/business-growth-graph-bar-arrow-direction-financial-growth-vision-upward-investment-return-rate-increase-159062253.jpg" alt="Strategy Background" class="slide-bg">
+            <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="text-left">
+                    <h2 data-animate class="text-4xl md:text-5xl font-bold tracking-tight text-slate-100">投资策略(I)：聚焦与方向</h2>
+                    <p data-animate class="mt-4 text-lg text-slate-400">秉持价值投资理念，聚焦具备高技术壁垒、巨大市场空间和强大团队的成长期与后期优质项目。</p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                     <div data-animate class="bento-card"><p class="font-semibold text-center text-slate-300">创新药及基因疗法</p></div>
+                     <div data-animate class="bento-card"><p class="font-semibold text-center text-slate-300">高端医疗器械</p></div>
+                     <div data-animate class="bento-card"><p class="font-semibold text-center text-slate-300">脑机接口(BCI)技术</p></div>
+                     <div data-animate class="bento-card"><p class="font-semibold text-center text-slate-300">数字疗法与平台</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <img src="https://thumbs.dreamstime.com/b/business-growth-graph-bar-arrow-direction-financial-growth-vision-upward-investment-return-rate-increase-159062253.jpg" alt="Portfolio Strategy Background" class="slide-bg">
+            <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                 <div class="grid grid-cols-2 gap-4">
+                     <div data-animate class="bento-card text-center"><i data-lucide="list-tree" class="mx-auto w-8 h-8 mb-2 text-teal-400"></i><p>分散风险</p></div>
+                     <div data-animate class="bento-card text-center"><i data-lucide="target" class="mx-auto w-8 h-8 mb-2 text-teal-400"></i><p>集中优势</p></div>
+                     <div data-animate class="bento-card text-center"><i data-lucide="users" class="mx-auto w-8 h-8 mb-2 text-teal-400"></i><p>生态协同</p></div>
+                     <div data-animate class="bento-card text-center"><i data-lucide="globe-2" class="mx-auto w-8 h-8 mb-2 text-teal-400"></i><p>本土优先&国际视野</p></div>
+                </div>
+                <div class="text-left lg:text-right">
+                    <h2 data-animate class="text-4xl md:text-5xl font-bold tracking-tight text-slate-100">投资策略(II)：组合与赋能</h2>
+                    <p data-animate class="mt-4 text-lg text-slate-400">通过科学的组合策略与深度的投后赋能，构建产业生态，最大化基金价值。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <img src="https://i.epochtimes.com/assets/uploads/2021/09/id13265057-neuronbrain-450x253.jpg" alt="Risk Management Background" class="slide-bg">
+            <div class="w-full max-w-6xl text-center">
+                <h2 data-animate class="text-4xl md:text-6xl font-bold tracking-tight text-slate-100">全流程风控：确保基金稳健运行</h2>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div data-animate class="bento-card">
+                        <h3 class="text-xl font-semibold text-slate-200 flex items-center gap-2"><i data-lucide="search-code"></i>投前评估</h3>
+                        <p class="mt-3 text-slate-400 text-left">多维度深入尽调，引入外部专家协同评估，严控项目入口风险。</p>
+                    </div>
+                     <div data-animate class="bento-card">
+                        <h3 class="text-xl font-semibold text-slate-200 flex items-center gap-2"><i data-lucide="shield-check"></i>投中决策</h3>
+                        <p class="mt-3 text-slate-400 text-left">设立专业投决会，执行严格的投资流程，确保决策科学、审慎。</p>
+                    </div>
+                     <div data-animate class="bento-card">
+                        <h3 class="text-xl font-semibold text-slate-200 flex items-center gap-2"><i data-lucide="bar-chart-3"></i>投后管理</h3>
+                        <p class="mt-3 text-slate-400 text-left">派驻董事/观察员，持续跟踪指标，提供增值服务，制定风险预案。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <img src="https://www.cnstock.com/image/202202/23/20220224080809783.png" alt="Exit Strategy Background" class="slide-bg">
+            <div class="w-full max-w-6xl text-center">
+                <h2 data-animate class="text-4xl md:text-6xl font-bold tracking-tight text-slate-100">多元化退出：最大化投资回报</h2>
+                <p data-animate class="mt-4 text-lg md:text-2xl font-light text-slate-400 max-w-3xl mx-auto">综合运用多种退出方式，在投资协议中设置保障条款，寻求最佳时机与方式，实现投资价值最大化。</p>
+                <div class="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div data-animate class="bento-card text-center p-4 md:p-6"><p class="text-lg font-semibold">IPO</p><p class="text-sm text-slate-400">科创板/创业板/港股/纳斯达克</p></div>
+                    <div data-animate class="bento-card text-center p-4 md:p-6"><p class="text-lg font-semibold">并购(M&A)</p><p class="text-sm text-slate-400">出售给战略或财务投资人</p></div>
+                    <div data-animate class="bento-card text-center p-4 md:p-6"><p class="text-lg font-semibold">股权转让</p><p class="text-sm text-slate-400">转让给其他基金或投资人</p></div>
+                    <div data-animate class="bento-card text-center p-4 md:p-6"><p class="text-lg font-semibold">其他方式</p><p class="text-sm text-slate-400">管理层回购/股息分红等</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <img src="https://imagepphcloud.thepaper.cn/pph/image/304/361/87.jpg" alt="Team Background" class="slide-bg">
+            <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 data-animate class="text-4xl md:text-5xl font-bold tracking-tight text-slate-100">专业团队：万联天泽资本</h2>
+                    <p data-animate class="mt-4 text-lg text-slate-400">万联证券全资子公司，是专业的私募股权投资平台，聚焦战略新兴产业，在生命健康领域拥有丰富投资经验和成功案例。</p>
+                    <div data-animate class="mt-6 flex flex-wrap gap-4">
+                        <span class="bg-blue-900/50 text-blue-300 text-sm font-medium px-3 py-1 rounded-full">丰富投资经验</span>
+                        <span class="bg-blue-900/50 text-blue-300 text-sm font-medium px-3 py-1 rounded-full">专业投资团队</span>
+                        <span class="bg-blue-900/50 text-blue-300 text-sm font-medium px-3 py-1 rounded-full">国际化视野</span>
+                    </div>
+                </div>
+                <div data-animate class="bento-card">
+                    <img src="https://www.cnstock.com/image/202202/23/20220224080809783.png" alt="Investment Chart" class="rounded-xl w-full h-full object-cover">
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <img src="https://imagepphcloud.thepaper.cn/pph/image/304/361/87.jpg" alt="Partner Background" class="slide-bg">
+            <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div data-animate class="bento-card order-2 lg:order-1">
+                     <img src="https://thumbs.dreamstime.com/b/business-growth-graph-bar-arrow-direction-financial-growth-vision-upward-investment-return-rate-increase-159062253.jpg" alt="Financial Chart" class="rounded-xl w-full h-full object-cover">
+                </div>
+                <div class="order-1 lg:order-2">
+                    <h2 data-animate class="text-4xl md:text-5xl font-bold tracking-tight text-slate-100">实力背书：广州金控</h2>
+                    <p data-animate class="mt-4 text-lg text-slate-400">广州市属大型国有金融控股集团，为基金提供雄厚资本实力、政府资源协同、广泛金融网络和产业资源整合的全方位赋能。</p>
+                    <div data-animate class="mt-6 flex flex-wrap gap-4">
+                        <span class="bg-teal-900/50 text-teal-300 text-sm font-medium px-3 py-1 rounded-full">雄厚资本实力</span>
+                        <span class="bg-teal-900/50 text-teal-300 text-sm font-medium px-3 py-1 rounded-full">政府资源协同</span>
+                         <span class="bg-teal-900/50 text-teal-300 text-sm font-medium px-3 py-1 rounded-full">产业资源整合</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <img src="https://images.unsplash.com/photo-1557682250-33bd709cbe85?q=80&w=2070&auto=format&fit=crop" alt="Abstract gradient background" class="slide-bg">
+            <div class="text-center">
+                <h2 data-animate class="text-4xl md:text-6xl font-bold tracking-tight text-slate-100">拟投项目深度分析</h2>
+                <p data-animate class="mt-4 text-lg md:text-2xl font-light text-slate-400 max-w-3xl mx-auto">精选九大高潜力标的，覆盖脑科学产业链关键节点，深入剖析其技术、市场与价值。</p>
+            </div>
+        </section>
+
+        <section class="slide">
+            <img src="https://imagepphcloud.thepaper.cn/pph/image/304/361/87.jpg" alt="Portfolio Background" class="slide-bg">
+             <div class="w-full max-w-6xl text-center">
+                <h2 data-animate class="text-4xl md:text-6xl font-bold tracking-tight text-slate-100">拟投项目速览</h2>
+                <p data-animate class="mt-4 text-lg md:text-2xl font-light text-slate-400 max-w-4xl mx-auto">精选脑科学及精神健康领域内，覆盖产业链关键环节、具备突破性技术和高成长潜力的优质企业组合。</p>
+                <div class="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+                    <div data-animate class="bento-card text-center font-semibold p-4"><p>泓宸创新生物</p><p class="text-xs text-slate-400 font-normal">干细胞再生</p></div>
+                    <div data-animate class="bento-card text-center font-semibold p-4"><p>杭州睿笛生物</p><p class="text-xs text-slate-400 font-normal">纳秒刀消融</p></div>
+                    <div data-animate class="bento-card text-center font-semibold p-4"><p>北京柏惠维康</p><p class="text-xs text-slate-400 font-normal">手术机器人</p></div>
+                    <div data-animate class="bento-card text-center font-semibold p-4"><p>蝶和智能康复</p><p class="text-xs text-slate-400 font-normal">智能康复整合</p></div>
+                    <div data-animate class="bento-card text-center font-semibold p-4"><p>神曦生物</p><p class="text-xs text-slate-400 font-normal">基因疗法</p></div>
+                    <div data-animate class="bento-card text-center font-semibold p-4"><p>析芒医疗</p><p class="text-xs text-slate-400 font-normal">脑机接口</p></div>
+                    <div data-animate class="bento-card text-center font-semibold p-4"><p>好心情</p><p class="text-xs text-slate-400 font-normal">数字心理健康</p></div>
+                    <div data-animate class="bento-card text-center font-semibold p-4"><p>零唯一思</p><p class="text-xs text-slate-400 font-normal">情绪客观评估</p></div>
+                    <div data-animate class="bento-card text-center font-semibold p-4"><p>途滕科技</p><p class="text-xs text-slate-400 font-normal">AI机器人康复</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <img src="https://news.ecust.edu.cn/_upload/article/images/bb/0a/46b507e64dc28270dab341759c97/e44a6447-3834-49a3-b879-3fe2f1f201a0.png" alt="Stem Cell Research" class="slide-bg">
+            <div class="w-full max-w-6xl bento-card p-6 md:p-8">
+                <h3 data-animate class="text-2xl md:text-3xl font-bold text-slate-100 text-center mb-2">泓宸创新生物</h3>
+                <p data-animate class="text-center text-lg text-blue-400 font-semibold mb-6">领域：干细胞再生神经元治疗</p>
+                <div data-animate class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-6 text-left text-base">
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="flask-conical" class="w-5 h-5 text-sky-400"></i>核心技术与产品</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>基于hiPSC分化的人脊髓神经细胞药物治疗脊髓损伤。</li>
+                            <li>利用运动神经元平台进行ALS等罕见病药物筛选。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="trending-up" class="w-5 h-5 text-sky-400"></i>市场潜力</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>中国脊髓损伤患者超500万，存在巨大未满足需求。</li>
+                            <li>干细胞治疗市场潜力达数百亿美元。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="shield-check" class="w-5 h-5 text-sky-400"></i>核心优势与壁垒</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>国际领先hiPSC定向分化技术：周期短 (21天)，纯度高 (&gt;90%)。</li>
+                            <li>已获授权的中美发明专利及多项在申专利。</li>
+                            <li>顶尖专家领衔的强大医工结合团队。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="scale" class="w-5 h-5 text-sky-400"></i>风险与回报分析</h4>
+                        <div class="mt-3 space-y-2 text-slate-400">
+                            <p><strong class="text-red-400">风险:</strong> 临床试验、监管审批、生产质控、市场竞争、融资风险。</p>
+                            <p><strong class="text-green-400">回报:</strong> 巨大市场空间、高技术壁垒、多管线平台价值，高风险高回报。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+             <div class="w-full max-w-6xl bento-card p-6 md:p-8">
+                <h3 data-animate class="text-2xl md:text-3xl font-bold text-slate-100 text-center mb-2">杭州睿笛生物</h3>
+                <p data-animate class="text-center text-lg text-blue-400 font-semibold mb-6">领域：纳秒脉冲电场消融技术平台</p>
+                <div data-animate class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-6 text-left text-base">
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="zap" class="w-5 h-5 text-sky-400"></i>核心技术与产品</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>“纳秒刀”技术：非热、选择性消融，保护重要组织结构。</li>
+                            <li>产品管线覆盖肿瘤消融、心血管介入、呼吸介入等。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="trending-up" class="w-5 h-5 text-sky-400"></i>市场潜力</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>聚焦肿瘤、心血管等数百亿级高价值市场。</li>
+                            <li>技术有望快速渗透并开辟新应用场景。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="shield-check" class="w-5 h-5 text-sky-400"></i>核心优势与壁垒</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>代际技术优势，显著优于传统及微秒脉冲技术。</li>
+                            <li>掌握核心技术，设备实现负载和心电自适应。</li>
+                            <li>广泛IP布局（超300项专利），获FDA及NMPA双重认可。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="scale" class="w-5 h-5 text-sky-400"></i>风险与回报分析</h4>
+                        <div class="mt-3 space-y-2 text-slate-400">
+                             <p><strong class="text-red-400">风险:</strong> 临床推广、市场教育、生产制造、竞争加剧、报销政策。</p>
+                             <p><strong class="text-green-400">回报:</strong> 市场颠覆潜力大、覆盖高价值市场、技术和IP壁垒高，高回报潜力。
+                             </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="slide">
+            <img src="https://www.stdaily.com/web/gdxw/pic/2025-01/16/286638_fda42659-0858-41b5-ad8e-1092d5883175.JPG" alt="Surgical Robot" class="slide-bg">
+            <div class="w-full max-w-6xl bento-card p-6 md:p-8">
+                <h3 data-animate class="text-2xl md:text-3xl font-bold text-slate-100 text-center mb-2">北京柏惠维康</h3>
+                <p data-animate class="text-center text-lg text-blue-400 font-semibold mb-6">领域：神经外科手术机器人</p>
+                <div data-animate class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-6 text-left text-base">
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="robot" class="w-5 h-5 text-sky-400"></i>核心技术与产品</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>“睿米”机器人：中国首款获NMPA三类证的神经外科手术机器人。</li>
+                            <li>实现0.5mm亚毫米级高精度定位，应用于多种神经系统微创手术。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="trending-up" class="w-5 h-5 text-sky-400"></i>市场潜力</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>中国神经外科机器人市场容量达百亿级，持续增长。</li>
+                            <li>国产替代领导者，具备先发优势和政策支持。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="shield-check" class="w-5 h-5 text-sky-400"></i>核心优势与壁垒</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                           <li>国内首个获证，有强大政策和市场准入壁垒。</li>
+                           <li>18年技术积累，超2万例临床应用验证。</li>
+                           <li>顶尖医工结合团队，创始人为863计划负责人。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="scale" class="w-5 h-5 text-sky-400"></i>风险与回报分析</h4>
+                        <div class="mt-3 space-y-2 text-slate-400">
+                             <p><strong class="text-red-400">风险:</strong> 市场推广、医生培训、竞品追赶、定价与医保政策。</p>
+                             <p><strong class="text-green-400">回报:</strong> 蓝海市场与国产替代机遇、先发优势、业绩爆发与高确定性上市预期。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+             <div class="w-full max-w-6xl bento-card p-6 md:p-8">
+                <h3 data-animate class="text-2xl md:text-3xl font-bold text-slate-100 text-center mb-2">蝶和智能康复</h3>
+                <p data-animate class="text-center text-lg text-blue-400 font-semibold mb-6">领域：智能康复设备生产与产业整合</p>
+                <div data-animate class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-6 text-left text-base">
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="factory" class="w-5 h-5 text-sky-400"></i>核心技术与产品</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>将全球康复设备领导者DIH的生产研发中心落地中国。</li>
+                            <li>融合机器人、VR、智能传感器，提供智能康复整体解决方案。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="trending-up" class="w-5 h-5 text-sky-400"></i>市场潜力</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>中国万亿级康复蓝海市场，DIH全球市占率第一（31%）。</li>
+                            <li>国产化带来30-50%成本下降，增强竞争力。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="shield-check" class="w-5 h-5 text-sky-400"></i>核心优势与壁垒</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>依托全球领导者DIH的技术与品牌。</li>
+                            <li>最广泛产品组合，具备“端到端”覆盖能力。</li>
+                            <li>国产化带来的成本与供应链优势。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="scale" class="w-5 h-5 text-sky-400"></i>风险与回报分析</h4>
+                        <div class="mt-3 space-y-2 text-slate-400">
+                             <p><strong class="text-red-400">风险:</strong> 国产化落地、市场竞争、政策变化、产业园运营。</p>
+                             <p><strong class="text-green-400">回报:</strong> 蓝海市场领导者、技术壁垒高、国产化双重优势、清晰A股上市路径。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <img src="https://imagepphcloud.thepaper.cn/pph/image/304/361/87.jpg" alt="Neuron Network" class="slide-bg">
+            <div class="w-full max-w-6xl bento-card p-6 md:p-8">
+                <h3 data-animate class="text-2xl md:text-3xl font-bold text-slate-100 text-center mb-2">神曦生物 (Neuexcell)</h3>
+                <p data-animate class="text-center text-lg text-blue-400 font-semibold mb-6">领域：原位神经再生基因疗法</p>
+                <div data-animate class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-6 text-left text-base">
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="dna" class="w-5 h-5 text-sky-400"></i>核心技术与产品</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>全球首创：通过基因递送，将胶质细胞原位转分化为功能性神经元。</li>
+                            <li>从根本上解决神经元丢失问题，重构神经环路。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="trending-up" class="w-5 h-5 text-sky-400"></i>市场潜力</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>瞄准脑卒中、AD、PD等缺乏根治疗法的巨大CNS疾病市场。</li>
+                            <li>有望开辟全新市场空间，成为全球神经再生疗法领跑者。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="shield-check" class="w-5 h-5 text-sky-400"></i>核心优势与壁垒</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>全球首创技术，非人灵长类POC数据验证成功。</li>
+                            <li>强大的全球专利体系，保护期至2043年。</li>
+                            <li>国际顶尖复合团队，由先驱科学家与资深药企高管组成。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="scale" class="w-5 h-5 text-sky-400"></i>风险与回报分析</h4>
+                        <div class="mt-3 space-y-2 text-slate-400">
+                             <p><strong class="text-red-400">风险:</strong> 临床试验、监管审批、生产制造、竞争风险。</p>
+                             <p><strong class="text-green-400">回报:</strong> 巨大蓝海与颠覆性潜力、全球领先技术与高壁垒，高风险高回报。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="slide">
+            <img src="https://www.nsfc.gov.cn/csc/20340/20289/23016/2018020708180897845.jpg" alt="Brain Interface" class="slide-bg">
+            <div class="w-full max-w-6xl bento-card p-6 md:p-8">
+                <h3 data-animate class="text-2xl md:text-3xl font-bold text-slate-100 text-center mb-2">析芒医疗</h3>
+                <p data-animate class="text-center text-lg text-blue-400 font-semibold mb-6">领域：植入式BCI与神经再生双平台</p>
+                <div data-animate class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-6 text-left text-base">
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="cpu" class="w-5 h-5 text-sky-400"></i>核心技术与产品</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>“BCI + 神经再生”双平台战略。</li>
+                            <li>核心硬件：自研高密度植入式电极与专用ASIC芯片。</li>
+                            <li>产品覆盖科研、医疗（二类/三类），对标国际领先BCI系统。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="trending-up" class="w-5 h-5 text-sky-400"></i>市场潜力</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>科研市场（约100亿美元）与巨大未满足需求的医疗市场。</li>
+                            <li>面向瘫痪、意识障碍、AD、PD等缺乏根治手段的疾病。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="shield-check" class="w-5 h-5 text-sky-400"></i>核心优势与壁垒</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>独特双平台战略，底层核心硬件自主可控。</li>
+                            <li>高密度电极技术与专用芯片设计能力。</li>
+                            <li>深厚科研积累和临床前验证，顶尖复合团队。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="scale" class="w-5 h-5 text-sky-400"></i>风险与回报分析</h4>
+                        <div class="mt-3 space-y-2 text-slate-400">
+                             <p><strong class="text-red-400">风险:</strong> 植入式BCI安全性、技术成熟度、监管难度、市场竞争激烈。</p>
+                             <p><strong class="text-green-400">回报:</strong> 颠覆性技术平台、高技术壁垒、战略重要性高，高风险高回报。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="slide">
+            <img src="https://star.global/_next/image/?url=https%3A%2F%2Fcms.star.global%2Fwp-content%2Fuploads%2F2022%2F05%2Fone-drop.jpg&w=3840&q=75" alt="Digital Health App" class="slide-bg">
+            <div class="w-full max-w-6xl bento-card p-6 md:p-8">
+                <h3 data-animate class="text-2xl md:text-3xl font-bold text-slate-100 text-center mb-2">好心情健康产业集团</h3>
+                <p data-animate class="text-center text-lg text-blue-400 font-semibold mb-6">领域：数字心理医疗与健康服务生态</p>
+                <div data-animate class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-6 text-left text-base">
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="smartphone-cog" class="w-5 h-5 text-sky-400"></i>核心技术与模式</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>构建“线上+线下”、“2B+2C”的全方位O2O服务生态圈。</li>
+                            <li>基于海量真实世界数据，研发AI驱动的数字疗法产品。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="trending-up" class="w-5 h-5 text-sky-400"></i>市场潜力</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>中国心理健康市场超千亿且高速增长，需求井喷。</li>
+                            <li>专业资源稀缺，供需严重失衡，数字疗法是关键解决方案。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="shield-check" class="w-5 h-5 text-sky-400"></i>核心优势与壁垒</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>汇聚全国80%+精神心理医生，形成难以复制的资源壁垒。</li>
+                            <li>拥有中国最大心理医疗健康数据资产，构建AI护城河。</li>
+                            <li>O2O生态闭环，多业务相互赋能。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="scale" class="w-5 h-5 text-sky-400"></i>风险与回报分析</h4>
+                        <div class="mt-3 space-y-2 text-slate-400">
+                             <p><strong class="text-red-400">风险:</strong> 数据隐私与安全、监管政策、市场竞争、医生资源稳定性。</p>
+                             <p><strong class="text-green-400">回报:</strong> 蓝海市场高增长、独特生态壁垒、数据驱动优势、多元化盈利模式。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="slide">
+             <div class="w-full max-w-6xl bento-card p-6 md:p-8">
+                <h3 data-animate class="text-2xl md:text-3xl font-bold text-slate-100 text-center mb-2">零唯一思 (Zero One Thoughts)</h3>
+                <p data-animate class="text-center text-lg text-blue-400 font-semibold mb-6">领域：数字情绪健康客观评估</p>
+                <div data-animate class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-6 text-left text-base">
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="brain-circuit" class="w-5 h-5 text-sky-400"></i>核心技术与产品</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>“情绪X光机”：基于多模态生理信号和AI的客观情绪评估平台。</li>
+                            <li>通过脑电大模型(LaBraM)，实现情绪健康的量化评估。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="trending-up" class="w-5 h-5 text-sky-400"></i>市场潜力</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>解决心理健康行业缺乏客观评估手段的突出痛点。</li>
+                            <li>潜在客户覆盖临床、科研、消费电子、政企单位等。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="shield-check" class="w-5 h-5 text-sky-400"></i>核心优势与壁垒</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>全球最大情感脑电数据集SEED，为AI模型提供独家优势。</li>
+                            <li>国内首个自研脑电大模型LaBraM。</li>
+                            <li>顶尖复合团队，深度医工结合。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="scale" class="w-5 h-5 text-sky-400"></i>风险与回报分析</h4>
+                        <div class="mt-3 space-y-2 text-slate-400">
+                             <p><strong class="text-red-400">风险:</strong> 临床有效性验证、监管审批挑战、市场接受度、数据安全。</p>
+                             <p><strong class="text-green-400">回报:</strong> 解决行业核心痛点、技术壁垒高、商业模式多元，高风险高回报。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <div class="w-full max-w-6xl bento-card p-6 md:p-8">
+                <h3 data-animate class="text-2xl md:text-3xl font-bold text-slate-100 text-center mb-2">途滕科技 (Totem AI)</h3>
+                <p data-animate class="text-center text-lg text-blue-400 font-semibold mb-6">领域：具身智能赋能神经肌肉训练</p>
+                <div data-animate class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-6 text-left text-base">
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="move-3d" class="w-5 h-5 text-sky-400"></i>核心技术与模式</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>混沌康复系统(CHAOS)：覆盖“诊-处-训-评”全流程的AI神经疗法。</li>
+                            <li>机器人硬件矩阵+多模态融合+游戏化训练。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="trending-up" class="w-5 h-5 text-sky-400"></i>市场潜力</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>面向中国4.2亿康复需求人口，尤其是基层医疗市场。</li>
+                            <li>定位为基层医疗智能康复设备与服务的首选供应商。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="shield-check" class="w-5 h-5 text-sky-400"></i>核心优势与壁垒</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 mt-3">
+                            <li>全周期闭环系统与创新技术组合。</li>
+                            <li>创新“融资租赁”商业模式，降低医疗机构初始成本。</li>
+                            <li>融合医疗、AI、机器人、游戏领域人才的复合团队。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-200 text-lg mb-2 border-b border-slate-700 pb-1 flex items-center gap-2"><i data-lucide="scale" class="w-5 h-5 text-sky-400"></i>风险与回报分析</h4>
+                        <div class="mt-3 space-y-2 text-slate-400">
+                             <p><strong class="text-red-400">风险:</strong> 研发与合规审批、市场教育成本、竞争挤压、财务风险。</p>
+                             <p><strong class="text-green-400">回报:</strong> 多元化收入模型、盈利周期可预期、高市场匹配度，高潜力。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <img src="https://www.cnstock.com/image/202202/23/20220224080809783.png" alt="Advantages Background" class="slide-bg">
+            <div class="w-full max-w-6xl text-center">
+                <h2 data-animate class="text-4xl md:text-6xl font-bold tracking-tight text-slate-100">我们的优势：构建成功的投资基石</h2>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div data-animate class="bento-card">
+                        <i data-lucide="bar-chart-big" class="w-10 h-10 text-cyan-400 mb-3"></i>
+                        <h3 class="text-xl font-semibold text-slate-200">赛道优势</h3>
+                        <p class="mt-2 text-slate-400">聚焦万亿级、高速增长的脑科学蓝海市场。</p>
+                    </div>
+                    <div data-animate class="bento-card">
+                        <i data-lucide="cpu" class="w-10 h-10 text-cyan-400 mb-3"></i>
+                        <h3 class="text-xl font-semibold text-slate-200">技术优势</h3>
+                        <p class="mt-2 text-slate-400">投资组合涵盖多个全球领先、颠覆性技术项目。</p>
+                    </div>
+                    <div data-animate class="bento-card">
+                        <i data-lucide="users-2" class="w-10 h-10 text-cyan-400 mb-3"></i>
+                        <h3 class="text-xl font-semibold text-slate-200">团队与资源</h3>
+                        <p class="mt-2 text-slate-400">专业投资团队，依托广州金控和粤万年青强大资源。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <img src="https://thumbs.dreamstime.com/b/business-growth-graph-bar-arrow-direction-financial-growth-vision-upward-investment-return-rate-increase-159062253.jpg" alt="Thank You Background" class="slide-bg">
+             <div class="text-center flex flex-col items-center">
+                <p data-animate class="text-2xl font-light text-slate-300 mb-6">谢谢</p>
+                <div data-animate class="bento-card text-center py-8 px-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-100 tracking-wider">万联天泽资本投资有限公司</h2>
+                    <div class="mt-6 text-slate-400 text-base space-y-2">
+                        <p>广州市珠江东路11号高德置地中心H座18-19楼</p>
+                        <p>www.wltz-capital.com</p>
+                    </div>
+                </div>
+             </div>
+        </section>
+
+    </div>
+
+    <div id="navigation" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-3">
+    </div>
+
+    <div id="slide-controls" class="fixed bottom-8 right-8 z-10 flex gap-3">
+        <button id="prev-slide" class="p-2 rounded-full bg-black/20 backdrop-blur-sm border border-white/10 hover:bg-white/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+            <i data-lucide="arrow-left" class="w-4 h-4 text-slate-300"></i>
+        </button>
+        <button id="next-slide" class="p-2 rounded-full bg-black/20 backdrop-blur-sm border border-white/10 hover:bg-white/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+            <i data-lucide="arrow-right" class="w-4 h-4 text-slate-300"></i>
+        </button>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const slides = Array.from(document.querySelectorAll('.slide'));
+        const navContainer = document.getElementById('navigation');
+        const slideControls = document.getElementById('slide-controls');
+        const prevButton = document.getElementById('prev-slide');
+        const nextButton = document.getElementById('next-slide');
+        let currentSlide = 0;
+
+        if (slides.length <= 1) {
+            if(navContainer) navContainer.style.display = 'none';
+            if (slideControls) slideControls.style.display = 'none';
+        }
+
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.classList.add('w-2', 'h-2', 'rounded-full', 'bg-slate-600', 'hover:bg-slate-400', 'transition-colors', 'duration-300');
+            dot.addEventListener('click', () => goToSlide(i));
+            if(navContainer) navContainer.appendChild(dot);
+        });
+
+        const navDots = navContainer ? Array.from(navContainer.children) : [];
+
+        function updateNav() {
+            if (navContainer) {
+                navDots.forEach((dot, i) => {
+                    dot.classList.toggle('bg-slate-200', i === currentSlide);
+                    dot.classList.toggle('bg-slate-600', i !== currentSlide);
+                });
+            }
+
+            if (prevButton && nextButton) {
+                prevButton.disabled = currentSlide === 0;
+                nextButton.disabled = currentSlide === slides.length - 1;
+            }
+        }
+
+        if(prevButton && nextButton) {
+            prevButton.addEventListener('click', () => {
+                goToSlide(currentSlide - 1);
+            });
+            nextButton.addEventListener('click', () => {
+                goToSlide(currentSlide + 1);
+            });
+        }
+
+        function goToSlide(slideIndex, isInitial = false) {
+            if (slideIndex < 0 || slideIndex >= slides.length) return;
+
+            const oldSlide = slides[currentSlide];
+            const newSlide = slides[slideIndex];
+            
+            const timeline = gsap.timeline();
+
+            if (!isInitial && oldSlide) {
+                const oldElements = oldSlide.querySelectorAll('[data-animate]');
+                timeline.to(oldElements, {
+                    opacity: 0,
+                    y: 20,
+                    stagger: 0.05,
+                    duration: 0.5,
+                    ease: 'power3.in'
+                });
+            }
+
+            timeline.call(() => {
+                if(oldSlide) oldSlide.classList.remove('active');
+                newSlide.classList.add('active');
+                currentSlide = slideIndex;
+                updateNav();
+            }, null, isInitial ? 0 : '+=0.2');
+
+
+            const newElements = newSlide.querySelectorAll('[data-animate]');
+            timeline.fromTo(newElements, {
+                opacity: 0,
+                y: 20
+            }, {
+                opacity: 1,
+                y: 0,
+                stagger: 0.1,
+                duration: 0.8,
+                ease: 'power3.out'
+            });
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                goToSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft') {
+                goToSlide(currentSlide - 1);
+            }
+        });
+
+        lucide.createIcons();
+        goToSlide(0, true);
+    });
+</script>
+</body>
+</html>

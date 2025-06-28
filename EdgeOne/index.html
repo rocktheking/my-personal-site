@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>通过GitHub与腾讯云EdgeOne Pages搭建个人网站/博客完整教程</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <header class="text-center py-16">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">通过GitHub与腾讯云EdgeOne Pages搭建个人网站/博客完整教程</h1>
+            <p class="mt-4 text-lg text-gray-600">for luobostudy.top | macOS 用户指南</p>
+        </header>
+
+        <div class="flex flex-col lg:flex-row gap-8 lg:gap-16">
+            <aside class="lg:w-1/4">
+                <nav id="table-of-contents" class="sticky top-8 bg-white/70 backdrop-blur-md p-6 rounded-xl border border-gray-200/80 shadow-sm">
+                    <h2 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">目录</h2>
+                    <ul class="space-y-3">
+                        <li><a href="#chapter-1" class="nav-link block text-gray-600 hover:text-blue-600 font-medium">第一章：启航准备</a></li>
+                        <li><a href="#chapter-2" class="nav-link block text-gray-600 hover:text-blue-600 font-medium">第二章：武装你的Mac</a></li>
+                        <li><a href="#chapter-3" class="nav-link block text-gray-600 hover:text-blue-600 font-medium">第三章：代码的云端之家</a></li>
+                        <li><a href="#chapter-4" class="nav-link block text-gray-600 hover:text-blue-600 font-medium">第四章：自动化魔法</a></li>
+                        <li><a href="#chapter-5" class="nav-link block text-gray-600 hover:text-blue-600 font-medium">第五章：赋予灵魂与个性</a></li>
+                        <li><a href="#conclusion" class="nav-link block text-gray-600 hover:text-blue-600 font-medium">结语：从此启航</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="lg:w-3/4 min-w-0">
+                <article class="prose prose-lg max-w-none prose-h2:border-b prose-h2:pb-3 prose-h2:border-gray-200 prose-h2:mb-8 prose-h3:mb-6 prose-a:text-blue-600 prose-strong:font-semibold">
+                    
+                    <section id="chapter-1" class="mb-24">
+                        <h2>第一章：启航准备：账户与基本概念</h2>
+                        <p>欢迎来到你的个人网站搭建之旅！在正式编写代码之前，我们需要准备好必要的“通行证”并理解几个核心概念。这就像出海远航前，要备好船票、了解海图一样。</p>
+                        
+                        <h3>1.1 必备账户</h3>
+                        <p>你的个人网站将由两个关键服务协同工作：一个负责存储你的代码，另一个负责将代码发布到全世界。</p>
+                        <ol>
+                            <li><strong>GitHub 账户：你的代码云端仓库</strong>
+                                <ul class="list-none pl-4">
+                                    <li><strong>做什么？</strong> 前往 <a href="https://github.com" target="_blank" rel="noopener noreferrer">github.com</a> 注册一个账户。</li>
+                                    <li><strong>为什么？</strong> GitHub 是全球最大的代码托管平台。你可以把它想象成一个专门为代码设计的“云端硬盘”。你所有的网站文件、修改记录都将安全地存放在这里。更重要的是，它是我们实现自动化部署的起点。</li>
+                                </ul>
+                            </li>
+                            <li class="mt-4"><strong>腾讯云账户：你的网站部署与加速平台</strong>
+                                <ul class="list-none pl-4">
+                                    <li><strong>做什么？</strong> 前往 <a href="https://cloud.tencent.com" target="_blank" rel="noopener noreferrer">cloud.tencent.com</a> 注册并根据指引完成实名认证。</li>
+                                    <li><strong>为什么？</strong> 我们将使用腾讯云的 EdgeOne Pages 服务来发布网站。它能自动从你的 GitHub 仓库拉取最新代码，然后将其部署到遍布全球的服务器上，确保任何地方的用户都能快速访问你的网站。实名认证是使用国内云服务的必要步骤。</li>
+                                </ul>
+                            </li>
+                        </ol>
+
+                        <h3>1.2 核心技术简介</h3>
+                        <p>了解这些术语将帮助你更好地理解整个流程是如何运作的。</p>
+                        <ul>
+                            <li><strong>Git</strong><br><strong>一句话解释:</strong> 一个强大的“代码时光机”。<br>Git 是一个版本控制系统，是现代软件开发的基石。它能帮你追踪项目中的每一次文件修改。你可以随时创建“存档点”（commit），如果后续修改出了问题，也能轻松地“读档”，回到之前的任何一个版本。我们将在本地电脑上使用 Git 来管理网站项目。</li>
+                            <li class="mt-4"><strong>GitHub</strong><br><strong>一句话解释:</strong> 存放你“代码时光机”记录的在线博物馆。<br>GitHub 是一个基于 Git 的在线平台。它为你的 Git 仓库提供了一个远程的家。你可以将本地的代码和所有“存档点”推送到 GitHub，实现云端备份、团队协作，以及与 EdgeOne Pages 这类自动化服务的联动。</li>
+                            <li class="mt-4"><strong>EdgeOne Pages</strong><br><strong>一句话解释:</strong> 一个智能、高速的“网站自动发布机器人”。<br>这是腾讯云提供的一项服务，专门用于托管静态网站（比如我们即将创建的由 HTML, CSS, JavaScript 构成的网站）。它的神奇之处在于，一旦你授权它访问你的 GitHub 仓库，每当你更新代码并推送到 GitHub，EdgeOne Pages 就会自动察觉，并立即重新构建、发布你的网站。它还自带全球CDN加速，让你的网站“飞”起来。</li>
+                             <li class="mt-4"><strong>CNAME 记录</strong><br><strong>一句话解释:</strong> 互联网世界的“地址转寄服务”。<br>CNAME (Canonical Name) 是一条 DNS（域名系统）规则。当你购买了一个好记的域名（如 `luobostudy.top`），你需要告诉全世界的浏览器：当有人访问这个域名时，请将他们引导到网站实际存放的地址（即 EdgeOne Pages 提供的一长串默认域名）。配置 CNAME 记录就是设置这个“转寄”规则的过程。</li>
+                        </ul>
+                    </section>
+                    
+                    <section id="chapter-2" class="mb-24">
+                        <h2>第二章：武装你的Mac：本地环境配置</h2>
+                        <p>现在，让我们来为你的 Mac 安装一些必要的开发工具。这就像为你的工作台配齐趁手的工具，能让后续工作事半功倍。我们将通过“终端” (Terminal) 来完成这一切，这是在Mac上与系统底层交互的强大工具。</p>
+                        <p><strong>如何打开终端？</strong><br>
+                        <strong>方法一 (推荐):</strong> 按下 `Command (⌘)` + `空格键` 打开聚焦搜索 (Spotlight Search)，输入 `Terminal` 或 `终端`，然后按回车。<br>
+                        <strong>方法二:</strong> 在“访达” (Finder) 中，进入“应用程序” > “实用工具” 文件夹，找到并打开“终端”。</p>
+
+                        <h3>2.1 为何以及如何安装Homebrew?</h3>
+                        <ul>
+                            <li><strong>它是什么？</strong> Homebrew 是 macOS 上一个广受欢迎的“包管理器”。你可以把它想象成一个<strong>“开发者的 App Store”</strong>。有了它，安装、更新和卸载各种开发软件（如我们需要的 Git）只需一条简单的命令，无需再手动去官网下载、解压和配置。</li>
+                            <li><strong>安装步骤</strong>
+                                <ol>
+                                    <li>打开你的“终端”应用。</li>
+                                    <li>复制并粘贴以下官方安装命令到终端里，然后按下回车。
+                                        <div class="code-block-wrapper">
+                                            <button class="copy-btn" aria-label="复制"><i data-lucide="copy"></i></button>
+                                            <pre><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></pre>
+                                        </div>
+                                    </li>
+                                    <li><strong>注意:</strong> 安装过程中，脚本会向你说明它将执行哪些操作，并可能会提示你输入电脑的开机密码（输入时密码不会显示在屏幕上，这是正常的，输完按回车即可）。请耐心等待安装完成。</li>
+                                </ol>
+                            </li>
+                        </ul>
+
+                        <h3>2.2 使用Homebrew安装Git</h3>
+                        <p>虽然 macOS 系统通常自带一个旧版本的 Git，但我们推荐安装最新版本以获得更好的性能和功能。</p>
+                        <ul>
+                            <li><strong>安装命令</strong><br>在终端中执行以下命令：
+                                <div class="code-block-wrapper">
+                                    <button class="copy-btn" aria-label="复制"><i data-lucide="copy"></i></button>
+                                    <pre><code>brew install git</code></pre>
+                                </div>
+                            </li>
+                             <li><strong>验证安装</strong><br>安装完成后，执行以下命令来检查 Git 是否已成功安装：
+                                <div class="code-block-wrapper">
+                                    <button class="copy-btn" aria-label="复制"><i data-lucide="copy"></i></button>
+                                    <pre><code>git --version</code></pre>
+                                </div>
+                                如果终端返回了类似 `git version 2.45.2` 的版本号信息，那么恭喜你，Git 已经准备就绪！
+                            </li>
+                        </ul>
+                        
+                        <h3>2.3 配置Git身份信息</h3>
+                        <p>在你第一次使用 Git 提交代码前，你需要告诉 Git 你是谁。这个信息将作为你未来所有代码提交的“签名”，记录在版本历史中。此操作是全局配置，你的 Mac 上只需设置一次。</p>
+                         <ul>
+                             <li><strong>配置命令</strong><br>请将下面的命令中的 `"Your Name"` 和 `"your.email@example.com"` 替换为你自己的名字和注册 GitHub 时使用的邮箱。
+                                <div class="code-block-wrapper">
+                                    <button class="copy-btn" aria-label="复制"><i data-lucide="copy"></i></button>
+                                    <pre><code># 设置你的用户名 (建议使用英文或拼音)
+git config --global user.name "Your Name"
+
+# 设置你的邮箱 (必须是你的GitHub注册邮箱)
+git config --global user.email "your.email@example.com"</code></pre>
+                                </div>
+                            </li>
+                             <li><strong>验证配置</strong><br>执行以下命令，可以列出所有 Git 的配置信息：
+                                <div class="code-block-wrapper">
+                                    <button class="copy-btn" aria-label="复制"><i data-lucide="copy"></i></button>
+                                    <pre><code>git config --list</code></pre>
+                                </div>
+                                在输出的内容里，仔细检查 `user.name` 和 `user.email` 是否已正确设置为你刚刚输入的值。
+                            </li>
+                        </ul>
+                        <p>至此，你的 Mac 已经完成了所有的本地环境准备工作，就像一艘装备精良的船，随时可以扬帆起航，开始构建你的网站项目了！</p>
+                    </section>
+
+                    <section id="chapter-3" class="mb-24">
+                        <h2>第三章：代码的云端之家：创建与连接GitHub仓库</h2>
+                        <p>我们已经在本地配置好了所有工具，就像一位工匠备齐了锤子与凿子。现在，是时候为我们的网站项目搭建一个“毛坯房”，并为它在云端（GitHub）找到一个安全的家。这个家不仅能备份我们的代码，更是未来实现自动化部署的关键枢纽。</p>
+
+                        <h3>3.1 奠定基石：创建你的第一个本地项目</h3>
+                        <ol>
+                            <li><strong>创建项目文件夹</strong><br>打开“访达”（Finder）。在你的个人文件夹（或其他你喜欢的位置）创建一个新文件夹。为了清晰起见，我们将其命名为 `my-personal-site`。这个文件夹就是你网站项目的根目录。</li>
+                            <li class="mt-4"><strong>创建网站首页</strong><br>现在，我们需要创建网站的第一个文件——首页。打开“文本编辑”（TextEdit）应用。在菜单栏选择 “格式” -> “制作纯文本”（或者使用快捷键 `Shift + Command + T`）。这是非常重要的一步，确保我们创建的是纯粹的代码文件，而不是富文本文档。将以下HTML代码复制并粘贴到编辑器中：
+                                <div class="code-block-wrapper">
+                                    <button class="copy-btn" aria-label="复制"><i data-lucide="copy"></i></button>
+                                    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;我的个人网站&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;欢迎来到我的数字花园&lt;/h1&gt;
+    &lt;p&gt;施工中，敬请期待！&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                                </div>
+                                保存文件：点击“文件” -> “存储...”。在保存窗口中，将文件名命名为 `index.html`，并确保它被保存在我们刚刚创建的 `my-personal-site` 文件夹内。
+                            </li>
+                        </ol>
+
+                        <h3>3.2 本地“存档”：初始化Git仓库</h3>
+                        <ol>
+                            <li><strong>进入项目目录</strong><br>打开“终端”（Terminal）。我们需要告诉终端，我们的工作区是 `my-personal-site` 文件夹。使用 `cd` (Change Directory) 命令来进入该目录。输入 `cd ` (注意 `cd` 后面有一个空格)，然后直接将 `my-personal-site` 文件夹从访达拖拽到终端窗口里，终端会自动填充路径。按下回车。
+                                <div class="code-block-wrapper">
+                                    <button class="copy-btn" aria-label="复制"><i data-lucide="copy"></i></button>
+                                    <pre><code># 示例路径，你的路径可能会有所不同
+cd /Users/yourusername/Documents/my-personal-site</code></pre>
+                                </div>
+                            </li>
+                            <li class="mt-4"><strong>初始化Git仓库 (`git init`)</strong><br><strong>作用</strong>：此命令会在当前文件夹下创建一个隐藏的 `.git` 目录，从此Git开始追踪这里的所有文件变化。这相当于为你的项目“激活了时光机功能”。在终端中执行：
+                                <div class="code-block-wrapper">
+                                    <button class="copy-btn" aria-label="复制"><i data-lucide="copy"></i></button>
+                                    <pre><code>git init -b main</code></pre>
+                                </div>
+                            </li>
+                             <li class="mt-4"><strong>添加文件到暂存区 (`git add`)</strong><br><strong>作用</strong>：在创建“存档点”之前，你需要明确告诉Git，本次要将哪些文件的改动包含进去。`git add` 命令就是做这个的，它将文件添加到“暂存区”——可以理解为等待拍摄快照的“等候区”。在终端中执行：
+                                <div class="code-block-wrapper">
+                                    <button class="copy-btn" aria-label="复制"><i data-lucide="copy"></i></button>
+                                    <pre><code>git add .</code></pre>
+                                </div>
+                            </li>
+                            <li class="mt-4"><strong>创建第一个提交 (`git commit`)</strong><br><strong>作用</strong>：这是创建“存档点”的决定性一步。它会为暂存区里的所有内容拍摄一个快照，并永久保存在Git的版本历史中。每次提交都必须附带一条说明信息，以便日后查阅。在终端中执行：
+                                <div class="code-block-wrapper">
+                                    <button class="copy-btn" aria-label="复制"><i data-lucide="copy"></i></button>
+                                    <pre><code>git commit -m 'Initial commit'</code></pre>
+                                </div>
+                            </li>
+                        </ol>
+
+                        <h3>3.3 云端安家：在GitHub创建远程仓库</h3>
+                        <ol>
+                            <li>登录你的 <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a> 账户。</li>
+                            <li>点击页面右上角的 `+` 号，在下拉菜单中选择 <strong>"New repository"</strong>。</li>
+                            <li>填写仓库信息：
+                                <ul>
+                                    <li><strong>Repository name</strong>: `my-personal-site`</li>
+                                    <li><strong>Description</strong>: `My personal website project.`</li>
+                                    <li><strong>Public</strong> / Private: 选择 <strong>Public</strong>.</li>
+                                    <li><strong>Initialize this repository with:</strong> <strong>⚠️ 极度重要：</strong> *不要勾选* 任何一项。</li>
+                                </ul>
+                            </li>
+                            <li>点击绿色的 <strong>"Create repository"</strong> 按钮。</li>
+                        </ol>
+                        <figure class="my-8">
+                            <img src="https://r2.flowith.net/files/o/1750792411416-github_repository_creation_interface_screenshot_index_0@1024x1024.png" alt="GitHub仓库创建界面截图" class="rounded-lg shadow-lg mx-auto">
+                            <figcaption class="text-center text-sm text-gray-600 mt-2">GitHub 仓库创建界面</figcaption>
+                        </figure>
+
+                        <h3>3.4 鹊桥相会：连接本地与远程并推送</h3>
+                        <ol>
+                             <li><strong>关联远程仓库 (`git remote add`)</strong><br>回到你的终端。在GitHub页面上，找到 "…or push an existing repository from the command line" 部分，复制第一行命令。它看起来像这样（请务必将 `YourUsername` 替换为你自己的GitHub用户名）：
+                                <div class="code-block-wrapper">
+                                    <button class="copy-btn" aria-label="复制"><i data-lucide="copy"></i></button>
+                                    <pre><code>git remote add origin https://github.com/YourUsername/my-personal-site.git</code></pre>
+                                </div>
+                            </li>
+                            <li class="mt-4"><strong>推送代码到GitHub (`git push`)</strong><br>在终端中执行以下命令：
+                                <div class="code-block-wrapper">
+                                    <button class="copy-btn" aria-label="复制"><i data-lucide="copy"></i></button>
+                                    <pre><code>git push -u origin main</code></pre>
+                                </div>
+                                <p>执行此命令时，macOS可能会弹窗提示你输入GitHub的用户名和密码或使用Token进行验证。请按照提示操作。</p>
+                            </li>
+                        </ol>
+                        <figure class="my-8">
+                            <img src="https://r2.flowith.net/files/o/1750792438866-git_commands_for_website_deployment_in_macos_terminal_index_3@1024x1024.png" alt="在macOS终端中执行Git命令" class="rounded-lg shadow-lg mx-auto">
+                            <figcaption class="text-center text-sm text-gray-600 mt-2">在终端中执行Git推送命令</figcaption>
+                        </figure>
+                        <p>推送完成后，回到你浏览器中的GitHub仓库页面，刷新一下。你应该能惊喜地看到，你本地的 `index.html` 文件已经出现在文件列表里了！</p>
+
+                    </section>
+
+                    <section id="chapter-4" class="mb-24">
+                        <h2>第四章：自动化魔法：连接EdgeOne Pages并完成首次部署</h2>
+                        <p>在前几章，我们为网站项目在本地打好了地基，并在GitHub上为它安了家。现在，我们将施展最激动人心的“魔法”——将代码仓库与腾讯云EdgeOne Pages连接起来。这一步将搭建起一座自动化桥梁，一旦建成，你未来的所有代码更新都将被自动发布到全球，无需任何手动操作。</p>
+
+                        <h3>4.1 登录云端，进入EdgeOne控制台</h3>
+                        <ol>
+                            <li>打开浏览器，访问 <a href="https://cloud.tencent.com" target="_blank" rel="noopener noreferrer">cloud.tencent.com</a>，使用你之前注册的账户登录。</li>
+                            <li>登录后，在页面顶部的搜索框中输入 `EdgeOne` 或 `边缘安全加速平台`，然后从搜索结果中点击进入 <strong>边缘安全加速平台 EdgeOne</strong> 的控制台。</li>
+                        </ol>
+
+                        <h3>4.2 创建你的第一个站点项目</h3>
+                         <ol>
+                            <li>在EdgeOne控制台概览页或左侧菜单的“站点管理”中，点击 <strong>“新建站点”</strong> 按钮。</li>
+                            <li>你会被要求输入你的主域名。由于我们暂时还没有购买域名，这里可以先输入一个计划中的域名（例如 `my-site-123.com`）作为占位符。选择接入模式时，请务必选择 <strong>“站点加速”</strong> 模式。点击“创建并开始接入”。</li>
+                             <li>站点创建成功后，你将进入该站点的管理界面。在左侧的导航菜单中，找到 <strong>“站点服务”</strong> 分类，然后点击下面的 <strong>“静态站点”</strong>。</li>
+                        </ol>
+
+                        <h3>4.3 授权与关联：连接GitHub仓库</h3>
+                        <ol>
+                            <li>在“静态站点”页面，点击 <strong>“开始配置”</strong> 或 <strong>“新建项目”</strong>。</li>
+                            <li>在“代码源”或“平台提供方”选项中，选择 <strong>GitHub</strong>。点击 <strong>“授权”</strong> 或 <strong>“添加GitHub应用”</strong>。</li>
+                            <li>页面会跳转到GitHub的授权页面。在授权范围选择时，你可以选择授权给 <strong>"All repositories" (所有仓库)</strong>，或者更安全地选择 <strong>"Only select repositories" (仅选择指定仓库)</strong>，然后找到并勾选 `my-personal-site` 仓库。</li>
+                            <li>点击 <strong>“Install & Authorize”</strong> 完成授权。授权成功后，页面会自动跳回到EdgeOne控制台。</li>
+                             <li>返回EdgeOne后，在“仓库”下拉列表中，现在应该能看到你刚刚授权的 `my-personal-site` 仓库了。选中它。</li>
+                        </ol>
+                        <figure class="my-8">
+                            <img src="https://r2.flowith.net/files/o/1750792418646-tencent_cloud_edgeone_site_creation_interface_screenshot_index_1@1024x1024.png" alt="腾讯云EdgeOne站点创建界面" class="rounded-lg shadow-lg mx-auto">
+                            <figcaption class="text-center text-sm text-gray-600 mt-2">在 EdgeOne 中关联 GitHub 仓库并配置项目</figcaption>
+                        </figure>
+
+                        <h3>4.4 配置构建选项</h3>
+                        <p>对于我们这个简单的HTML项目，配置非常直接：</p>
+                        <ul>
+                            <li><strong>项目名称</strong>: `my-personal-site`</li>
+                            <li><strong>生产分支</strong>: `main`</li>
+                            <li><strong>构建命令</strong>: <em>留空</em></li>
+                            <li><strong>输出目录</strong>: <em>留空</em> 或 `/`</li>
+                        </ul>
+                        <p>填写完毕后，点击页面底部的 <strong>“保存并部署”</strong> 或 <strong>“开始部署”</strong>。</p>
+
+                        <h3>4.5 见证奇迹：监控部署与首次访问</h3>
+                        <ol>
+                            <li>你将被带到部署日志或项目概览页面。你会看到一个部署任务正在进行中。当状态变为绿色的 <strong>“已发布”</strong> 或 <strong>“成功”</strong> 时，就代表你的网站已经上线了！</li>
+                            <li>在部署成功的信息旁边，EdgeOne会提供一个 <strong>临时域名</strong>，通常格式为 `your-project-xxxx.edgeone-pages.com`。</li>
+                            <li><strong>复制这个域名</strong>，在浏览器的新标签页中打开它。如果一切顺利，你将看到熟悉的页面。</li>
+                        </ol>
+                    </section>
+                    
+                    <section id="chapter-5" class="mb-24">
+                        <h2>第五章：终章：为网站赋予灵魂与个性</h2>
+                        <p>至此，你已成功搭建起一个全自动化的网站发布流水线。但我们的网站还缺少最后的点睛之笔：一个专属的域名和不断丰富的内容。</p>
+
+                        <h3>5.1 拥有自己的门牌号：绑定自定义域名</h3>
+                        <p>我们将把临时域名换成你自己的专属域名，例如 `luobostudy.top`。</p>
+                        <h4>第一步：获取你的 CNAME 地址</h4>
+                        <ol>
+                            <li>登录腾讯云，进入 <strong>边缘安全加速平台 EdgeOne</strong> 控制台。</li>
+                            <li>在左侧菜单中，进入 <strong>“站点服务”</strong> -> <strong>“静态站点”</strong>。</li>
+                            <li>点击你之前创建的项目进入详情页。</li>
+                            <li>在 <strong>“域名信息”</strong> 或 <strong>“访问配置”</strong> 区域，找到并 <strong>完整复制 CNAME 地址</strong>。</li>
+                        </ol>
+                        
+                        <h4>第二步：在你的域名注册商处添加 CNAME 记录</h4>
+                        <p>前往你购买域名的地方，将你的域名指向刚刚复制的 CNAME 地址。以下以腾讯云的 DNSPod 为例：</p>
+                        <ol>
+                            <li>登录你的域名注册商控制台，找到你的域名 `luobostudy.top`，点击“解析”。</li>
+                            <li>点击“添加记录”，然后按照下表填写：
+                                <table class="w-full text-left border-collapse my-4">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-b p-2 font-semibold">字段</th>
+                                            <th class="border-b p-2 font-semibold">填写内容</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td class="border-b p-2"><strong>主机记录</strong></td><td class="border-b p-2">`www`</td></tr>
+                                        <tr><td class="border-b p-2"><strong>记录类型</strong></td><td class="border-b p-2">`CNAME`</td></tr>
+                                        <tr><td class="border-b p-2"><strong>记录值</strong></td><td class="border-b p-2"><em>粘贴你从EdgeOne复制的CNAME地址</em></td></tr>
+                                        <tr><td class="border-b p-2"><strong>TTL</strong></td><td class="border-b p-2">默认即可 (如 600 秒)</td></tr>
+                                    </tbody>
+                                </table>
+                            </li>
+                            <li>保存记录。</li>
+                        </ol>
+                         <figure class="my-8">
+                            <img src="https://r2.flowith.net/files/o/1750792423102-dns_management_interface_adding_cname_record_index_2@1024x1024.png" alt="DNS管理界面添加CNAME记录" class="rounded-lg shadow-lg mx-auto">
+                            <figcaption class="text-center text-sm text-gray-600 mt-2">在域名解析服务商处添加 CNAME 记录</figcaption>
+                        </figure>
+
+                        <h4>第三步：验证绑定</h4>
+                        <p>DNS 解析记录的全球生效需要一些时间。耐心等待10分钟后，你可以尝试在浏览器中访问你的域名 `http://www.luobostudy.top`。如果能看到你的网站首页，则说明绑定已成功！</p>
+
+                        <h3>5.2 耕耘花园：多路径内容管理与更新</h3>
+                        <p>一个网站的生命力在于其不断更新的内容。得益于我们建立的自动化流程，为网站添加新页面变得异常简单。</p>
+                        <h4>创建一篇新文章</h4>
+                        <ol>
+                            <li><strong>在本地创建新文件</strong>:
+                                <ul class="list-disc pl-8">
+                                    <li>在你的项目文件夹 `my-personal-site` 中，创建一个名为 `posts` 的新文件夹。</li>
+                                    <li>在 `posts` 文件夹内，创建一个新的HTML文件，命名为 `my-first-article.html`。</li>
+                                    <li>打开它并粘贴以下内容：
+                                        <div class="code-block-wrapper">
+                                            <button class="copy-btn" aria-label="复制"><i data-lucide="copy"></i></button>
+                                            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;我的第一篇文章&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;这是我的第一篇文章！&lt;/h1&gt;
+    &lt;p&gt;通过Git和EdgeOne自动化发布，感觉太棒了！&lt;/p&gt;
+    &lt;p&gt;&lt;a href="/"&gt;返回首页&lt;/a&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="mt-4"><strong>理解URL映射</strong>: 本地文件结构 `posts/my-first-article.html` 将直接映射为网站的URL路径 `http://www.luobostudy.top/posts/my-first-article.html`。</li>
+                        </ol>
+
+                        <h4>重温自动化发布流程</h4>
+                        <p>让我们把这个新页面发布到线上：</p>
+                        <ol>
+                            <li>打开终端，并确保你位于项目目录中。</li>
+                            <li>添加所有更改到暂存区：
+                                <div class="code-block-wrapper">
+                                    <button class="copy-btn" aria-label="复制"><i data-lucide="copy"></i></button>
+                                    <pre><code>git add .</code></pre>
+                                </div>
+                            </li>
+                             <li>提交更改并附上描述信息：
+                                <div class="code-block-wrapper">
+                                    <button class="copy-btn" aria-label="复制"><i data-lucide="copy"></i></button>
+                                    <pre><code>git commit -m "Add my first article"</code></pre>
+                                </div>
+                            </li>
+                            <li>推送到GitHub：
+                                <div class="code-block-wrapper">
+                                    <button class="copy-btn" aria-label="复制"><i data-lucide="copy"></i></button>
+                                    <pre><code>git push</code></pre>
+                                </div>
+                            </li>
+                        </ol>
+                        <p>完成！几分钟后，刷新你的网站，并尝试访问新文章的URL，见证新增内容的上线吧！</p>
+                    </section>
+
+                    <section id="conclusion" class="mb-24">
+                        <h2>结语：你的数字世界，从此启航</h2>
+                        <p>恭喜你完成了整个教程！让我们回顾一下你所取得的非凡成就：</p>
+                        <blockquote class="border-l-4 border-blue-500 pl-4 italic text-gray-700">
+                        从零开始，你不仅搭建了一个属于自己的个人网站，更掌握了一套现代化的、全自动的Web开发与部署工作流。你的网站拥有专属域名，部署在全球边缘节点，享受着CDN加速带来的极速访问体验，而每一次更新都只需要简单的几行`git`命令。
+                        </blockquote>
+                        <figure class="my-10">
+                            <img src="https://r2.flowith.net/files/o/1750792428299-mockup_of_successful_personal_website_deployment_index_4@1024x1024.png" alt="个人网站成功部署效果图" class="rounded-lg shadow-2xl mx-auto w-full max-w-4xl">
+                            <figcaption class="text-center text-sm text-gray-600 mt-3">成功部署后的网站效果展示</figcaption>
+                        </figure>
+                        <p>这不仅仅是一个网站，更是你在数字世界中开拓的第一片疆土。以此为基石，你的探索之旅才刚刚开始。接下来，你可以：</p>
+                        <ul>
+                            <li><strong>深化前端技能</strong>：深入学习 <strong>HTML</strong> 的语义化标签、<strong>CSS</strong> 的布局与美化（如Flexbox, Grid），以及 <strong>JavaScript</strong> 的交互逻辑。</li>
+                            <li><strong>探索静态网站生成器 (SSG)</strong>：了解 <strong>Hugo</strong>, <strong>Jekyll</strong>, <strong>Astro</strong> 或 <strong>VitePress</strong> 这类工具，使用Markdown写作，自动生成复杂网站。</li>
+                            <li><strong>发挥创意</strong>：你的网站可以是一个博客、一个作品集、一份在线简历，或是一个知识库。尽情发挥你的想象力去创造吧！</li>
+                        </ul>
+                        <p>你已经掌握了最有力的工具，前方的道路广阔无垠。祝你在代码的世界里，探索愉快，创造非凡！</p>
+                    </section>
+
+                </article>
+            </main>
+        </div>
+    </div>
+    
+    <footer class="text-center py-10 mt-16 border-t border-gray-200">
+        <p class="text-gray-500">教程由 Neo 精心构建</p>
+    </footer>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>
