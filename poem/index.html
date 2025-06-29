@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>罗博士诗词集</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap">
+</head>
+<body>
+    <div class="bg-overlay"></div>
+    <header>
+        <div class="header-content">
+            <div class="avatar">
+                <img src="Pic/avatar1.jpg" alt="罗博士头像">
+            </div>
+            <h1>罗博士诗词集</h1>
+            <p class="subtitle">心系家国 笔墨丹青</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <button id="menu-toggle">≡</button>
+            <ul id="nav-menu">
+                <li><a href="#" class="active" data-filter="all">全部作品</a></li>
+                <li><a href="#" data-filter="爱国">爱国情怀</a></li>
+                <li><a href="#" data-filter="山水">山水游记</a></li>
+                <li><a href="#" data-filter="时事">时事感怀</a></li>
+                <li><a href="#" data-filter="家国">家国情思</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="poems-container">
+            <!-- 沁园春-游武汉长江一桥 -->
+            <div class="poem-card" data-categories="爱国,山水">
+                <div class="poem-image">
+                    <img src="Pic/沁园春·游武汉长江一桥.jpg" alt="沁园春-游武汉长江一桥">
+                </div>
+                <div class="poem-content">
+                    <h2>沁园春-游武汉长江一桥</h2>
+                    <div class="poem-text">
+                        <p>风过汉水，云灼楚天，月漾高秋。</p>
+                        <p>望一桥虬劲，两山静穆，三镇灯火，万千重楼。</p>
+                        <p>黄鹤归去，芳草含羞，大江自古向东流。</p>
+                        <p>忆千年，问波涛洗尽，谁家吴钩。</p>
+                        <p>梦回鹦鹉洲头，随昔年星海少年游。</p>
+                        <p>答人间换了，世界当惊，雄关漫道，浪涌飞舟。</p>
+                        <p>有志同学，无姓王侯，十亿神州竞自由。</p>
+                        <p>当自强，虽千帆共逐，我立潮头。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 七律-过大别山 -->
+            <div class="poem-card" data-categories="爱国,山水">
+                <div class="poem-image">
+                    <img src="Pic/七律·过大别山.jpg" alt="七律-过大别山">
+                </div>
+                <div class="poem-content">
+                    <h2>七律-过大别山</h2>
+                    <div class="poem-text">
+                        <p class="poem-intro">党庆日，过大别山，谒烈士陵，见王步文与妻诀别书，心潮澎湃，歌以咏之。</p>
+                        <p>铁铸苍山峰如炬，玉染竹林浪千层。</p>
+                        <p>无边大地埋忠骨，浩荡浮云颂英魂。</p>
+                        <p>身世浮沉家国爱，肝胆昆仑主义真。</p>
+                        <p>莫道英雄空热血，亦是多情亦凡人。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 忆秦娥·北京 -->
+            <div class="poem-card" data-categories="爱国,时事">
+                <div class="poem-image">
+                    <img src="Pic/忆秦娥·北京.jpeg" alt="忆秦娥·北京">
+                </div>
+                <div class="poem-content">
+                    <h2>忆秦娥·北京</h2>
+                    <div class="poem-text">
+                        <p>西风咽，落木萧萧又一年，</p>
+                        <p>又一年，</p>
+                        <p>玉盘有缺，春梦难圆。</p>
+                        <p>长安不见朔方雪，</p>
+                        <p>酒醒应有凌云月，</p>
+                        <p>凌云月，</p>
+                        <p>曾有少年，壮怀激烈。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 七律党庆献礼 -->
+            <div class="poem-card" data-categories="爱国,时事">
+                <div class="poem-image">
+                    <img src="Pic/七律党庆献礼.jpeg" alt="七律党庆献礼">
+                </div>
+                <div class="poem-content">
+                    <h2>七律党庆献礼</h2>
+                    <div class="poem-text">
+                        <p class="poem-intro">党庆日，过大别山，参加张海良师兄组织的党庆活动，深有感触，遂作此诗</p>
+                        <p>百年波折别歧路，万里萧疏觅新途。</p>
+                        <p>卫此青山荐碧血，守我沧海献头颅。</p>
+                        <p>粉身碎骨家零落，披肝沥胆国兴复。</p>
+                        <p>自古创业多悲壮，敢问浮沉复谁主。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 渔家傲-中场-孟晚舟回国 -->
+            <div class="poem-card" data-categories="爱国,时事,家国">
+                <div class="poem-image">
+                    <img src="Pic/渔家傲·中场·孟晚舟回国.jpg" alt="渔家傲-中场-孟晚舟回国">
+                </div>
+                <div class="poem-content">
+                    <h2>渔家傲-中场-孟晚舟回国</h2>
+                    <div class="poem-text">
+                        <p>千日羁旅在绝地，家国不离人不弃。英刀美斧混不惧，莫悲泣，晚舟虽远终归去。</p>
+                        <p>使馆烽火火未熄，南海忠骨骨犹立，族恨国耻终未洗，需自强，十亿愚公移山易。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 过汶川 -->
+            <div class="poem-card" data-categories="山水,家国">
+                <div class="poem-image">
+                    <img src="Pic/过汶川.jpg" alt="过汶川">
+                </div>
+                <div class="poem-content">
+                    <h2>过汶川</h2>
+                    <div class="poem-text">
+                        <p>九龙入南海，双桥笑飞舟。</p>
+                        <p>经帆浮云过，羌山楼外楼。</p>
+                        <p>白石水中走，青莲天上游。</p>
+                        <p>汶川今如何，国人当长留。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 京城骤雨 -->
+            <div class="poem-card" data-categories="时事,家国">
+                <div class="poem-image">
+                    <img src="Pic/京城骤雨.jpg" alt="京城骤雨">
+                </div>
+                <div class="poem-content">
+                    <h2>京城骤雨</h2>
+                    <div class="poem-text">
+                        <p>独上小楼听秋水，重回大都望春潮。</p>
+                        <p>雷自星河勾银树，雨从沧海化碧涛。</p>
+                        <p>金瓯浩荡风驱鬼，玉宇澄清云捕妖。</p>
+                        <p>黑山墨岭同瘟去，明烛纸船照天烧。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 过四姑娘山 -->
+            <div class="poem-card" data-categories="山水">
+                <div class="poem-image">
+                    <img src="Pic/过四姑娘山.jpg" alt="过四姑娘山">
+                </div>
+                <div class="poem-content">
+                    <h2>过四姑娘山</h2>
+                    <div class="poem-text">
+                        <p>锦官城外山之巅，怪石凌空舞翩跹。</p>
+                        <p>千里蜿蜒龙负雪，万丈狰狞虎啸天。</p>
+                        <p>常听罡风翻绿浪，更有巧云卧山前。</p>
+                        <p>莫叹穿山路修远，斜阳耀处是新年。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 祭李文亮 -->
+            <div class="poem-card" data-categories="时事,家国">
+                <div class="poem-image">
+                    <img src="Pic/祭李文亮.jpeg" alt="祭李文亮">
+                </div>
+                <div class="poem-content">
+                    <h2>祭李文亮</h2>
+                    <div class="poem-text">
+                        <p>昨夜神州皆祝祷，今朝华夏祭楚风；</p>
+                        <p>江城雪雨曾潇洒，泉台江月应从容；</p>
+                        <p>引兵壮士手中哨，布阵珞珈山上松；</p>
+                        <p>任重道远当弘毅，莫道凡人非英雄。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 采桑子·除夕 -->
+            <div class="poem-card" data-categories="时事,家国">
+                <div class="poem-image">
+                    <img src="Pic/采桑子·除夕.jpeg" alt="采桑子·除夕">
+                </div>
+                <div class="poem-content">
+                    <h2>采桑子·除夕</h2>
+                    <div class="poem-text">
+                        <p class="poem-intro">2020年除夕，疫情遍地、困于南粤；武汉封城，独过除夕。心情激荡，作《采桑子》一首，以寄忧思。</p>
+                        <p>江城夜冷人亦冷，</p>
+                        <p>岁岁团圆，今不团圆，</p>
+                        <p>战时家国两难全。</p>
+                        <p>虎兕脱匣谁是过，</p>
+                        <p>苦也人间，怒也人间，</p>
+                        <p>欲贺新年却无言。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 鼓浪屿谒郑成功像 -->
+            <div class="poem-card" data-categories="爱国,山水">
+                <div class="poem-image">
+                    <img src="Pic/鼓浪屿谒郑成功像.jpg" alt="鼓浪屿谒郑成功像">
+                </div>
+                <div class="poem-content">
+                    <h2>鼓浪屿谒郑成功像</h2>
+                    <div class="poem-text">
+                        <p>鼓浪屿外海波柔，临风望岛登重楼。</p>
+                        <p>手揽长锋震夷寇，足跨玄岩慑敌酋。</p>
+                        <p>三帆昨日惊世界，五洋明朝入华流。</p>
+                        <p>一国何堪分两岸，七十年来几白头？</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 送祖母老安人入南昌宫歌 -->
+            <div class="poem-card" data-categories="家国">
+                <div class="poem-image">
+                    <img src="Pic/送祖母老安人入南昌宫歌.jpg" alt="送祖母老安人入南昌宫歌">
+                </div>
+                <div class="poem-content">
+                    <h2>送祖母老安人入南昌宫歌</h2>
+                    <div class="poem-text">
+                        <p class="poem-intro">癸卯岁末，祖母老安人驾鹤仙逝，追思先人，悲不能已，呜呼哀哉，长歌当泣。遂作送祖母老安人入南昌宫歌，歌曰：</p>
+                        <p>槛外黄鹤空悲泣，榻前白冠缓低吟。</p>
+                        <p>青山白云悄送客，脱蜕凡躯入幽冥。</p>
+                        <p>彼岸花畔黄泉路，三途河前望乡亭。</p>
+                        <p>桥头孟婆惊作揖，殿内阎罗喜相迎。</p>
+                        <p>自言本是乱世女，生长汉水乐楚音。</p>
+                        <p>曾见山河成火海，也闻人命草芥轻。</p>
+                        <p>天命伟人开盛世，诸公夙寐谋安宁。</p>
+                        <p>长命百岁自喜乐，寿终正寝无憾情。</p>
+                        <p>崔判恭对波劫尽，自当还复旧姓名。</p>
+                        <p>驾六龙兮入瑶池，直上五城白玉京。</p>
+                        <p>腾蛇凤凰齐颂祷，风伯雨师舞雷霆。</p>
+                        <p>返本还源得自我，洗尽铅华复真灵。</p>
+                        <p>三清四御皆作客，赐宴昆仑松柏青。</p>
+                        <p>蟠桃琼浆溢金樽，玄女麻姑击玉罄。</p>
+                        <p>八仙九曜齐贺寿，七宝龙珠羊脂瓶。</p>
+                        <p>还杯真武笑雍容，执手东王泪语盈。</p>
+                        <p>曾见精卫能填海，尝闻嫦娥夜夜心。</p>
+                        <p>此去凡尘九十载，风雪从容踏莎行。</p>
+                        <p>万古神话尘与土，百年茶饭天共云。</p>
+                        <p>天若有爱天亦老，人间何日无真晴。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>© 2024 罗博士诗词集 | 心系家国 笔墨丹青</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,385 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Serif SC', serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f9f5e9;
+    position: relative;
+}
+
+.bg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('Pic/网页背景.jpeg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+    z-index: -1;
+}
+
+/* 头部样式 */
+header {
+    background: linear-gradient(to right, #8b0000, #a52a2a);
+    color: #fff;
+    padding: 2rem 0;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #f9f5e9;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    letter-spacing: 2px;
+}
+
+/* 导航样式 */
+nav {
+    background-color: #333;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+#nav-menu {
+    display: flex;
+    list-style: none;
+    transition: all 0.3s ease;
+}
+
+#nav-menu li {
+    margin: 0;
+}
+
+#nav-menu a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 1rem 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+#nav-menu a:hover,
+#nav-menu a.active {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#nav-menu a.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #8b0000;
+}
+
+/* 主内容区样式 */
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.poems-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.poem-card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.poem-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.poem-image {
+    height: 200px;
+    overflow: hidden;
+}
+
+.poem-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.poem-card:hover .poem-image img {
+    transform: scale(1.05);
+}
+
+.poem-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.poem-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #8b0000;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.poem-text {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.poem-text p {
+    margin-bottom: 0.5rem;
+    text-align: center;
+    line-height: 1.8;
+}
+
+.poem-intro {
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+    margin-bottom: 1rem;
+    text-align: left;
+    border-left: 3px solid #8b0000;
+    padding-left: 1rem;
+}
+
+/* 页脚样式 */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1.5rem 0;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .poems-container {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    #menu-toggle {
+        display: block;
+    }
+
+    #nav-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        background-color: #333;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    #nav-menu.active {
+        max-height: 300px;
+    }
+
+    #nav-menu li {
+        width: 100%;
+    }
+
+    #nav-menu a {
+        padding: 1rem 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .poems-container {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .poem-image {
+        height: 180px;
+    }
+
+    .poem-content h2 {
+        font-size: 1.3rem;
+    }
+
+    .poem-text p {
+        font-size: 0.95rem;
+    }
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.poem-card {
+    animation: fadeIn 0.6s ease forwards;
+    animation-play-state: paused;
+    opacity: 0;
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.poem-card:nth-child(2) { animation-delay: 0.1s; }
+.poem-card:nth-child(3) { animation-delay: 0.2s; }
+.poem-card:nth-child(4) { animation-delay: 0.3s; }
+.poem-card:nth-child(5) { animation-delay: 0.4s; }
+.poem-card:nth-child(6) { animation-delay: 0.5s; }
+.poem-card:nth-child(7) { animation-delay: 0.6s; }
+.poem-card:nth-child(8) { animation-delay: 0.7s; }
+.poem-card:nth-child(9) { animation-delay: 0.8s; }
+.poem-card:nth-child(10) { animation-delay: 0.9s; }
+.poem-card:nth-child(11) { animation-delay: 1s; }
+.poem-card:nth-child(12) { animation-delay: 1.1s; }
+.poem-card:nth-child(13) { animation-delay: 1.2s; }
+
+/* 诗词卡片展开状态 */
+.poem-card.expanded {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+    transform: none !important;
+}
+
+.poem-card.expanded .poem-image {
+    height: 100%;
+    min-height: 300px;
+}
+
+.poem-card.expanded .poem-content {
+    padding: 2rem;
+}
+
+.poem-card.expanded .poem-text p {
+    text-align: left;
+    font-size: 1.1rem;
+    line-height: 2;
+}
+
+.poem-card.expanded h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #8b0000;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a52a2a;
+}
+
+/* 导航栏过渡效果 */
+nav {
+    transition: transform 0.3s ease;
+}
+
+/* 页面加载状态 */
+body.loaded .poem-card {
+    animation-play-state: running;
+}
