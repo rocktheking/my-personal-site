@@ -1,96 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&display=swap');
-
-:root {
-    --bg-color: #0a0a0a;
-    --text-primary: #d1d5db;
-    --text-secondary: #a0a0a0;
-    --text-title: #f3f4f6;
-    --divider-color: #b89b71;
-    --card-bg: rgba(17, 17, 17, 0.65);
-    --card-border: rgba(255, 255, 255, 0.08);
-    --scrollbar-track: var(--bg-color);
-    --scrollbar-thumb: #373737;
-    --scrollbar-thumb-hover: #555;
-}
-
-.font-handwriting {
-    font-family: 'ZCOOL XiaoWei', sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&display=swap');
 
 body {
-    background-color: var(--bg-color);
+    font-family: 'Noto Serif SC', serif;
+    background-color: #fafaf9;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-#parallax-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-size: cover;
-    background-position: center center;
-    z-index: 0;
-    opacity: 0;
-    will-change: transform, opacity;
-    transition: opacity 1.5s ease-in-out;
-}
-
-#parallax-background.loaded {
-    opacity: 0.3;
-}
-
-.poem-section {
-    opacity: 0;
-    transform: translateY(40px);
-    will-change: transform, opacity;
-}
-
-.poem-card {
-    background-color: var(--card-bg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid var(--card-border);
-}
-
-.poem-title-divider {
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--divider-color), transparent);
-    opacity: 0.6;
-}
-
-.poem-preface {
-    font-size: 0.95em;
-    color: var(--text-secondary);
-    line-height: 1.8;
-    letter-spacing: 0.05em;
-    font-style: italic;
-}
-
-.poem-body p {
-    margin-bottom: 0.5rem;
-}
-
-#back-to-top.visible {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-
-/* Custom scrollbar for a more integrated feel */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--scrollbar-track);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-thumb);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollbar-thumb-hover);
+.font-ma-shan-zheng {
+    font-family: 'Ma Shan Zheng', cursive;
 }

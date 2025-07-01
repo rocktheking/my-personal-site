@@ -3,38 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>罗博士的诗集</title>
+    <title>诗词集</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.gstatic.com/s/zcoolxiaowei/v17/i7dMIFFrTRywYeR27A9s_1nCwhd-cKk.woff2" as="font" type="font/woff2" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="bg-black text-gray-300">
+<body class="bg-stone-50 text-stone-800">
 
-    <div id="parallax-background"></div>
+    <header class="text-center py-16 sm:py-20">
+        <h1 class="text-5xl md:text-6xl font-ma-shan-zheng text-stone-900">风雅集</h1>
+        <p class="text-lg text-stone-500 mt-3 tracking-widest">A COLLECTION OF POEMS</p>
+    </header>
 
-    <div id="scroll-container" class="relative z-10">
-        <header class="text-center pt-24 pb-16">
-            <h1 id="main-title" class="text-5xl md:text-6xl font-handwriting text-gray-100 tracking-wider"></h1>
-            <div class="flex justify-center items-center mt-6">
-                <div class="w-16 h-px bg-gray-600"></div>
-                <i data-lucide="feather" class="mx-4 text-gray-500"></i>
-                <div class="w-16 h-px bg-gray-600"></div>
-            </div>
-        </header>
+    <main id="poems-container" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+    </main>
     
-        <main id="poetry-container" class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl pb-24">
-            
-        </main>
-    </div>
+    <footer class="text-center py-10">
+        <p class="text-sm text-stone-400">&copy; 2025. All poems are the intellectual property of the author.</p>
+    </footer>
 
-    <button id="back-to-top" title="返回顶部" class="fixed bottom-8 right-8 z-50 p-3 rounded-full bg-gray-800/50 text-gray-300 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/70 transition-all duration-300 opacity-0 invisible -translate-y-4 pointer-events-none">
-        <i data-lucide="arrow-up" class="w-5 h-5"></i>
-    </button>
-
-    <script type="module" src="main.js"></script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>
