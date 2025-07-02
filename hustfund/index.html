@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>华中科技大学校友创业投资基金方案</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="presentation.css">
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-900">
+    <main id="presentation-container">
+        
+        <section class="presentation-slide layout-fullscreen text-white" style="background: linear-gradient(135deg, #002d57 0%, #001f3b 100%);">
+            <div class="text-center">
+                <div data-animate class="w-24 h-24 mb-6 mx-auto bg-white/90 rounded-2xl flex items-center justify-center shadow-2xl">
+                    <!-- 替换为PNG图片 -->
+                    <img 
+                        src="https://raw.githubusercontent.com/rocktheking/pic/refs/heads/main/%E5%8D%8E%E7%A7%91%E5%A4%A7logo.svg.png"
+                        alt="华中科技大学校徽" 
+                        width="80" 
+                        height="80"
+                        class="object-contain" 
+                    >
+                </div>
+                <p class="text-xl md:text-2xl font-light tracking-wider text-white/80" data-animate>HUST ALUMNI SEED VENTURE FUND</p>
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold my-4 leading-tight text-white" data-animate>华中科技大学<br>校友创业投资基金方案</h1>
+                <p class="text-lg md:text-xl font-light text-white/80 mt-6" data-animate>凝聚校友力量 · 赋能科技创新</p>
+            </div>
+        </section>
+
+        <section class="presentation-slide layout-split text-white bg-gray-900">
+            <div class="flex flex-col justify-center items-start w-full md:w-1/2 p-4 md:p-8 z-10">
+                <h2 class="text-3xl md:text-5xl font-bold text-hust-red mb-4" data-animate>方案缘起</h2>
+                <h3 class="text-2xl md:text-3xl font-semibold mb-6" data-animate>喻园沃土，英才辈出</h3>
+                <p class="text-base md:text-lg text-gray-300 leading-relaxed" data-animate>
+                    华中科技大学，以其深厚的科研底蕴和“敢于竞争，善于转化”的科创文化，孕育了无数科技领袖与创业先锋。从微信之父张小龙到众多上市公司创始人，形成了瞩目的“华科系”现象。这不仅是母校的荣耀，更证明了校友群体是一座亟待深度开发的创新金矿。
+                </p>
+            </div>
+            <div class="hidden md:flex w-1/2 items-center justify-center p-8 bg-black/20 relative" data-animate>
+                 <div class="absolute inset-0 bg-hust-blue opacity-10"></div>
+                 <i data-lucide="atom" class="w-48 h-48 text-hust-blue opacity-30"></i>
+            </div>
+        </section>
+
+        <section class="presentation-slide text-white bg-gray-900 layout-spacious">
+             <div class="text-center w-full max-w-4xl">
+                <h3 class="text-hust-blue text-lg md:text-xl font-semibold mb-2" data-animate>核心瓶颈</h3>
+                <h2 class="text-3xl md:text-5xl font-bold mb-8" data-animate>从“赛事”到“生态”的最后一公里</h2>
+                <div class="grid md:grid-cols-2 gap-8 text-left">
+                    <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700" data-animate>
+                        <div class="flex items-center mb-3">
+                            <i data-lucide="dollar-sign" class="w-8 h-8 text-hust-red mr-4"></i>
+                            <h4 class="text-xl font-bold">优质项目“融资难”</h4>
+                        </div>
+                        <p class="text-gray-300">大赛发掘的优秀早期项目，尤其是硬科技项目，因周期长、壁垒高，难以在纯市场环境中快速获得关键的“第一笔钱”，导致发展受阻甚至错失良机。</p>
+                    </div>
+                    <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700" data-animate>
+                        <div class="flex items-center mb-3">
+                            <i data-lucide="trending-down" class="w-8 h-8 text-hust-blue mr-4"></i>
+                            <h4 class="text-xl font-bold">赛事吸引力受限</h4>
+                        </div>
+                        <p class="text-gray-300">缺乏稳定的基金配套，不仅削弱了大赛对全球顶尖校友创业项目的吸引力，也让有心支持母校的投资人校友缺少一个官方、可靠的渠道来凝聚力量。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="presentation-slide text-white bg-gray-900">
+            <div class="w-full max-w-5xl text-center">
+                <h2 class="text-3xl md:text-5xl font-bold mb-10" data-animate>他山之石：清华大学“赛投孵”联动模式</h2>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0 w-full" data-animate>
+                    <div class="bg-gray-800 p-6 rounded-lg text-center w-full md:w-1/3">
+                        <i data-lucide="trophy" class="w-12 h-12 mx-auto text-hust-red mb-3"></i>
+                        <h3 class="text-xl font-semibold">三创大赛</h3>
+                        <p class="text-gray-400 mt-1">作为高质量项目池，持续输送优质标的。</p>
+                    </div>
+                    <i data-lucide="arrow-right" class="w-12 h-12 text-hust-blue mx-4 hidden md:block"></i>
+                    <i data-lucide="arrow-down" class="w-12 h-12 text-hust-blue my-4 md:hidden"></i>
+                    <div class="bg-gray-800 p-6 rounded-lg text-center w-full md:w-1/3">
+                        <i data-lucide="rocket" class="w-12 h-12 mx-auto text-hust-red mb-3"></i>
+                        <h3 class="text-xl font-semibold">校友种子基金</h3>
+                        <p class="text-gray-400 mt-1">提供关键“第一笔钱”，为项目启动加速。</p>
+                    </div>
+                     <i data-lucide="arrow-right" class="w-12 h-12 text-hust-blue mx-4 hidden md:block"></i>
+                     <i data-lucide="arrow-down" class="w-12 h-12 text-hust-blue my-4 md:hidden"></i>
+                    <div class="bg-gray-800 p-6 rounded-lg text-center w-full md:w-1/3">
+                        <i data-lucide="factory" class="w-12 h-12 mx-auto text-hust-red mb-3"></i>
+                        <h3 class="text-xl font-semibold">成功孵化</h3>
+                        <p class="text-gray-400 mt-1">成功案例反哺生态，形成正向增强飞轮。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="presentation-slide layout-stack text-white bg-gray-900">
+            <h2 class="text-3xl md:text-5xl font-bold text-center mb-8" data-animate>核心方案：专业管理公司 “华科天使投资”</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-6xl">
+                <div class="bg-hust-red/20 border border-hust-red p-6 rounded-lg" data-animate>
+                    <h3 class="font-bold text-lg text-white">牵头方</h3>
+                    <p class="text-2xl font-bold text-white mt-2">华中科技大学<br>& 校友总会</p>
+                </div>
+                <div class="bg-hust-red/20 border border-hust-red p-6 rounded-lg" data-animate>
+                    <h3 class="font-bold text-lg text-white">注册资本</h3>
+                    <p class="text-4xl font-bold text-white mt-2">2000万</p>
+                    <p class="text-gray-300 text-sm">高比例GP-Commit，彰显信心</p>
+                </div>
+                <div class="bg-hust-red/20 border border-hust-red p-6 rounded-lg" data-animate>
+                    <h3 class="font-bold text-lg text-white">股东构成</h3>
+                    <p class="text-2xl font-bold text-white mt-2">企业家校友<br>& 投资人校友</p>
+                </div>
+                <div class="bg-hust-red/20 border border-hust-red p-6 rounded-lg" data-animate>
+                    <h3 class="font-bold text-lg text-white">单股东投资额</h3>
+                    <p class="text-4xl font-bold text-white mt-2">100-200万</p>
+                    <p class="text-gray-300 text-sm">股权分散，广泛参与</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="presentation-slide layout-split text-white bg-gray-900 show-all-on-mobile">
+            <div class="flex flex-col justify-center w-full md:w-1/2 p-4 md:p-8">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6" data-animate>核心方案：一期基金规模与构成</h2>
+                <div class="space-y-4 text-lg" data-animate>
+                    <p>基金一期目标规模为<strong class="text-hust-red text-2xl font-bold">1亿</strong>人民币，存续期<strong class="text-hust-red font-semibold">10年(5+5)</strong>，采用多元化出资结构以确保稳定性和广泛参与度。</p>
+                </div>
+            </div>
+            <div class="w-full md:w-1/2 h-64 md:h-auto flex items-center justify-center p-4" data-animate>
+                <canvas id="fundStructureChart" class="max-w-full max-h-full"></canvas>
+            </div>
+        </section>
+
+        <section class="presentation-slide text-white bg-gray-900 layout-spacious">
+            <div class="w-full max-w-5xl">
+                <h2 class="text-3xl md:text-5xl font-bold text-center mb-12" data-animate>核心方案：投资策略与决策</h2>
+                <ul class="space-y-8">
+                    <li class="flex items-start gap-6" data-animate>
+                        <i data-lucide="target" class="w-10 h-10 text-hust-blue flex-shrink-0 mt-1"></i>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-bold">投资标的：目标明确</h3>
+                            <p class="text-lg text-gray-300">严格限定为“华中大全球校友创业大赛”的获奖项目，确保服务宗旨与项目质量。</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-6" data-animate>
+                        <i data-lucide="scaling" class="w-10 h-10 text-hust-blue flex-shrink-0 mt-1"></i>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-bold">投资额度：精准滴灌</h3>
+                            <p class="text-lg text-gray-300">单个项目 200-500 万元，体现种子投资性质，用最有效资本支持最关键阶段。</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-6" data-animate>
+                        <i data-lucide="gavel" class="w-10 h-10 text-hust-blue flex-shrink-0 mt-1"></i>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-bold">投决机制：专业公正</h3>
+                            <p class="text-lg text-gray-300">7-10人荣誉性、无薪酬投委会，超1/2票数通过。投反对票者不得跟投，确保决策独立公正。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="presentation-slide layout-split text-white bg-gray-900 show-all-on-mobile">
+             <div class="flex flex-col justify-center w-full md:w-1/2 p-4 md:p-8">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6" data-animate>核心亮点：超额收益分配 (Carry)</h2>
+                <p class="text-lg text-gray-300" data-animate>
+                    为最大化让利于出资校友，充分体现基金的公益服务属性，我们采用远低于市场惯例（2:8）的<strong class="text-hust-red font-bold text-xl">1:9</strong>分成方案，将绝大部分收益回馈LP。
+                </p>
+                 <div class="mt-8 text-sm text-gray-400" data-animate>
+                    <p><strong>GP (华科天使投资): </strong>获得10%收益，用于弥补运营成本及股东分红，激励团队持续服务。</p>
+                    <p class="mt-2"><strong>LP (出资人): </strong>获得90%收益，最大化资本回报，鼓励并感谢更多校友参与支持。</p>
+                </div>
+            </div>
+            <div class="w-full md:w-1/2 h-64 md:h-auto flex items-center justify-center p-4" data-animate>
+                <canvas id="carrySplitChart" style="max-height: 400px;"></canvas>
+            </div>
+        </section>
+        
+        <section class="presentation-slide text-white bg-gray-900 layout-spacious">
+             <div class="text-center w-full max-w-4xl">
+                <h2 class="text-3xl md:text-5xl font-bold mb-12" data-animate>回归初心：基金的公益性与公共性</h2>
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div data-animate>
+                        <div class="inline-block p-4 bg-hust-red rounded-full mb-4">
+                            <i data-lucide="heart-handshake" class="w-12 h-12 text-white"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-hust-red">公益性</h3>
+                        <p class="text-lg text-gray-300 mt-2">我们坚守服务校友的初心。通过压缩运营成本、设定1:9的Carry分成，最大化让利于出资校友，而非追求GP利润。</p>
+                    </div>
+                    <div data-animate>
+                        <div class="inline-block p-4 bg-hust-blue rounded-full mb-4">
+                            <i data-lucide="users" class="w-12 h-12 text-white"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-hust-blue">公共性</h3>
+                        <p class="text-lg text-gray-300 mt-2">基金是面向全体校友的公共平台。投资标的源于公开、公正的创业大赛，打破信息壁垒，让每个华科创业者都有机会获得支持。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="presentation-slide layout-fullscreen text-white" style="background: linear-gradient(135deg, #a80a14 0%, #d20b17 100%);">
+            <div class="text-center">
+                <h2 class="text-4xl md:text-6xl font-bold" data-animate>携手共创 · 赋能未来</h2>
+                <p class="text-xl md:text-2xl text-white/80 mt-4" data-animate>HUST Alumni Venture Fund</p>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="presentation-navigation" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-black/30 backdrop-blur-sm transition-opacity duration-300">
+        <button id="presentation-prev-slide" class="p-1.5 rounded-full hover:bg-white/10 transition-colors duration-200 disabled:opacity-30 disabled:cursor-not-allowed">
+            <i data-lucide="chevron-left" class="w-5 h-5 text-white/80"></i>
+        </button>
+        
+        <div id="presentation-dots" class="flex gap-1.5 items-center">
+        </div>
+        
+        <button id="presentation-next-slide" class="p-1.5 rounded-full hover:bg-white/10 transition-colors duration-200 disabled:opacity-30 disabled:cursor-not-allowed">
+            <i data-lucide="chevron-right" class="w-5 h-5 text-white/80"></i>
+        </button>
+    </div>
+
+    <script src="presentation.js"></script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>
