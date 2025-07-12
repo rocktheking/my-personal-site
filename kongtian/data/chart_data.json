@@ -1,0 +1,115 @@
+{
+  "commercialAerospaceFunding": {
+    "labels": ["2020", "2021", "2022", "2023", "2024"],
+    "datasets": [{
+      "label": "年度融资金额 (亿元)",
+      "data": [70.4, 66.65, 121.9, 40.0, 202.39],
+      "borderColor": "#60a5fa",
+      "backgroundColor": "rgba(96, 165, 250, 0.2)",
+      "fill": true,
+      "tension": 0.4
+    }]
+  },
+  "lowAltitudeEconomyMarketSize": {
+    "labels": ["2023", "2025 (预计)", "2026 (预计)", "2030 (预计)"],
+    "datasets": [{
+      "label": "市场规模 (万亿元)",
+      "data": [0.5, 1.5, 2.0, 8.0],
+      "backgroundColor": [
+        "rgba(59, 130, 246, 0.7)",
+        "rgba(234, 179, 8, 0.7)",
+        "rgba(16, 185, 129, 0.7)",
+        "rgba(236, 72, 153, 0.7)"
+      ]
+    }]
+  },
+  "techMilestones": [
+    { "date": "2023.07", "event": "蓝箭航天“朱雀二号”成功发射，成为全球首款成功入轨的液氧甲烷火箭。" },
+    { "date": "2023.10", "event": "亿航智能EH216-S获得中国民航局颁发的全球首个eVTOL型号合格证(TC)。" },
+    { "date": "2024.02", "event": "峰飞航空“盛世龙”完成全球首次eVTOL跨城跨海演示飞行（深圳-珠海）。" },
+    { "date": "2024.03", "event": "峰飞航空V2000CG获得全球首个2吨级eVTOL型号合格证(TC)。" },
+    { "date": "2024.04", "event": "亿航智能EH216-S获得生产许可证(PC)，标志着全球首个eVTOL生产线投产。" },
+    { "date": "2025.03", "event": "亿航智能EH216-S取得运营合格证(OC)，获得商业运营资格，三证齐全。" }
+  ],
+  "policyFramework": {
+    "title": "中国空天经济政策支持框架",
+    "description": "国家通过顶层战略规划与地方创新实践相结合，为商业航天和低空经济发展提供了强有力的政策保障和清晰的发展路径。",
+    "nodes": [
+      { "id": "top_level", "label": "国家顶层战略", "level": 0 },
+      { "id": "commercial_aerospace", "label": "商业航天", "level": 1 },
+      { "id": "low_altitude", "label": "低空经济", "level": 1 },
+      { "id": "ca_policy1", "label": "纳入“新基建”和战略性新兴产业", "level": 2 },
+      { "id": "ca_policy2", "label": "《民营经济促进法》保障参与", "level": 2 },
+      { "id": "ca_policy3", "label": "设立国家级产业基金（如制造业基金）", "level": 2 },
+      { "id": "ca_infra", "label": "建设海南商业发射场", "level": 2 },
+      { "id": "la_policy1", "label": "《无人驾驶航空器飞行管理暂行条例》", "level": 2 },
+      { "id": "la_policy2", "label": "写入政府工作报告，定为“新增长引擎”", "level": 2 },
+      { "id": "la_infra", "label": "地方政府（深圳、广州、合肥等）出台专项扶持政策和法规", "level": 2 },
+      { "id": "la_standard", "label": "民航局推动eVTOL适航审定标准制定", "level": 2 }
+    ],
+    "links": [
+      { "source": "top_level", "target": "commercial_aerospace" },
+      { "source": "top_level", "target": "low_altitude" },
+      { "source": "commercial_aerospace", "target": "ca_policy1" },
+      { "source": "commercial_aerospace", "target": "ca_policy2" },
+      { "source": "commercial_aerospace", "target": "ca_policy3" },
+      { "source": "commercial_aerospace", "target": "ca_infra" },
+      { "source": "low_altitude", "target": "la_policy1" },
+      { "source": "low_altitude", "target": "la_policy2" },
+      { "source": "low_altitude", "target": "la_infra" },
+      { "source": "low_altitude", "target": "la_standard" }
+    ]
+  },
+  "financingRounds": {
+    "labels": ["垣信卫星", "天兵科技", "星河动力", "蓝箭航天", "沃兰特航空", "小鹏汇天", "星际荣耀"],
+    "datasets": [{
+      "label": "融资额 (亿元人民币)",
+      "data": [67, 15, 11, 9, 10, 36.5, 3],
+      "backgroundColor": [
+        "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", 
+        "#10b981", "#10b981", "#3b82f6"
+      ],
+      "notes": {
+        "垣信卫星": "A轮 (2024.02)", "天兵科技": "C+轮 (2024.06)", "星河动力": "C/C+轮 (2023.09)",
+        "蓝箭航天": "E轮 (2024.12)", "沃兰特航空": "6轮融资 (2024)", "小鹏汇天": "A轮 (>5亿美元)",
+        "星际荣耀": "D轮 (2025.03)"
+      }
+    }]
+  },
+  "trlCurve": {
+    "commercialAerospace": [
+      { "name": "大推力液氧甲烷发动机", "status": "已入轨", "detail": "蓝箭航天“朱雀二号”为全球首款成功入轨的液氧甲烷火箭 (2023.7)", "trl": 9 },
+      { "name": "火箭回收技术", "status": "亚轨道验证", "detail": "多家公司成功完成公里级VTVL试验，目标2025-26年突破", "trl": 7 }
+    ],
+    "lowAltitudeEconomy": [
+      { "name": "安全与适航认证", "status": "全球领跑", "detail": "亿航/峰飞获全球首批eVTOL完整三证/吨级TC，建立标准", "trl": 9 },
+      { "name": "电池与能源系统", "status": "产业协同", "detail": "宁德时代、国轩高科等电池巨头入局，加速技术迭代", "trl": 8 },
+      { "name": "大载重无人运输", "status": "已首飞", "detail": "腾盾、壹通等吨级货运无人机已首飞，即将商业化", "trl": 7 },
+      { "name": "全自主飞行", "status": "商业运营", "detail": "亿航EH216-S已在广州、合肥等地开展商业观光运营", "trl": 9 }
+    ]
+  },
+  "satelliteLaunches": {
+    "labels": ["GW星座 (星网)", "G60星链 (千帆)", "中国星座总规划数"],
+    "datasets": [{
+      "label": "规划卫星数量",
+      "data": [12992, 12000, 29000],
+      "backgroundColor": [
+        "rgba(96, 165, 250, 0.7)",
+        "rgba(234, 179, 8, 0.7)",
+        "rgba(236, 72, 153, 0.7)"
+      ]
+    }]
+  },
+  "marketForecast": {
+    "labels": ["无人机物流 (2035)", "农林植保 (2023)", "eVTOL产业 (2026)"],
+    "datasets": [{
+      "label": "细分市场规模预测 (亿元)",
+      "data": [10000, 645, 95],
+      "backgroundColor": [
+        "rgba(59, 130, 246, 0.7)",
+        "rgba(234, 179, 8, 0.7)",
+        "rgba(16, 185, 129, 0.7)"
+      ]
+    }]
+  }
+}

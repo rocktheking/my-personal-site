@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>为什么我国空天经济产业值得投资 | 元航资本深度分析</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <script type="module" src="scripts/main.js"></script>
+</head>
+
+<body class="bg-gray-900 text-gray-300 font-sans antialiased">
+
+    <div id="root-container" class="max-w-screen-2xl mx-auto">
+        <header id="main-header" class="sticky top-0 z-40 bg-gray-900/80 backdrop-blur-lg border-b border-gray-700/50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-20">
+                    <div class="flex items-center">
+                        <i data-lucide="rocket" class="h-8 w-8 text-blue-400 mr-3"></i>
+                        <h1 class="text-xl sm:text-2xl font-bold text-white tracking-wider">
+                           <span class="hidden sm:inline">元航资本 |</span> 空天经济投资价值分析
+                        </h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                         <div class="relative">
+                            <input type="search" id="search-input" placeholder="搜索200个反驳论点..."
+                                class="w-40 sm:w-64 pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <i data-lucide="search" class="h-5 w-5 text-gray-500"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav id="main-nav" class="hidden md:block bg-gray-800/50">
+                 <div class="container mx-auto px-8 flex justify-center space-x-8" id="nav-links">
+                    
+                </div>
+            </nav>
+        </header>
+
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+            <div class="flex flex-col md:flex-row">
+                <aside id="sidebar-container" class="w-full md:w-64 lg:w-72 md:sticky md:top-20 md:self-start mb-8 md:mb-0 md:mr-8 lg:mr-12 flex-shrink-0">
+                     <div class="p-4 bg-gray-800/50 rounded-xl border border-gray-700/50">
+                        <h2 class="text-lg font-semibold text-white mb-4">报告大纲</h2>
+                        <nav id="sidebar-nav"></nav>
+                     </div>
+                </aside>
+
+                <main id="content-container" class="flex-1 min-w-0">
+                    <article id="report-content" class="prose prose-invert max-w-none prose-h2:text-blue-400 prose-h2:border-b prose-h2:border-blue-400/30 prose-h2:pb-2 prose-blockquote:border-l-blue-500">
+                        <!-- Content will be injected here -->
+                    </article>
+                </main>
+            </div>
+        </div>
+
+        <footer class="text-center py-8 mt-16 border-t border-gray-800 text-gray-500">
+            <p>&copy; 2025 元航资本. All Rights Reserved. </p>
+            <p class="text-sm mt-2">本报告仅供内部参考，不构成任何投资建议。</p>
+        </footer>
+    </div>
+    
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-blue-500/80 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition-opacity duration-300 opacity-0 pointer-events-none z-50">
+        <i data-lucide="arrow-up" class="h-6 w-6"></i>
+    </button>
+</body>
+
+</html>
