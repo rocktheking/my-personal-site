@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>空天经济结构互动图</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <!-- 配置Tailwind自定义主题 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            space: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              300: '#7dd3fc',
+              500: '#0ea5e9',
+              700: '#0284c7',
+              900: '#0f172a',
+            },
+            aviation: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              300: '#5eead4',
+              500: '#14b8a6',
+              700: '#0f766e',
+              900: '#134e4a',
+            },
+            interaction: {
+              500: '#8b5cf6',
+              700: '#6d28d9',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .node-card {
+        background-color: white;
+        border-radius: 8px;
+        padding: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease-in-out;
+      }
+      .node-card:hover {
+        transform: translateY(-2px);
+      }
+      .draggable {
+        cursor: move;
+        user-select: none;
+      }
+      .dragging {
+        cursor: grabbing;
+        opacity: 0.8;
+        filter: brightness(1.1);
+      }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen font-sans">
+  <!-- 页面头部 -->
+  <header class="container mx-auto px-4 py-8 text-center">
+    <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold bg-clip-text text-transparent bg-gradient-to-r from-space-700 to-aviation-700 mb-4">
+      空天经济结构互动图
+    </h1>
+    <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+      空天经济由商业航天与低空经济两大核心组成，二者通过技术共享、基础设施协同、应用场景融合形成互补互动的有机整体
+    </p>
+    <p class="text-gray-500 mt-4">
+      <i class="fa fa-hand-pointer-o mr-2"></i>提示：点击并拖动文本框和连接线，探索它们之间的关系
+    </p>
+  </header>
+
+  <!-- 主要内容区 -->
+  <main class="container mx-auto px-4 py-8">
+    <!-- 可视化图表容器 -->
+    <div class="relative w-full overflow-hidden" style="height: 1000px; max-width: 1400px; margin: 0 auto;">
+      <!-- SVG画布 -->
+      <svg id="spaceEconomyChart" class="w-full h-full" viewBox="0 0 1200 1000">
+        <!-- 背景装饰 -->
+        <defs>
+          <pattern id="stars" width="50" height="50" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1" fill="#0ea5e9" opacity="0.5"/>
+            <circle cx="25" cy="10" r="0.8" fill="#8b5cf6" opacity="0.3"/>
+            <circle cx="40" cy="30" r="1.2" fill="#14b8a6" opacity="0.4"/>
+          </pattern>
+          <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="5" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
+        
+        <!-- 背景 -->
+        <rect x="0" y="0" width="1200" height="1000" fill="url(#stars)" opacity="0.2"/>
+        <rect x="0" y="500" width="1200" height="1" stroke="#e2e8f0" stroke-dasharray="5,5"/>
+        
+        <!-- 中心连接区 - 增加尺寸和颜色深度 -->
+        <g id="centerNode">
+          <circle cx="600" cy="500" r="80" fill="white" stroke="#8b5cf6" stroke-width="3" filter="url(#glow)" />
+          <text x="600" y="485" text-anchor="middle" fill="#6d28d9" font-weight="bold" font-size="22">空天经济</text>
+          <text x="600" y="515" text-anchor="middle" fill="#6d28d9" font-size="16">协同生态系统</text>
+          <text x="600" y="540" text-anchor="middle" fill="#6d28d9" font-size="14" font-style="italic">商业航天+低空经济</text>
+        </g>
+        
+        <!-- 商业航天核心节点 - 增加尺寸和颜色深度 -->
+        <g id="spaceNode">
+          <circle cx="250" cy="500" r="100" fill="white" stroke="#0ea5e9" stroke-width="4" filter="url(#glow)"/>
+          <text x="250" y="480" text-anchor="middle" fill="#0284c7" font-weight="bold" font-size="22">商业航天</text>
+          <text x="250" y="505" text-anchor="middle" fill="#0284c7" font-size="16">高空-太空领域</text>
+          <text x="250" y="530" text-anchor="middle" fill="#0284c7" font-size="14">天基信息基础设施</text>
+          
+          <!-- 商业航天说明文本 - 可拖拽 -->
+          <foreignObject x="0" y="620" width="220" height="180" class="draggable">
+            <div class="node-card" xmlns="http://www.w3.org/1999/xhtml">
+              <p class="text-sm text-gray-700">
+                商业航天通过市场化运作开展航天活动，包括运载火箭发射、卫星制造与应用、太空资源开发等，
+                构建覆盖全球的天基信息基础设施，提供通信、导航、遥感等基础服务。
+              </p>
+            </div>
+          </foreignObject>
+        </g>
+        
+        <!-- 低空经济核心节点 - 增加尺寸和颜色深度 -->
+        <g id="aviationNode">
+          <circle cx="950" cy="500" r="100" fill="white" stroke="#14b8a6" stroke-width="4" filter="url(#glow)"/>
+          <text x="950" y="480" text-anchor="middle" fill="#0f766e" font-weight="bold" font-size="22">低空经济</text>
+          <text x="950" y="505" text-anchor="middle" fill="#0f766e" font-size="16">低空-近地领域</text>
+          <text x="950" y="530" text-anchor="middle" fill="#0f766e" font-size="14">立体交通网络</text>
+          
+          <!-- 低空经济说明文本 - 可拖拽 -->
+          <foreignObject x="1030" y="620" width="220" height="180" class="draggable">
+            <div class="node-card" xmlns="http://www.w3.org/1999/xhtml">
+              <p class="text-sm text-gray-700">
+                低空经济利用低空空域（地面以上1000米以下）开展经济活动，包括无人机物流、eVTOL空中交通、
+                通用航空等，构建立体交通网络，提升城市运行效率和社会服务能力。
+              </p>
+            </div>
+          </foreignObject>
+        </g>
+        
+        <!-- 商业航天子节点 - 增加尺寸和颜色深度 -->
+        <g id="rocketNode">
+          <circle cx="120" cy="300" r="55" fill="white" stroke="#0ea5e9" stroke-width="3"/>
+          <text x="120" y="295" text-anchor="middle" fill="#0284c7" font-size="16">运载火箭</text>
+          <text x="120" y="315" text-anchor="middle" fill="#0284c7" font-size="12">发射服务</text>
+          
+          <!-- 说明文本 - 可拖拽 -->
+          <foreignObject x="25" y="360" width="190" height="80" class="draggable">
+            <div class="node-card" xmlns="http://www.w3.org/1999/xhtml">
+              <p class="text-xs text-gray-700">
+                提供将卫星、航天器等有效载荷送入太空的运输服务，新一代可重复使用火箭技术显著降低发射成本。
+              </p>
+            </div>
+          </foreignObject>
+        </g>
+        
+        <g id="satelliteNode">
+          <circle cx="120" cy="700" r="55" fill="white" stroke="#0ea5e9" stroke-width="3"/>
+          <text x="120" y="695" text-anchor="middle" fill="#0284c7" font-size="16">卫星系统</text>
+          <text x="120" y="715" text-anchor="middle" fill="#0284c7" font-size="12">通信/遥感/导航</text>
+          
+          <!-- 说明文本 - 可拖拽 -->
+          <foreignObject x="25" y="760" width="190" height="80" class="draggable">
+            <div class="node-card" xmlns="http://www.w3.org/1999/xhtml">
+              <p class="text-xs text-gray-700">
+                构建天基信息网络，实现全球无缝覆盖，低轨卫星星座正在成为支撑6G和全球互联的核心基础设施。
+              </p>
+            </div>
+          </foreignObject>
+        </g>
+        
+        <g id="groundNode">
+          <circle cx="380" cy="300" r="55" fill="white" stroke="#0ea5e9" stroke-width="3"/>
+          <text x="380" y="295" text-anchor="middle" fill="#0284c7" font-size="16">地面系统</text>
+          <text x="380" y="315" text-anchor="middle" fill="#0284c7" font-size="12">测控/接收</text>
+          
+          <!-- 说明文本 - 可拖拽 -->
+          <foreignObject x="285" y="360" width="190" height="80" class="draggable">
+            <div class="node-card" xmlns="http://www.w3.org/1999/xhtml">
+              <p class="text-xs text-gray-700">
+                由地面测控站、数据接收中心、运控系统等组成，负责卫星的跟踪、测控和数据处理，是连接太空资产与地面应用的关键环节。
+              </p>
+            </div>
+          </foreignObject>
+        </g>
+        
+        <g id="spaceAppNode">
+          <circle cx="380" cy="700" r="55" fill="white" stroke="#0ea5e9" stroke-width="3"/>
+          <text x="380" y="695" text-anchor="middle" fill="#0284c7" font-size="16">太空应用</text>
+          <text x="380" y="715" text-anchor="middle" fill="#0284c7" font-size="12">数据服务/在轨操作</text>
+          
+          <!-- 说明文本 - 可拖拽 -->
+          <foreignObject x="285" y="760" width="190" height="80" class="draggable">
+            <div class="node-card" xmlns="http://www.w3.org/1999/xhtml">
+              <p class="text-xs text-gray-700">
+                基于卫星数据的各类增值服务，包括气象预报、灾害监测、自然资源勘探、金融保险等领域的应用。
+              </p>
+            </div>
+          </foreignObject>
+        </g>
+        
+        <!-- 低空经济子节点 - 增加尺寸和颜色深度 -->
+        <g id="droneNode">
+          <circle cx="1080" cy="300" r="55" fill="white" stroke="#14b8a6" stroke-width="3"/>
+          <text x="1080" y="295" text-anchor="middle" fill="#0f766e" font-size="16">无人机系统</text>
+          <text x="1080" y="315" text-anchor="middle" fill="#0f766e" font-size="12">工业/消费/物流</text>
+          
+          <!-- 说明文本 - 可拖拽 -->
+          <foreignObject x="985" y="360" width="190" height="80" class="draggable">
+            <div class="node-card" xmlns="http://www.w3.org/1999/xhtml">
+              <p class="text-xs text-gray-700">
+                包括多旋翼、固定翼等各类无人机，广泛应用于农业植保、电力巡检、地理测绘、物流配送等领域。
+              </p>
+            </div>
+          </foreignObject>
+        </g>
+        
+        <g id="evtolNode">
+          <circle cx="1080" cy="700" r="55" fill="white" stroke="#14b8a6" stroke-width="3"/>
+          <text x="1080" y="695" text-anchor="middle" fill="#0f766e" font-size="16">eVTOL</text>
+          <text x="1080" y="715" text-anchor="middle" fill="#0f766e" font-size="12">空中出租车</text>
+          
+          <!-- 说明文本 - 可拖拽 -->
+          <foreignObject x="985" y="760" width="190" height="80" class="draggable">
+            <div class="node-card" xmlns="http://www.w3.org/1999/xhtml">
+              <p class="text-xs text-gray-700">
+                电动垂直起降飞行器，具备噪音低、污染小、起降灵活等特点，是未来城市空中交通的核心载体。
+              </p>
+            </div>
+          </foreignObject>
+        </g>
+        
+        <g id="airTrafficNode">
+          <circle cx="820" cy="300" r="55" fill="white" stroke="#14b8a6" stroke-width="3"/>
+          <text x="820" y="295" text-anchor="middle" fill="#0f766e" font-size="16">空管系统</text>
+          <text x="820" y="315" text-anchor="middle" fill="#0f766e" font-size="12">低空交通管理</text>
+          
+          <!-- 说明文本 - 可拖拽 -->
+          <foreignObject x="725" y="360" width="190" height="80" class="draggable">
+            <div class="node-card" xmlns="http://www.w3.org/1999/xhtml">
+              <p class="text-xs text-gray-700">
+                包括低空交通管理系统、通信导航监视系统等，负责低空飞行器的航线规划、交通调度和安全监控。
+              </p>
+            </div>
+          </foreignObject>
+        </g>
+        
+        <g id="aviationAppNode">
+          <circle cx="820" cy="700" r="55" fill="white" stroke="#14b8a6" stroke-width="3"/>
+          <text x="820" y="695" text-anchor="middle" fill="#0f766e" font-size="16">低空应用</text>
+          <text x="820" y="715" text-anchor="middle" fill="#0f766e" font-size="12">应急/旅游/巡检</text>
+          
+          <!-- 说明文本 - 可拖拽 -->
+          <foreignObject x="725" y="760" width="190" height="80" class="draggable">
+            <div class="node-card" xmlns="http://www.w3.org/1999/xhtml">
+              <p class="text-xs text-gray-700">
+                包括应急救援、空中旅游、城市巡检、医疗转运等多样化场景，通过低空飞行器的灵活部署提升社会服务效率。
+              </p>
+            </div>
+          </foreignObject>
+        </g>
+        
+        <!-- 连接线 - 核心到中心 - 增加粗细 - 可拖拽 -->
+        <line id="spaceToCenter" x1="350" y1="500" x2="520" y2="500" stroke="#0ea5e9" stroke-width="3" class="draggable"/>
+        <line id="aviationToCenter" x1="680" y1="500" x2="850" y2="500" stroke="#14b8a6" stroke-width="3" class="draggable"/>
+        
+        <!-- 商业航天内部连接 - 增加粗细 - 可拖拽 -->
+        <line id="spaceToRocket" x1="250" y1="400" x2="175" y2="350" stroke="#0ea5e9" stroke-width="2" stroke-dasharray="4,4" class="draggable"/>
+        <line id="spaceToSatellite" x1="250" y1="600" x2="175" y2="650" stroke="#0ea5e9" stroke-width="2" stroke-dasharray="4,4" class="draggable"/>
+        <line id="spaceToGround" x1="250" y1="400" x2="325" y2="350" stroke="#0ea5e9" stroke-width="2" stroke-dasharray="4,4" class="draggable"/>
+        <line id="spaceToSpaceApp" x1="250" y1="600" x2="325" y2="650" stroke="#0ea5e9" stroke-width="2" stroke-dasharray="4,4" class="draggable"/>
+        
+        <!-- 低空经济内部连接 - 增加粗细 - 可拖拽 -->
+        <line id="aviationToDrone" x1="950" y1="400" x2="1025" y2="350" stroke="#14b8a6" stroke-width="2" stroke-dasharray="4,4" class="draggable"/>
+        <line id="aviationToEvtol" x1="950" y1="600" x2="1025" y2="650" stroke="#14b8a6" stroke-width="2" stroke-dasharray="4,4" class="draggable"/>
+        <line id="aviationToAirTraffic" x1="950" y1="400" x2="875" y2="350" stroke="#14b8a6" stroke-width="2" stroke-dasharray="4,4" class="draggable"/>
+        <line id="aviationToAviationApp" x1="950" y1="600" x2="875" y2="650" stroke="#14b8a6" stroke-width="2" stroke-dasharray="4,4" class="draggable"/>
+        
+        <!-- 互动连接线及说明 - 增加粗细和颜色深度 - 可拖拽 -->
+        <path id="techSharePath" d="M 170 300 Q 600 180 1030 300" stroke="#8b5cf6" stroke-width="3" fill="none" class="draggable"/>
+        <text id="techShareText" x="600" y="160" text-anchor="middle" fill="#6d28d9" font-size="16" font-weight="500" class="draggable">技术共享</text>
+        <foreignObject id="techShareDesc" x="450" y="170" width="300" height="70" class="draggable">
+          <div class="node-card" xmlns="http://www.w3.org/1999/xhtml">
+            <p class="text-xs text-gray-700">
+              导航通信技术、动力系统技术、材料技术等双向赋能，商业航天技术支撑低空飞行器高精度运行，低空技术反哺航天领域
+            </p>
+          </div>
+        </foreignObject>
+        
+        <path id="infrastructurePath" d="M 330 300 Q 600 330 870 300" stroke="#8b5cf6" stroke-width="3" fill="none" class="draggable"/>
+        <text id="infrastructureText" x="600" y="310" text-anchor="middle" fill="#6d28d9" font-size="16" font-weight="500" class="draggable">基础设施协同</text>
+        <!-- 基础设施协同说明文本 - 调整到连接线的上方 -->
+        <foreignObject id="infrastructureDesc" x="450" y="280" width="300" height="70" class="draggable">
+          <div class="node-card" xmlns="http://www.w3.org/1999/xhtml">
+            <p class="text-xs text-gray-700">
+              地面站网络、起降场地、能源系统等资源复用，商业航天地面设施兼作低空监控节点，降低建设成本
+            </p>
+          </div>
+        </foreignObject>
+        
+        <path id="applicationPath" d="M 330 700 Q 600 620 870 700" stroke="#8b5cf6" stroke-width="3" fill="none" class="draggable"/>
+        <text id="applicationText" x="600" y="590" text-anchor="middle" fill="#6d28d9" font-size="16" font-weight="500" class="draggable">应用场景融合</text>
+        <foreignObject id="applicationDesc" x="450" y="600" width="300" height="70" class="draggable">
+          <div class="node-card" xmlns="http://www.w3.org/1999/xhtml">
+            <p class="text-xs text-gray-700">
+              应急救援、物流运输等场景的天地一体化解决方案，卫星提供宏观监测，低空设备执行精准作业
+            </p>
+          </div>
+        </foreignObject>
+        
+        <path id="navigationPath" d="M 170 700 Q 600 820 1030 700" stroke="#8b5cf6" stroke-width="3" fill="none" class="draggable"/>
+        <text id="navigationText" x="600" y="800" text-anchor="middle" fill="#6d28d9" font-size="16" font-weight="500" class="draggable">导航与通信支持</text>
+        <foreignObject id="navigationDesc" x="450" y="810" width="300" height="70" class="draggable">
+          <div class="node-card" xmlns="http://www.w3.org/1999/xhtml">
+            <p class="text-xs text-gray-700">
+              卫星系统为低空飞行器提供高精度定位与全域通信，解决偏远地区通信盲区问题，保障低空活动安全
+            </p>
+          </div>
+        </foreignObject>
+      </svg>
+    </div>
+    
+    <!-- 图例说明 -->
+    <div class="bg-white rounded-lg shadow-md p-6 mt-12 max-w-5xl mx-auto">
+      <h2 class="text-xl font-bold mb-6 text-center">空天经济核心构成与互动关系总览</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="font-semibold text-space-700 flex items-center mb-4">
+            <i class="fa fa-rocket mr-2"></i>商业航天核心领域
+          </h3>
+          <ul class="space-y-3 text-gray-600">
+            <li class="flex items-start">
+              <i class="fa fa-circle text-xs text-space-500 mt-1.5 mr-2"></i>
+              <span><strong>运载火箭：</strong>提供进入空间的运输服务，可重复使用技术降低发射成本</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa fa-circle text-xs text-space-500 mt-1.5 mr-2"></i>
+              <span><strong>卫星系统：</strong>构建通信、遥感、导航一体化天基网络，实现全球覆盖</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa fa-circle text-xs text-space-500 mt-1.5 mr-2"></i>
+              <span><strong>地面系统：</strong>负责卫星跟踪、测控和数据处理，连接太空资产与地面应用</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa fa-circle text-xs text-space-500 mt-1.5 mr-2"></i>
+              <span><strong>太空应用：</strong>基于卫星数据的增值服务，覆盖多行业场景</span>
+            </li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="font-semibold text-aviation-700 flex items-center mb-4">
+            <i class="fa fa-plane mr-2"></i>低空经济核心领域
+          </h3>
+          <ul class="space-y-3 text-gray-600">
+            <li class="flex items-start">
+              <i class="fa fa-circle text-xs text-aviation-500 mt-1.5 mr-2"></i>
+              <span><strong>无人机系统：</strong>工业级与消费级无人机的多样化应用，提升作业效率</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa fa-circle text-xs text-aviation-500 mt-1.5 mr-2"></i>
+              <span><strong>eVTOL：</strong>电动垂直起降飞行器，构建城市空中交通网络</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa fa-circle text-xs text-aviation-500 mt-1.5 mr-2"></i>
+              <span><strong>空管系统：</strong>低空交通管理与控制系统，保障低空活动有序进行</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa fa-circle text-xs text-aviation-500 mt-1.5 mr-2"></i>
+              <span><strong>低空应用：</strong>应急救援、旅游观光等场景落地，提升社会服务能力</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="bg-gray-800 text-white py-8 mt-16">
+    <div class="container mx-auto px-4 text-center">
+      <p>空天经济结构互动可视化 &copy; 2023</p>
+      <p class="text-gray-400 text-sm mt-2">展示商业航天与低空经济的协同关系</p>
+    </div>
+  </footer>
+
+  <script>
+    // 初始化拖拽功能
+    document.addEventListener('DOMContentLoaded', function() {
+      // 所有可拖拽元素（仅文本框和连接线）
+      const draggableElements = document.querySelectorAll('.draggable');
+      
+      // 存储当前拖拽的元素和相关信息
+      let currentDrag = null;
+      
+      // 为每个可拖拽元素添加事件监听器
+      draggableElements.forEach(element => {
+        element.addEventListener('mousedown', startDrag);
+        element.addEventListener('touchstart', startDrag, {passive: false});
+      });
+      
+      // 整个SVG添加鼠标和触摸移动、释放事件
+      const svg = document.getElementById('spaceEconomyChart');
+      svg.addEventListener('mousemove', drag);
+      svg.addEventListener('touchmove', drag, {passive: false});
+      svg.addEventListener('mouseup', endDrag);
+      svg.addEventListener('touchend', endDrag);
+      
+      // 开始拖拽
+      function startDrag(event) {
+        event.preventDefault();
+        
+        // 存储当前拖拽的元素
+        currentDrag = {
+          element: event.currentTarget,
+          // 获取鼠标/触摸位置
+          startX: event.type === 'mousedown' ? event.clientX : event.touches[0].clientX,
+          startY: event.type === 'mousedown' ? event.clientY : event.touches[0].clientY,
+          // 获取元素当前的变换矩阵
+          matrix: event.currentTarget.transform.baseVal.consolidate() 
+                  ? event.currentTarget.transform.baseVal.consolidate().matrix 
+                  : svg.createSVGMatrix()
+        };
+        
+        // 添加拖拽样式
+        currentDrag.element.classList.add('dragging');
+      }
+      
+      // 拖拽过程
+      function drag(event) {
+        if (!currentDrag) return;
+        event.preventDefault();
+        
+        // 获取当前鼠标/触摸位置
+        const clientX = event.type === 'mousemove' ? event.clientX : event.touches[0].clientX;
+        const clientY = event.type === 'mousemove' ? event.clientY : event.touches[0].clientY;
+        
+        // 计算位移
+        const dx = clientX - currentDrag.startX;
+        const dy = clientY - currentDrag.startY;
+        
+        // 创建平移变换
+        const translate = svg.createSVGTransform();
+        translate.setTranslate(dx, dy);
+        
+        // 应用变换
+        const g = currentDrag.element;
+        g.transform.baseVal.initialize(translate);
+        
+        // 更新连接线（如果是连接线被拖动）
+        if (g.tagName === 'line' || g.tagName === 'path') {
+          updateConnectionPosition(g, dx, dy);
+        }
+      }
+      
+      // 结束拖拽
+      function endDrag() {
+        if (!currentDrag) return;
+        
+        // 移除拖拽样式
+        currentDrag.element.classList.remove('dragging');
+        
+        // 重置当前拖拽
+        currentDrag = null;
+      }
+      
+      // 更新连接线位置
+      function updateConnectionPosition(element, dx, dy) {
+        if (element.tagName === 'line') {
+          // 更新直线位置
+          const x1 = parseFloat(element.getAttribute('x1')) + dx;
+          const y1 = parseFloat(element.getAttribute('y1')) + dy;
+          const x2 = parseFloat(element.getAttribute('x2')) + dx;
+          const y2 = parseFloat(element.getAttribute('y2')) + dy;
+          
+          element.setAttribute('x1', x1);
+          element.setAttribute('y1', y1);
+          element.setAttribute('x2', x2);
+          element.setAttribute('y2', y2);
+        } else if (element.tagName === 'path') {
+          // 更新贝塞尔曲线路径
+          const pathData = element.getAttribute('d');
+          const newPathData = pathData.replace(/([MQLTQCSAZ])([^MQLTQCSAZ]*)/g, function(match, command, coords) {
+            if (command === 'M' || command === 'L' || command === 'T') {
+              // 移动或直线命令
+              const points = coords.trim().split(/\s+/);
+              const newPoints = [];
+              for (let i = 0; i < points.length; i += 2) {
+                if (points[i] !== undefined && points[i+1] !== undefined) {
+                  const x = parseFloat(points[i]) + dx;
+                  const y = parseFloat(points[i+1]) + dy;
+                  newPoints.push(x, y);
+                }
+              }
+              return command + newPoints.join(' ');
+            } else if (command === 'Q' || command === 'S') {
+              // 二次贝塞尔曲线命令
+              const points = coords.trim().split(/\s+/);
+              const newPoints = [];
+              for (let i = 0; i < points.length; i += 2) {
+                if (points[i] !== undefined && points[i+1] !== undefined) {
+                  const x = parseFloat(points[i]) + dx;
+                  const y = parseFloat(points[i+1]) + dy;
+                  newPoints.push(x, y);
+                }
+              }
+              return command + newPoints.join(' ');
+            }
+            // 其他命令保持不变
+            return match;
+          });
+          
+          element.setAttribute('d', newPathData);
+          
+          // 如果是互动连接线，还需要更新相关文本和说明框位置
+          const id = element.id;
+          if (id.includes('Path')) {
+            const textId = id.replace('Path', 'Text');
+            const descId = id.replace('Path', 'Desc');
+            
+            const text = document.getElementById(textId);
+            const desc = document.getElementById(descId);
+            
+            if (text) {
+              const x = parseFloat(text.getAttribute('x')) + dx;
+              const y = parseFloat(text.getAttribute('y')) + dy;
+              text.setAttribute('x', x);
+              text.setAttribute('y', y);
+            }
+            
+            if (desc) {
+              const x = parseFloat(desc.getAttribute('x')) + dx;
+              const y = parseFloat(desc.getAttribute('y')) + dy;
+              desc.setAttribute('x', x);
+              desc.setAttribute('y', y);
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>    
