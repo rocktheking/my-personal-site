@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中科创星 - 核聚变领域全维度投资布局</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0F52BA', // 科技蓝主色
+                        secondary: '#1E293B', // 深灰辅助色
+                        accent: '#38BDF8', // 浅蓝强调色
+                        light: '#F8FAFC', // 浅色背景
+                        neutral: '#64748B', // 中性灰
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Helvetica', 'Arial', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(15, 82, 186, 0.15);
+            }
+            .table-cell-fit {
+                white-space: nowrap;
+                width: 1%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light font-sans">
+    <!-- 顶部导航栏 -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i class="fa fa-atom text-primary text-2xl"></i>
+                <h1 class="text-xl md:text-2xl font-bold text-secondary">中科创星 · 核聚变投资布局</h1>
+            </div>
+            <nav class="hidden md:block">
+                <ul class="flex gap-6">
+                    <li><a href="#overview" class="text-secondary hover:text-primary transition-colors">布局概览</a></li>
+                    <li><a href="#enterprise" class="text-secondary hover:text-primary transition-colors">投资企业</a></li>
+                    <li><a href="#value" class="text-secondary hover:text-primary transition-colors">产业价值</a></li>
+                </ul>
+            </nav>
+            <button class="md:hidden text-secondary text-xl" id="mobileMenuBtn">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        <!-- 移动端菜单 -->
+        <div class="md:hidden hidden bg-white shadow-lg absolute w-full" id="mobileMenu">
+            <ul class="px-4 py-2 space-y-3">
+                <li><a href="#overview" class="block py-2 text-secondary hover:text-primary">布局概览</a></li>
+                <li><a href="#enterprise" class="block py-2 text-secondary hover:text-primary">投资企业</a></li>
+                <li><a href="#value" class="block py-2 text-secondary hover:text-primary">产业价值</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- 英雄区 -->
+    <section class="bg-gradient-to-r from-primary/90 to-primary py-16 md:py-24 text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-shadow">聚焦核聚变前沿 布局硬科技未来</h2>
+                <p class="text-lg md:text-xl opacity-90 mb-8">中科创星深耕可控核聚变产业链，围绕高温超导、聚变装置、核心材料等关键环节精准投资，覆盖8家核心企业，构建全维度产业投资矩阵</p>
+                <a href="#enterprise" class="inline-block bg-white text-primary font-medium px-8 py-3 rounded-lg hover:bg-opacity-90 transition-colors">查看投资企业详情</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 布局概览 -->
+    <section id="overview" class="py-16 md:py-20">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h3 class="text-2xl md:text-3xl font-bold text-secondary mb-8 text-center">布局概览</h3>
+                <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                    <p class="text-secondary mb-4">中科创星旗下40.8亿元规模的先导创业投资基金，聚焦硬科技领域核心技术突破，在可控核聚变赛道完成<span class="text-primary font-medium">8家核心企业</span>布局，覆盖：</p>
+                    <ul class="list-disc list-inside text-secondary space-y-2 mb-6 pl-4">
+                        <li>上游核心材料：锂燃炬薪（锂7同位素）</li>
+                        <li>中游关键设备：翌曦科技（高温超导磁体）、甚磁科技（超导带材）、曦融兆波（射频加热系统）、曦合超导（超导设备）</li>
+                        <li>下游聚变装置：星环聚能（紧凑型聚变堆）、星能玄光（场反磁镜聚变装置）、东昇聚变（小型化聚变电站）</li>
+                    </ul>
+                    <p class="text-secondary">其中东昇聚变、曦合超导为核聚变产业链关联企业（非直接投资），星环聚能、锂燃炬薪等6家为中科创星直接投资标的，形成“核心投资+产业链关联”的双维度布局，精准卡位核聚变技术商业化关键节点。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 投资企业表格 -->
+    <section id="enterprise" class="py-16 md:py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h3 class="text-2xl md:text-3xl font-bold text-secondary mb-10 text-center">核聚变领域投资/关联企业全清单</h3>
+            
+            <!-- 响应式表格容器 -->
+            <div class="overflow-x-auto rounded-xl shadow-lg">
+                <table class="w-full bg-white">
+                    <thead>
+                        <tr class="bg-primary text-white">
+                            <th class="px-4 py-3 text-left table-cell-fit">公司名称</th>
+                            <th class="px-4 py-3 text-left table-cell-fit">投资主体</th>
+                            <th class="px-4 py-3 text-left table-cell-fit">投资时间</th>
+                            <th class="px-4 py-3 text-left table-cell-fit">占股比例</th>
+                            <th class="px-4 py-3 text-left">公司简介</th>
+                            <th class="px-4 py-3 text-left table-cell-fit">估值/发展情况</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <!-- 星环聚能 -->
+                        <tr class="card-hover">
+                            <td class="px-4 py-4 font-medium">星环聚能</td>
+                            <td class="px-4 py-4">中科创星（未明确具体基金）</td>
+                            <td class="px-4 py-4">2022.06（天使轮）<br>2024.03（Pre-A轮跟投）</td>
+                            <td class="px-4 py-4">未明确单独占股</td>
+                            <td class="px-4 py-4">2021年成立于陕西西咸新区，清华工程物理系核能所聚变团队核心，提出紧凑型重复重联聚变堆方案，与清华共建SUNIST-2装置，计划2027年开建商业示范堆，2030年实现电能输出</td>
+                            <td class="px-4 py-4">Pre-A轮后估值超20亿元<br>A轮融资推进中</td>
+                        </tr>
+                        <!-- 翌曦科技 -->
+                        <tr class="card-hover">
+                            <td class="px-4 py-4 font-medium">翌曦科技</td>
+                            <td class="px-4 py-4">中科创星（种子轮领投）</td>
+                            <td class="px-4 py-4">2022.09（种子轮领投）</td>
+                            <td class="px-4 py-4">未公开</td>
+                            <td class="px-4 py-4">2022年成立于上海，上海交大金之俭教授团队核心，深耕高温超导聚变强场磁体，掌握集束缆线、失超保护核心技术，加入中核集团聚变创新联合体，产品进入国际聚变研究巨头供应商序列</td>
+                            <td class="px-4 py-4">累计融资数亿元<br>估值未公开</td>
+                        </tr>
+                        <!-- 甚磁科技 -->
+                        <tr class="card-hover">
+                            <td class="px-4 py-4 font-medium">甚磁科技</td>
+                            <td class="px-4 py-4">中科创星（天使轮联合投资方）</td>
+                            <td class="px-4 py-4">2023.06（天使轮）</td>
+                            <td class="px-4 py-4">未公开</td>
+                            <td class="px-4 py-4">2022年成立于上海闵行，上海交大赵跃博士成果转化企业，建成国内首条千公里级YBCO高温超导带材生产线，产品适配聚变辐照工况，可用于聚变磁体、超导电力装备等领域</td>
+                            <td class="px-4 py-4">累计融资超亿元<br>估值稳步提升</td>
+                        </tr>
+                        <!-- 星能玄光 -->
+                        <tr class="card-hover">
+                            <td class="px-4 py-4 font-medium">星能玄光</td>
+                            <td class="px-4 py-4">北京中科创星硬科技中小企业创业投资合伙企业（有限合伙）</td>
+                            <td class="px-4 py-4">2024年底（天使轮联合领投）</td>
+                            <td class="px-4 py-4">未公开</td>
+                            <td class="px-4 py-4">2024年成立于合肥，中科大孙玄教授团队核心，主攻先进场反磁镜聚变路径，建造KMAX-U直线型装置，计划2025年底建成首台工程化装置，2035年建成200MW聚变能电站</td>
+                            <td class="px-4 py-4">天使轮融资亿元级<br>Pre-A轮后估值增长</td>
+                        </tr>
+                        <!-- 曦融兆波 -->
+                        <tr class="card-hover">
+                            <td class="px-4 py-4 font-medium">曦融兆波</td>
+                            <td class="px-4 py-4">北京中科创星硬科技中小企业创业投资合伙企业（有限合伙）</td>
+                            <td class="px-4 py-4">2024年底（天使轮领投）</td>
+                            <td class="px-4 py-4">占比不足5%<br>具体未披露</td>
+                            <td class="px-4 py-4">2022年成立于合肥，合肥综合性国家科学中心团队核心，国内唯一实现离子回旋波加热系统级交付的商业公司，为星能玄光等聚变企业提供核心加热设备，技术同时适配核聚变与半导体领域</td>
+                            <td class="px-4 py-4">天使轮融资数千万元<br>Pre-A轮后估值未公开</td>
+                        </tr>
+                        <!-- 锂燃炬薪 -->
+                        <tr class="card-hover">
+                            <td class="px-4 py-4 font-medium">锂燃炬薪</td>
+                            <td class="px-4 py-4">北京中科创星硬科技中小企业创业投资合伙企业（有限合伙）</td>
+                            <td class="px-4 py-4">2024.09（天使+轮）</td>
+                            <td class="px-4 py-4">2.1739%<br>实缴30.6513万元</td>
+                            <td class="px-4 py-4">2023年成立，中科院上海有机化学研究所成果转化企业，全球唯一用有机萃取法实现超高丰度锂7同位素工业化生产的企业，锂7丰度达99.975%，为核聚变提供核心冷却/屏蔽材料</td>
+                            <td class="px-4 py-4">累计融资超1.75亿元<br>入选浙江种子独角兽</td>
+                        </tr>
+                        <!-- 曦合超导 -->
+                        <tr class="card-hover bg-gray-50/50">
+                            <td class="px-4 py-4 font-medium">曦合超导</td>
+                            <td class="px-4 py-4">无直接投资（兴泰资本等投资）</td>
+                            <td class="px-4 py-4">无直接投资</td>
+                            <td class="px-4 py-4">无持股</td>
+                            <td class="px-4 py-4">2022年成立于合肥，主营超导、低温设备研发制造，2025年推动嘉兴生产基地落地，总投资约1亿元，产品应用于科研强磁、能源环保等领域，与核聚变领域存在技术间接关联</td>
+                            <td class="px-4 py-4">A轮后注册资本8070.59万元<br>估值未公开</td>
+                        </tr>
+                        <!-- 东昇聚变 -->
+                        <tr class="card-hover bg-gray-50/50">
+                            <td class="px-4 py-4 font-medium">东昇聚变</td>
+                            <td class="px-4 py-4">无直接投资（上海未来产业基金等投资）</td>
+                            <td class="px-4 py-4">无直接投资</td>
+                            <td class="px-4 py-4">无持股</td>
+                            <td class="px-4 py-4">复旦大学孵化企业，聚焦“氘-氦3”为燃料的强磁场小型化聚变电站技术，计划12年建设三代聚变装置，目标实现聚变净能量增益Q>1，燃料来源更丰富、放射性废物更少</td>
+                            <td class="px-4 py-4">获上海国资基金投资<br>估值未公开</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="mt-6 bg-white rounded-lg p-4 shadow-sm">
+                <p class="text-neutral text-sm">注：<br>1. 标灰行企业为核聚变产业链关联企业，中科创星无直接投资；<br>2. 占股比例、估值等信息基于公开工商数据、融资公告整理，未公开信息标注为“未披露/未公开”；<br>3. 所有数据更新至2025年12月。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 产业价值 -->
+    <section id="value" class="py-16 md:py-20">
+        <div class="container mx-auto px-4">
+            <h3 class="text-2xl md:text-3xl font-bold text-secondary mb-8 text-center">产业投资价值</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- 价值卡片1 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                    <div class="text-primary text-3xl mb-4">
+                        <i class="fa fa-link"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-secondary mb-3">全产业链布局</h4>
+                    <p class="text-neutral">覆盖核聚变上游核心材料、中游关键设备、下游聚变装置全环节，投资标的形成技术协同，打通“材料-设备-装置”产业闭环，助力技术商业化落地。</p>
+                </div>
+                
+                <!-- 价值卡片2 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                    <div class="text-primary text-3xl mb-4">
+                        <i class="fa fa-flask"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-secondary mb-3">核心技术卡位</h4>
+                    <p class="text-neutral">聚焦高温超导、锂同位素分离等核聚变领域“卡脖子”技术，投资标的均为清华、中科大、上海交大等顶尖高校团队成果转化，掌握核心自主知识产权。</p>
+                </div>
+                
+                <!-- 价值卡片3 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                    <div class="text-primary text-3xl mb-4">
+                        <i class="fa fa-rocket"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-secondary mb-3">双维度布局策略</h4>
+                    <p class="text-neutral">采取“直接投资核心标的+关注产业链关联企业”策略，既卡位核心技术节点，又覆盖产业上下游配套环节，构建完整的核聚变投资生态。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部 -->
+    <footer class="bg-secondary text-white py-10">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex justify-center items-center gap-4 mb-4">
+                <i class="fa fa-atom text-accent text-2xl"></i>
+                <h4 class="text-xl font-semibold">中科创星 · 硬科技投资先行者</h4>
+            </div>
+            <p class="text-sm opacity-70 max-w-2xl mx-auto">本页面信息基于公开工商备案、融资公告、权威媒体报道整理，仅供宣传参考，具体投资细节以中科创星官方披露为准</p>
+        </div>
+    </footer>
+
+    <!-- 回到顶部按钮 -->
+    <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-8 right-8 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-primary/90 transition-colors">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // 移动端菜单交互
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 点击导航链接关闭移动端菜单
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 表格响应式优化（移动端适配）
+        window.addEventListener('resize', () => {
+            const table = document.querySelector('table');
+            if (window.innerWidth < 768) {
+                table.classList.add('text-sm');
+            } else {
+                table.classList.remove('text-sm');
+            }
+        });
+
+        // 初始化表格适配
+        window.dispatchEvent(new Event('resize'));
+    </script>
+</body>
+</html>
