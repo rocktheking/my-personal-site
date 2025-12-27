@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>场反位型 (FRC) 原理演示</title>
+    <style>
+        :root {
+            --bg-color: #0b0b10; /* 回归深色背景，但在工程感上更纯粹 */
+            --panel-bg: rgba(20, 25, 35, 0.9);
+            --text-color: #e0e0ff;
+            --accent-color: #ff0055;
+            --plasma-color: #ff3366;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        #ui-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 340px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            text-shadow: 0 0 10px rgba(255, 0, 85, 0.3);
+            margin-bottom: 15px;
+            pointer-events: auto;
+            font-weight: 800;
+        }
+
+        .panel {
+            background: var(--panel-bg);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            pointer-events: auto;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+        }
+
+        .control-group h3, .info-box h3 {
+            font-size: 1rem;
+            margin-top: 0;
+            color: #fff;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: color 0.2s;
+            color: #bbb;
+            font-weight: 500;
+        }
+
+        label:hover {
+            color: var(--accent-color);
+        }
+
+        input[type="checkbox"] {
+            accent-color: var(--accent-color);
+            width: 16px;
+            height: 16px;
+        }
+
+        .info-box p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+
+        .info-box b {
+            color: var(--accent-color);
+        }
+        
+        .status {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status p {
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .status span {
+            color: var(--plasma-color);
+            font-weight: bold;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            background: linear-gradient(45deg, #ff0055, #ff5500);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.2s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(255, 0, 85, 0.3);
+        }
+
+        .action-btn:hover {
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
+            transform: translateY(-1px);
+        }
+
+        .action-btn:active {
+            transform: translateY(1px);
+        }
+
+        .action-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: none;
+        }
+
+        .action-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .process-status {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #00d2ff;
+            margin-top: 5px;
+            padding: 8px 0;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            border: 1px solid rgba(0, 210, 255, 0.2);
+        }
+    </style>
+    <!-- 引入 Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <div id="ui-container">
+        <h1>场反位型 (FRC) 对撞融合演示</h1>
+        <div class="panel">
+            <div class="control-group">
+                <h3>运行控制</h3>
+                <div class="button-group">
+                    <button id="btn-fire" class="action-btn">启动对撞 (FIRE)</button>
+                    <button id="btn-reset" class="action-btn secondary">重置 (RESET)</button>
+                </div>
+                <div class="process-status">
+                    状态: <span id="status-text">就绪 (READY)</span>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <h3>可视化层级</h3>
+                <label><input type="checkbox" id="toggle-plasma" checked> 等离子体 (Plasma)</label>
+                <label><input type="checkbox" id="toggle-internal-field" checked> 内部闭合磁场 (Closed Field)</label>
+                <label><input type="checkbox" id="toggle-external-field" checked> 外部开放磁场 (Open Field)</label>
+                <label><input type="checkbox" id="toggle-coils" checked> 外部线圈 (Solenoid Coils)</label>
+            </div>
+            <div class="info-box">
+                <h3>原理说明</h3>
+                <p>本演示展示了类似 <b>Helion Energy</b> 或 <b>TAE</b> 的对撞融合方案。</p>
+                <p>1. <b>生成与加速</b>: 两个 FRC 等离子体团在两端生成，并被磁力加速器加速至极高速度。</p>
+                <p>2. <b>对撞与合并</b>: 两个 FRC 在中心腔室高速对撞，动能转化为热能，合并成一个高温、高压的稳定 FRC。</p>
+                <p>3. <b>聚变点火</b>: 在高 Beta 值状态下，中心发生剧烈聚变反应，释放能量。</p>
+            </div>
+            <div class="status">
+                <p>等离子体速度: <span id="velocity-display">0</span> km/s</p>
+                <p>核心温度: <span id="temp-display">5.0</span> keV</p>
+                <p>聚变产出: <span id="fusion-display">0</span> MW</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
