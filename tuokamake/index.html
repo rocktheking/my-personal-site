@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokamak Principle Animation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Noto+Sans+SC:wght@300;500;700&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #f4f6f8; /* 极简浅灰背景 */
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+        }
+
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        canvas {
+            box-shadow: 0 0 50px rgba(0,0,0,0.05);
+        }
+
+        /* 电影感字幕容器 */
+        .subtitle-container {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            width: 80%;
+            max-width: 900px;
+            pointer-events: none; /* 防止遮挡鼠标交互，虽然本例无交互 */
+            z-index: 10;
+        }
+
+        .subtitle-cn {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 10px rgba(255,255,255,0.8);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .subtitle-en {
+            font-size: 16px;
+            font-weight: 400;
+            color: #546e7a;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 5px rgba(255,255,255,0.8);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s; /* 稍微延迟 */
+        }
+
+        /* 字幕激活状态 */
+        .subtitle-container.active .subtitle-cn,
+        .subtitle-container.active .subtitle-en {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 顶部标题 */
+        .header {
+            position: absolute;
+            top: 40px;
+            left: 50px;
+            z-index: 10;
+        }
+        .header h1 {
+            font-size: 14px;
+            color: #90a4ae;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: #29b6f6;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Tokamak Physics Visualization</h1>
+    </div>
+
+    <div id="canvas-container">
+        <canvas id="tokamakCanvas"></canvas>
+        
+        <div class="subtitle-container" id="subtitle-box">
+            <div class="subtitle-cn" id="sub-cn"></div>
+            <div class="subtitle-en" id="sub-en"></div>
+        </div>
+    </div>
+    
+    <div class="progress-bar" id="progress"></div>
+
+<script>
+/**
+ * 托卡马克动画引擎
+ * 核心逻辑：3D投影到2D Canvas，分层渲染以处理遮挡关系
+ */
+
+const canvas = document.getElementById('tokamakCanvas');
+const ctx = canvas.getContext('2d');
+const subBox = document.getElementById('subtitle-box');
+const subCn = document.getElementById('sub-cn');
+const subEn = document.getElementById('sub-en');
+const progressBar = document.getElementById('progress');
+
+// 配置参数
+let width, height;
+const config = {
+    torusRadius: 180, // 大半径 R
+    tubeRadius: 70,   // 小半径 r
+    cameraDist: 900,  // 摄像机距离
+    rotationSpeed: 0.005,
+    colors: {
+        bg: '#f4f6f8',
+        chamber: 'rgba(200, 210, 220, 0.3)',
+        chamberStroke: 'rgba(160, 170, 180, 0.5)',
+        toroidalCoil: '#1a237e', // 深蓝
+        centralSolenoid: '#d84315', // 铜橙色
+        poloidalCoil: '#00897b', // 青色
+        fieldLine: 'rgba(41, 182, 246, 0.6)', // 浅蓝磁感线
+        plasma: '#aa00ff', // 紫色等离子体
+        particle: '#f50057' // 粒子颜色
+    }
+};
+
+// 状态管理
+let time = 0;
+let globalRotation = 0;
+let sceneIndex = 0;
+let sceneTime = 0; // 当前场景播放了多久
+
+// 剧本 (Timeline)
+const script = [
+    {
+        duration: 400,
+        textCn: "托卡马克的核心是一个环形的真空室。",
+        textEn: "At the heart of a Tokamak is a toroidal (doughnut-shaped) vacuum chamber.",
+        state: { showChamber: true, showTCoils: false, showCS: false, showPCoils: false, showField: false, showParticles: false, fieldTwist: 0 }
+    },
+    {
+        duration: 500,
+        textCn: "首先，环形场线圈（蓝色）产生一个沿环向的强磁场。",
+        textEn: "First, Toroidal Field Coils (Blue) generate a strong magnetic field running around the ring.",
+        state: { showChamber: true, showTCoils: true, showCS: false, showPCoils: false, showField: true, showParticles: false, fieldTwist: 0, fieldType: 'toroidal' }
+    },
+    {
+        duration: 500,
+        textCn: "但仅有环向磁场是不够的，粒子会漂移并撞击内壁。",
+        textEn: "But a toroidal field alone is unstable; particles drift and hit the walls.",
+        state: { showChamber: true, showTCoils: true, showCS: false, showPCoils: false, showField: true, showParticles: true, particleMode: 'drift' }
+    },
+    {
+        duration: 500,
+        textCn: "此时，中央螺线管（橙色）像变压器一样，在气体中感应出强大的电流。",
+        textEn: "The Central Solenoid (Orange) acts like a transformer, inducing a massive current inside the plasma.",
+        state: { showChamber: true, showTCoils: true, showCS: true, showPCoils: false, showField: true, showParticles: false, fieldType: 'toroidal' }
+    },
+    {
+        duration: 500,
+        textCn: "等离子体电流产生了极向磁场，环绕着等离子体截面。",
+        textEn: "This plasma current generates a Poloidal Magnetic Field wrapping around the plasma cross-section.",
+        state: { showChamber: true, showTCoils: true, showCS: true, showPCoils: false, showField: true, showParticles: false, fieldType: 'poloidal_demo' }
+    },
+    {
+        duration: 600,
+        textCn: "两种磁场叠加，形成了螺旋形的磁力线。这是约束的关键。",
+        textEn: "The combination creates twisted, Helical Magnetic Field lines. This is the key to confinement.",
+        state: { showChamber: true, showTCoils: true, showCS: true, showPCoils: false, showField: true, showParticles: false, fieldType: 'helical', twistAnim: true }
+    },
+    {
+        duration: 600,
+        textCn: "带电粒子被紧紧束缚在这些螺旋磁力线上，做高速螺旋运动。",
+        textEn: "Charged particles are tightly bound to these twisted lines, spiraling at high speeds.",
+        state: { showChamber: true, showTCoils: true, showCS: true, showPCoils: false, showField: true, showParticles: true, particleMode: 'helical' }
+    },
+    {
+        duration: 500,
+        textCn: "最后，外部的极向场线圈（青色）用于控制等离子体的形状和位置。",
+        textEn: "Finally, outer Poloidal Field Coils (Teal) allow for shaping and positioning of the plasma.",
+        state: { showChamber: true, showTCoils: true, showCS: true, showPCoils: true, showField: true, showParticles: true, particleMode: 'helical' }
+    },
+    {
+        duration: 400,
+        textCn: "这就是托卡马克：用磁笼禁锢人造太阳。",
+        textEn: "This is the Tokamak: confining an artificial sun within a magnetic cage.",
+        state: { showChamber: true, showTCoils: true, showCS: true, showPCoils: true, showField: true, showParticles: true, particleMode: 'helical', finalShot: true }
+    }
+];
+
+// 初始化
+function init() {
+    resize();
+    window.addEventListener('resize', resize);
+    requestAnimationFrame(loop);
+    updateSubtitle(0);
+}
+
+function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+}
+
+// 3D 投影数学辅助函数
+function project(x, y, z) {
+    const scale = config.cameraDist / (config.cameraDist + z);
+    const x2d = x * scale + width / 2;
+    const y2d = y * scale + height / 2;
+    return { x: x2d, y: y2d, scale: scale, z: z };
+}
+
+function rotateY(x, z, angle) {
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+    return {
+        x: x * cos - z * sin,
+        z: x * sin + z * cos
+    };
+}
+
+// 缓动函数
+function lerp(start, end, t) {
+    return start * (1 - t) + end * t;
+}
+
+// 绘制函数集
+
+// 1. 绘制真空室幽灵轮廓
+function drawChamber(ctx, angleOffset, opacity) {
+    if (opacity <= 0) return;
+    ctx.strokeStyle = config.colors.chamberStroke;
+    ctx.lineWidth = 1;
+    ctx.globalAlpha = opacity * 0.3;
+
+    // 绘制经线 (Poloidal circles at different toroidal angles)
+    for (let i = 0; i < 12; i++) {
+        const phi = (i / 12) * Math.PI * 2 + angleOffset;
+        const pts = [];
+        for (let j = 0; j <= 20; j++) {
+            const theta = (j / 20) * Math.PI * 2;
+            // Torus parametric eq
+            const r_eff = config.torusRadius + config.tubeRadius * Math.cos(theta);
+            const x = r_eff * Math.cos(phi);
+            const y = config.tubeRadius * Math.sin(theta);
+            const z = r_eff * Math.sin(phi);
+            
+            // Rotate scene
+            const rot = rotateY(x, z, 0); // Already rotated by phi logic, but let's keep consistent scene rot
+            // Wait, standard approach: Define object, then rotate whole object
+            // Let's redefine:
+            // x, y, z in local space
+            const x_loc = (config.torusRadius + config.tubeRadius * Math.cos(theta)) * Math.cos(phi);
+            const y_loc = config.tubeRadius * Math.sin(theta);
+            const z_loc = (config.torusRadius + config.tubeRadius * Math.cos(theta)) * Math.sin(phi);
+            
+            const r = rotateY(x_loc, z_loc, angleOffset); // Rotate entire object
+            pts.push(project(r.x, y_loc, r.z));
+        }
+        
+        ctx.beginPath();
+        for(let k=0; k<pts.length; k++) {
+            if(k==0) ctx.moveTo(pts[k].x, pts[k].y);
+            else ctx.lineTo(pts[k].x, pts[k].y);
+        }
+        ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+}
+
+// 2. 绘制环形场线圈 (D-shape/Oval coils)
+function drawToroidalCoils(ctx, angleOffset, opacity) {
+    if (opacity <= 0) return;
+    const numCoils = 16;
+    
+    for (let i = 0; i < numCoils; i++) {
+        const phi = (i / numCoils) * Math.PI * 2;
+        const coilWidth = 10;
+        const coilDepth = 20;
+        
+        // Calculate center of this coil
+        const cx = config.torusRadius * Math.cos(phi);
+        const cz = config.torusRadius * Math.sin(phi);
+        
+        // Rotate
+        const r_center = rotateY(cx, cz, angleOffset);
+        
+        // Simple sorting: only draw if z is roughly behind or front? No, draw all, let z-index handle later if needed. 
+        // For simple canvas 2d, we draw back to front manually or just draw transparently.
+        
+        // Draw Coil as a thick ellipse loop
+        ctx.strokeStyle = config.colors.toroidalCoil;
+        ctx.lineWidth = 3;
+        ctx.globalAlpha = opacity * 0.8;
+        
+        ctx.beginPath();
+        for (let j = 0; j <= 30; j++) {
+            const theta = (j / 30) * Math.PI * 2;
+            // Coil is slightly larger than chamber
+            const R_coil = config.tubeRadius * 1.2; 
+            
+            const x_loc = (config.torusRadius + R_coil * Math.cos(theta)) * Math.cos(phi);
+            const y_loc = R_coil * Math.sin(theta) * 1.4; // D-shape vertical stretch
+            const z_loc = (config.torusRadius + R_coil * Math.cos(theta)) * Math.sin(phi);
+            
+            const r = rotateY(x_loc, z_loc, angleOffset);
+            const p = project(r.x, y_loc, r.z);
+            
+            if (j === 0) ctx.moveTo(p.x, p.y);
+            else ctx.lineTo(p.x, p.y);
+        }
+        ctx.stroke();
+        
+        // Glow effect
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = config.colors.toroidalCoil;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+    }
+    ctx.globalAlpha = 1;
+}
+
+// 3. 绘制中央螺线管 (Central Solenoid)
+function drawCentralSolenoid(ctx, angleOffset, opacity) {
+    if (opacity <= 0) return;
+    const heightCS = 220;
+    const radiusCS = 50;
+    const segments = 10;
+    
+    ctx.fillStyle = config.colors.centralSolenoid;
+    ctx.strokeStyle = '#bf360c';
+    ctx.lineWidth = 1;
+    ctx.globalAlpha = opacity;
+
+    // Draw Cylinder as stack of circles
+    for(let y = -heightCS/2; y <= heightCS/2; y+=10) {
+        ctx.beginPath();
+        for(let i=0; i<=20; i++) {
+            const theta = (i/20) * Math.PI * 2;
+            const x = radiusCS * Math.cos(theta);
+            const z = radiusCS * Math.sin(theta);
+            const r = rotateY(x, z, angleOffset);
+            const p = project(r.x, y, r.z);
+            if(i==0) ctx.moveTo(p.x, p.y);
+            else ctx.lineTo(p.x, p.y);
+        }
+        ctx.fill();
+        ctx.stroke();
+    }
+    
+    // Add "Pulse" effect if active
+    if (opacity > 0.8) {
+        ctx.shadowBlur = 20 + Math.sin(time * 0.1) * 10;
+        ctx.shadowColor = '#ff5722';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+        ctx.stroke(); // Overlay glow
+        ctx.shadowBlur = 0;
+    }
+    ctx.globalAlpha = 1;
+}
+
+// 4. 绘制极向场线圈 (Poloidal Coils) - Outer rings
+function drawPoloidalCoils(ctx, angleOffset, opacity) {
+    if (opacity <= 0) return;
+    
+    const coils = [
+        { y: -180, r: 100 },
+        { y: 180, r: 100 },
+        { y: -120, r: 240 },
+        { y: 120, r: 240 }
+    ];
+
+    ctx.strokeStyle = config.colors.poloidalCoil;
+    ctx.lineWidth = 4;
+    ctx.globalAlpha = opacity;
+
+    coils.forEach(coil => {
+        ctx.beginPath();
+        for(let i=0; i<=50; i++) {
+            const theta = (i/50) * Math.PI * 2;
+            const x = coil.r * Math.cos(theta);
+            const z = coil.r * Math.sin(theta);
+            const r = rotateY(x, z, angleOffset);
+            const p = project(r.x, coil.y, r.z);
+            if(i==0) ctx.moveTo(p.x, p.y);
+            else ctx.lineTo(p.x, p.y);
+        }
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = config.colors.poloidalCoil;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+    });
+    ctx.globalAlpha = 1;
+}
+
+// 5. 绘制磁力线 (Magnetic Field Lines)
+function drawFieldLines(ctx, angleOffset, opacity, type, twistFactor) {
+    if (opacity <= 0) return;
+    
+    ctx.lineWidth = 2;
+    ctx.globalAlpha = opacity * 0.7;
+    
+    const numLines = 8;
+    
+    for (let i = 0; i < numLines; i++) {
+        // Start points around the poloidal cross section
+        const startTheta = (i / numLines) * Math.PI * 2; 
+        
+        ctx.beginPath();
+        let firstPoint = true;
+        
+        // Trace the line around the torus
+        // steps: toroidal angle phi
+        const steps = 100;
+        for (let j = 0; j <= steps; j++) {
+            const phi = (j / steps) * Math.PI * 2;
+            
+            let theta;
+            if (type === 'toroidal') {
+                theta = startTheta; // Constant theta (pure rings)
+            } else if (type === 'poloidal_demo') {
+                 // Visualize poloidal field (circles around the plasma cross section)
+                 // This is tricky to draw as a continuous line in this loop structure.
+                 // Let's cheat: Draw rings around the torus tube
+                 // We need to iterate phi discretely and draw loops?
+                 // No, let's just make theta rotate FAST relative to phi being stationary?
+                 // Let's just visualize the 'result' of the field.
+                 // For poloidal demo: just show rings wrapping the minor radius
+                 theta = (j / steps) * Math.PI * 10; // Wrap around many times
+                 // But we want to show them purely poloidal. 
+                 // Let's skip drawing continuous lines for poloidal_demo here and handle differently?
+                 // Let's stick to the Helical logic but with q=0 or q=infinity.
+                 theta = startTheta + (j/steps) * Math.PI * 10;
+            } else {
+                // Helical: Theta changes as Phi changes. q factor (safety factor)
+                // q = dPhi / dTheta. High q = loose twist. Low q = tight twist.
+                // Twist factor animates from 0 to target.
+                theta = startTheta + phi * twistFactor * 3; 
+            }
+
+            // Poloidal demo override for cleaner look
+            if (type === 'poloidal_demo') {
+                 // Draw vertical loops
+                 // We need a different loop structure for pure poloidal.
+                 // Let's just skip this function for poloidal and draw rings separately?
+                 // Or just make it helical with very high pitch.
+            }
+
+            const x_loc = (config.torusRadius + config.tubeRadius * Math.cos(theta)) * Math.cos(phi);
+            const y_loc = config.tubeRadius * Math.sin(theta);
+            const z_loc = (config.torusRadius + config.tubeRadius * Math.cos(theta)) * Math.sin(phi);
+
+            const r = rotateY(x_loc, z_loc, angleOffset);
+            const p = project(r.x, y_loc, r.z);
+
+            // Depth sorting hack: Fade out back lines
+            // ctx.globalAlpha = r.z < 0 ? opacity * 0.2 : opacity * 0.8; 
+            // Can't change alpha mid-path easily.
+            
+            if (firstPoint) {
+                ctx.moveTo(p.x, p.y);
+                firstPoint = false;
+            } else {
+                ctx.lineTo(p.x, p.y);
+            }
+        }
+        
+        if (type === 'toroidal') {
+            ctx.strokeStyle = config.colors.toroidalCoil; // Blue
+        } else if (type === 'poloidal_demo') {
+            ctx.strokeStyle = '#00e676'; // Greenish
+        } else {
+            // Helical
+            const grad = ctx.createLinearGradient(0,0, width, height);
+            grad.addColorStop(0, config.colors.toroidalCoil);
+            grad.addColorStop(1, config.colors.plasma);
+            ctx.strokeStyle = grad;
+        }
+        
+        ctx.shadowBlur = 5;
+        ctx.shadowColor = ctx.strokeStyle;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+    }
+    ctx.globalAlpha = 1;
+}
+
+// 特殊：绘制纯极向场（垂直环）
+function drawPurePoloidalField(ctx, angleOffset, opacity) {
+    if (opacity <= 0) return;
+    ctx.strokeStyle = '#69f0ae';
+    ctx.lineWidth = 1;
+    ctx.globalAlpha = opacity * 0.5;
+    
+    // Draw rings around the tube at various toroidal angles
+    for(let i=0; i<8; i++) {
+        const phi = (i/8) * Math.PI * 2 + angleOffset; // Rotate with system
+        
+        ctx.beginPath();
+        for(let j=0; j<=30; j++) {
+            const theta = (j/30) * Math.PI * 2;
+            const x_loc = (config.torusRadius + config.tubeRadius * Math.cos(theta)) * Math.cos(phi);
+            const y_loc = config.tubeRadius * Math.sin(theta);
+            const z_loc = (config.torusRadius + config.tubeRadius * Math.cos(theta)) * Math.sin(phi);
+            
+            const r = rotateY(x_loc, z_loc, angleOffset); // actually phi already rotates it? 
+            // No, phi places it on the ring. angleOffset rotates the camera view.
+            // Wait, previous logic: x_loc is calculated based on phi.
+            // rotateY rotates the whole world.
+            // So if I add angleOffset to phi, the rings spin around the center Z axis.
+            
+            const r_final = rotateY((config.torusRadius + config.tubeRadius * Math.cos(theta)) * Math.cos(phi), 
+                                     config.tubeRadius * Math.sin(theta),
+                                     (config.torusRadius + config.tubeRadius * Math.cos(theta)) * Math.sin(phi));
+                                     
+            // Actually, we want the rings to stay relative to the plasma, and the plasma rotates? 
+            // Or just static rings that the camera rotates around?
+            // Let's just rotate the world.
+            const x_world = (config.torusRadius + config.tubeRadius * Math.cos(theta)) * Math.cos(phi);
+            const z_world = (config.torusRadius + config.tubeRadius * Math.cos(theta)) * Math.sin(phi);
+            const r_view = rotateY(x_world, z_world, angleOffset);
+            
+            const p = project(r_view.x, y_loc, r_view.z);
+            if(j==0) ctx.moveTo(p.x, p.y);
+            else ctx.lineTo(p.x, p.y);
+        }
+        ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+}
+
+// 6. 粒子系统
+const particles = [];
+const numParticles = 100;
+for(let i=0; i<numParticles; i++) {
+    particles.push({
+        phi: Math.random() * Math.PI * 2,
+        theta: Math.random() * Math.PI * 2,
+        speed: 0.02 + Math.random() * 0.02,
+        driftOffset: 0
+    });
+}
+
+function drawParticles(ctx, angleOffset, opacity, mode) {
+    if (opacity <= 0) return;
+    
+    ctx.fillStyle = config.colors.particle;
+    
+    particles.forEach(p => {
+        // Update physics
+        if (mode === 'drift') {
+            // Move toroidally but drift outwards (simulate bad confinement)
+            p.phi += p.speed;
+            p.driftOffset += 0.5; // Drift away from center
+            // Reset if too far
+            if(p.driftOffset > 100) p.driftOffset = 0;
+        } else if (mode === 'helical') {
+            // Follow field lines
+            p.phi += p.speed;
+            // q = 3 (safety factor) -> dPhi / dTheta = 3 -> dTheta = dPhi / 3
+            p.theta += p.speed * 3; 
+            p.driftOffset = lerp(p.driftOffset, 0, 0.1); // Pull back to center
+        }
+
+        // Calculate Position
+        const r_eff = config.torusRadius + (config.tubeRadius + p.driftOffset) * Math.cos(p.theta);
+        const x_loc = r_eff * Math.cos(p.phi);
+        const y_loc = (config.tubeRadius + p.driftOffset) * Math.sin(p.theta);
+        const z_loc = r_eff * Math.sin(p.phi);
+
+        const r = rotateY(x_loc, z_loc, angleOffset);
+        const proj = project(r.x, y_loc, r.z);
+
+        // Draw Glow
+        const size = Math.max(0, (500 / (500 + r.z)) * 4); // Scale by depth
+        
+        ctx.globalAlpha = opacity * (mode === 'drift' ? (1 - p.driftOffset/100) : 1);
+        ctx.beginPath();
+        ctx.arc(proj.x, proj.y, size, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Trail
+        if (mode === 'helical') {
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = config.colors.particle;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+    });
+    ctx.globalAlpha = 1;
+}
+
+// 主渲染循环
+function loop() {
+    // 清除画布
+    ctx.clearRect(0, 0, width, height);
+
+    // 时间更新
+    time++;
+    globalRotation += config.rotationSpeed;
+    sceneTime++;
+
+    // 场景控制
+    const currentScene = script[sceneIndex];
+    if (sceneTime > currentScene.duration) {
+        sceneIndex++;
+        if (sceneIndex >= script.length) {
+            sceneIndex = script.length - 1; // 停在最后
+            // 或者重播： 
+            // sceneIndex = 0; 
+            // globalRotation = 0;
+        } else {
+            sceneTime = 0;
+            updateSubtitle(sceneIndex);
+        }
+    }
+
+    // 计算总进度
+    let totalDuration = script.reduce((acc, cur) => acc + cur.duration, 0);
+    let pastDuration = script.slice(0, sceneIndex).reduce((acc, cur) => acc + cur.duration, 0);
+    let progress = (pastDuration + sceneTime) / totalDuration;
+    progressBar.style.width = (progress * 100) + '%';
+
+    // 状态插值 (简单的状态机，这里为了平滑可以做更多，但直接使用当前状态+透明度过渡即可)
+    const s = currentScene.state;
+    
+    // 渲染层级 (Back to Front)
+    // 1. Back half of Chamber
+    // 2. Back Coils
+    // 3. Central Solenoid
+    // 4. Plasma / Field Lines
+    // 5. Front Coils
+    // 6. Front half of Chamber
+    
+    // 为了简化，我们按对象类型画，并依赖 globalAlpha 做淡入淡出
+    // 3D遮挡在Canvas 2D里很难完美，我们采用"透视叠加"风格
+    
+    const viewAngle = globalRotation;
+
+    // --- Layer 1: Structure ---
+    // Chamber
+    if (s.showChamber) drawChamber(ctx, viewAngle, 1);
+    
+    // Toroidal Coils
+    if (s.showTCoils) {
+        // Fade in
+        const alpha = Math.min(1, sceneTime / 60); 
+        drawToroidalCoils(ctx, viewAngle, alpha);
+    }
+    
+    // Central Solenoid
+    if (s.showCS) {
+        const alpha = Math.min(1, sceneTime / 60);
+        drawCentralSolenoid(ctx, viewAngle, alpha);
+    }
+
+    // --- Layer 2: Physics/Fields ---
+    
+    // Field Lines
+    if (s.showField) {
+        let twist = s.fieldTwist !== undefined ? s.fieldTwist : 0;
+        if (s.twistAnim) {
+            twist = Math.min(1, sceneTime / 200); // Animate twist happening
+        }
+        
+        if (s.fieldType === 'poloidal_demo') {
+            drawPurePoloidalField(ctx, viewAngle, Math.min(1, sceneTime/30));
+        } else {
+            drawFieldLines(ctx, viewAngle, Math.min(1, sceneTime/30), s.fieldType, twist);
+        }
+    }
+
+    // Particles
+    if (s.showParticles) {
+        drawParticles(ctx, viewAngle, Math.min(1, sceneTime/30), s.particleMode);
+    }
+
+    // --- Layer 3: Outer Hardware ---
+    // Poloidal Coils
+    if (s.showPCoils) {
+        drawPoloidalCoils(ctx, viewAngle, Math.min(1, sceneTime/60));
+    }
+    
+    requestAnimationFrame(loop);
+}
+
+// 字幕更新逻辑
+function updateSubtitle(index) {
+    subBox.classList.remove('active');
+    
+    setTimeout(() => {
+        subCn.textContent = script[index].textCn;
+        subEn.textContent = script[index].textEn;
+        subBox.classList.add('active');
+    }, 500);
+}
+
+// 启动
+init();
+
+</script>
+</body>
+</html>

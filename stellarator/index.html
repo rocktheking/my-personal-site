@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>仿星器 (Stellarator) 原理演示</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- 引入 Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <div id="ui-container">
+        <h1>仿星器 (Stellarator) 原理演示</h1>
+        <div class="panel">
+            <div class="control-group">
+                <h3>可视化层级</h3>
+                <label><input type="checkbox" id="toggle-plasma" checked> 等离子体 (Plasma)</label>
+                <label><input type="checkbox" id="toggle-field" checked> 磁感线 (Magnetic Field)</label>
+                <label><input type="checkbox" id="toggle-coils" checked> 外部线圈 (Coils)</label>
+            </div>
+            <div class="info-box">
+                <h3>原理说明</h3>
+                <p>仿星器通过极其复杂的<b>扭曲磁场</b>来约束高温等离子体。</p>
+                <p>不同于托卡马克依靠等离子体电流产生极向磁场，仿星器完全依靠<b>外部线圈的复杂几何形状</b>来产生所需的螺旋磁场。</p>
+                <p>优势：无需维持巨大的等离子体电流，理论上可<b>连续运行</b>，且无电流大破裂风险。</p>
+            </div>
+            <div class="status">
+                <p>等离子体温度: <span id="temp-display">100,000,000</span> K</p>
+                <p>磁场强度: <span id="field-display">5.0</span> T</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
