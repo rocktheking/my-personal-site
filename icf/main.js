@@ -87,6 +87,7 @@ function init() {
     // 6. 创建几何体
     createTargetChamber(); // 新增：靶室
     createHohlraum();
+    createHohlraumDebris(); // 新增：Hohlraum 碎片粒子系统
     createCapsule();
     createLasers();
     createEffects();
@@ -96,6 +97,48 @@ function init() {
     setupUIControls();
     
     updateUI("SYSTEM READY", 0, "Solid", 0, 0);
+}
+
+function createHohlraumDebris() {
+    // 创建一个与 Hohlraum 形状一致的粒子系统，用于毁灭动画
+    // 圆筒侧面
+    const count = 3000;
+    const geo = new THREE.BufferGeometry();
+    const positions = new Float32Array(count * 3);
+    const velocities = new Float32Array(count * 3);
+    
+    for(let i=0; i<count; i++) {
+        const h = (Math.random() - 0.5) * HOHLRAUM_HEIGHT;
+        const theta = Math.random() * Math.PI * 2;
+        const r = HOHLRAUM_RADIUS + (Math.random()-0.5) * 1; // 略微有厚度
+        
+        const x = Math.cos(theta) * r;
+        const z = Math.sin(theta) * r;
+        
+        positions[i*3] = x;
+        positions[i*3+1] = h;
+        positions[i*3+2] = z;
+        
+        // 爆炸速度：主要是沿径向向外
+        const speed = 0.5 + Math.random() * 1.5;
+        velocities[i*3] = Math.cos(theta) * speed;
+        velocities[i*3+1] = (Math.random()-0.5) * speed; // 少量上下飞散
+        velocities[i*3+2] = Math.sin(theta) * speed;
+    }
+    
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const mat = new THREE.PointsMaterial({
+        color: 0xffd700, // 金色碎片
+        size: 0.4,
+        transparent: true,
+        opacity: 0, // 初始不可见
+        blending: THREE.AdditiveBlending
+    });
+    
+    const debris = new THREE.Points(geo, mat);
+    debris.name = 'hohlraumDebris';
+    debris.userData = { velocities: velocities, active: false };
+    scene.add(debris);
 }
 
 function createTargetChamber() {
@@ -464,16 +507,55 @@ function updatePhysics() {
     else if (currentState === STATE.EXPANSION) {
         animTimer++;
         
+        // Hohlraum 毁灭效果 (Vaporization)
+        // 剧烈发光 -> 切换为粒子 -> 粒子飞散
+        hohlraumGroup.children.forEach(child => {
+             if (child.name === 'innerGlow') return;
+             
+             // 1. 先瞬间变亮白
+             if (animTimer < 5 && child.material) {
+                 child.material.emissive.setHex(0xffffff);
+                 child.material.emissiveIntensity = 5.0;
+             }
+             // 2. 然后隐藏本体，激活粒子
+             else if (animTimer === 5) {
+                 child.visible = false; // 隐藏圆筒
+                 
+                 const debris = scene.getObjectByName('hohlraumDebris');
+                 if (debris) {
+                     debris.userData.active = true;
+                     debris.material.opacity = 1;
+                 }
+             }
+        });
+        
+        // 更新碎片粒子
+        const debris = scene.getObjectByName('hohlraumDebris');
+        if (debris && debris.userData.active) {
+            const pos = debris.geometry.attributes.position.array;
+            const vel = debris.userData.velocities;
+            
+            for(let i=0; i<vel.length/3; i++) {
+                pos[i*3] += vel[i*3];
+                pos[i*3+1] += vel[i*3+1];
+                pos[i*3+2] += vel[i*3+2];
+            }
+            debris.geometry.attributes.position.needsUpdate = true;
+            
+            // 逐渐消失
+            debris.material.opacity *= 0.96;
+        }
+
         // 残骸消散
         shockwaveGroup.visible = false;
         ablationPlasma.material.opacity *= 0.95;
-        innerGlow.material.opacity *= 0.95;
+        innerGlow.material.opacity *= 0.8; 
         innerLight.intensity *= 0.9;
         composer.passes[1].strength *= 0.95;
         
-        updateUI("BURN COMPLETE", 0, "Cooling", 0, 0);
+        updateUI("HOHLRAUM DESTROYED", 0, "Vaporized", 0, 0);
         
-        if (animTimer > 100) {
+        if (animTimer > 120) {
             resetSimulation();
         }
     }
@@ -508,6 +590,33 @@ function resetSimulation() {
     });
     
     hohlraumGroup.getObjectByName('innerGlow').material.opacity = 0;
+    
+    // 重置 Hohlraum 状态
+    hohlraumGroup.children.forEach(child => {
+        if (child.name !== 'innerGlow') {
+            child.visible = true; // 重新显示
+            child.scale.setScalar(1);
+            child.rotation.set(0, 0, 0);
+            if (child.material) {
+                child.material.color.setHex(0xffd700);
+                child.material.emissive.setHex(0xffd700);
+                child.material.emissiveIntensity = 0.1;
+                child.material.opacity = 0.3;
+            }
+        }
+    });
+    
+    // 重置碎片粒子
+    const debris = scene.getObjectByName('hohlraumDebris');
+    if (debris) {
+        debris.userData.active = false;
+        debris.material.opacity = 0;
+        // 重置位置 (需要保存初始位置，这里简化直接重新计算或归位)
+        // 简单归位：其实 createHohlraumDebris 里生成的初始位置是固定的随机值，
+        // 这里需要恢复它。最简单的方法是 remove 再 add，或者在 userData 存一份 initPos
+        scene.remove(debris);
+        createHohlraumDebris(); // 重新创建一份新的
+    }
     
     const ablator = capsuleGroup.getObjectByName('ablator');
     ablator.scale.setScalar(1);

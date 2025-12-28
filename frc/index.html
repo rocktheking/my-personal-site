@@ -40,6 +40,68 @@
             width: 340px;
             z-index: 2;
             pointer-events: none;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #ui-container.collapsed {
+            transform: translateX(calc(-100% - 20px));
+        }
+
+        #ui-toggle {
+            position: absolute;
+            top: 0;
+            right: -40px;
+            width: 40px;
+            height: 40px;
+            background: var(--panel-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: none;
+            border-radius: 0 8px 8px 0;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            font-size: 1.2rem;
+            pointer-events: auto;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.2);
+        }
+
+        /* Mobile optimization */
+        @media (max-width: 768px) {
+            #ui-container {
+                width: 70%;
+                max-width: 320px;
+                left: 10px;
+                top: 10px;
+            }
+            
+            .panel {
+                padding: 15px;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+            
+            h1 {
+                font-size: 1.1rem;
+                margin-bottom: 10px;
+            }
+            
+            .control-group {
+                gap: 8px;
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+            }
+            
+            .control-group h3, .info-box h3 {
+                font-size: 0.9rem;
+            }
+            
+            .info-box p {
+                font-size: 0.8rem;
+                margin-bottom: 8px;
+            }
         }
 
         h1 {
@@ -195,6 +257,7 @@
     <div id="canvas-container"></div>
     
     <div id="ui-container">
+        <div id="ui-toggle">◀</div>
         <h1>场反位型 (FRC) 对撞融合演示</h1>
         <div class="panel">
             <div class="control-group">
@@ -230,6 +293,69 @@
         </div>
     </div>
 
+    <!-- Floating Action Button for Fire -->
+    <button id="fab-fire" title="启动对撞">🚀</button>
+
+    <style>
+        #fab-fire {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(255, 0, 85, 0.5);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        #fab-fire:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 8px 30px rgba(255, 0, 85, 0.8);
+            background: #ff3377;
+        }
+        #fab-fire:active {
+            transform: scale(0.95);
+        }
+        @media (max-width: 768px) {
+            #fab-fire {
+                bottom: 20px;
+                right: 20px;
+                width: 56px;
+                height: 56px;
+                font-size: 24px;
+            }
+        }
+    </style>
+
+    <script>
+        const uiContainer = document.getElementById('ui-container');
+        const toggleBtn = document.getElementById('ui-toggle');
+        const fabFire = document.getElementById('fab-fire');
+        const btnFire = document.getElementById('btn-fire');
+        
+        toggleBtn.addEventListener('click', () => {
+            uiContainer.classList.toggle('collapsed');
+            toggleBtn.innerText = uiContainer.classList.contains('collapsed') ? '▶' : '◀';
+        });
+
+        fabFire.addEventListener('click', () => {
+            // Trigger the main fire button click
+            btnFire.click();
+            
+            // Add a little visual feedback
+            fabFire.style.transform = 'scale(0.9)';
+            setTimeout(() => fabFire.style.transform = '', 100);
+        });
+    </script>
     <script type="module" src="main.js"></script>
 </body>
 </html>

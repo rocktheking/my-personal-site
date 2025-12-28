@@ -32,7 +32,69 @@ body, html {
     left: 20px;
     width: 320px;
     z-index: 2;
-    pointer-events: none; /* 让鼠标事件穿透到 Canvas */
+    pointer-events: none;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#ui-container.collapsed {
+    transform: translateX(calc(-100% - 20px));
+}
+
+#ui-toggle {
+    position: absolute;
+    top: 0;
+    right: -40px;
+    width: 40px;
+    height: 40px;
+    background: var(--panel-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    font-size: 1.2rem;
+    pointer-events: auto;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.2);
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+    #ui-container {
+        width: 70%;
+        max-width: 300px;
+        left: 10px;
+        top: 10px;
+    }
+    
+    .panel {
+        padding: 15px;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+    
+    h1 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+    
+    .control-group {
+        gap: 8px;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+    }
+    
+    .control-group h3, .info-box h3 {
+        font-size: 0.9rem;
+    }
+    
+    .info-box p {
+        font-size: 0.8rem;
+        margin-bottom: 8px;
+    }
 }
 
 h1 {

@@ -44,20 +44,27 @@ function init() {
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.toneMapping = THREE.ReinhardToneMapping;
+    // renderer.toneMapping = THREE.ReinhardToneMapping; // 旧：可能导致过暗
+    renderer.toneMapping = THREE.ACESFilmicToneMapping; // 新：更现代的映射
+    renderer.toneMappingExposure = 1.2; // 增加曝光
     document.getElementById('canvas-container').appendChild(renderer.domElement);
 
     // 灯光
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // 0.2 -> 0.5
     scene.add(ambientLight);
     
     // 上下电极板的发光
-    const topLight = new THREE.PointLight(0x00ffff, 1, 50);
+    const topLight = new THREE.PointLight(0x00ffff, 2, 100); // 强度 1->2, 距离 50->100
     topLight.position.set(0, 15, 0);
     scene.add(topLight);
-    const bottomLight = new THREE.PointLight(0x00ffff, 1, 50);
+    const bottomLight = new THREE.PointLight(0x00ffff, 2, 100);
     bottomLight.position.set(0, -15, 0);
     scene.add(bottomLight);
+    
+    // 补光灯，防止死角
+    const fillLight = new THREE.DirectionalLight(0xffffff, 1);
+    fillLight.position.set(10, 10, 10);
+    scene.add(fillLight);
 
     // 4. 后处理 (Bloom) - Z-Pinch 需要强烈的电弧光感
     const renderScene = new RenderPass(scene, camera);
@@ -82,6 +89,7 @@ function init() {
     createVisualizations(); 
     createPlasmaColumn();
     createTarget(); // 新增：靶丸
+    createFusionBurst(); // 新增：聚变爆发粒子
     createCurrentParticles(); 
 
     // 7. 事件
@@ -89,6 +97,89 @@ function init() {
     setupUIControls();
     
     updateUI("就绪 (READY)", 0, 0, "Solid");
+}
+
+function createFusionBurst() {
+    // 聚变产物粒子系统
+    const count = 1000;
+    const geo = new THREE.BufferGeometry();
+    const positions = new Float32Array(count * 3);
+    const velocities = new Float32Array(count * 3);
+    
+    for(let i=0; i<count; i++) {
+        positions[i*3] = 0;
+        positions[i*3+1] = 0;
+        positions[i*3+2] = 0;
+        
+        // 随机向外飞散
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        const speed = 0.5 + Math.random() * 1.5;
+        
+        velocities[i*3] = speed * Math.sin(phi) * Math.cos(theta);
+        velocities[i*3+1] = speed * Math.sin(phi) * Math.sin(theta);
+        velocities[i*3+2] = speed * Math.cos(phi);
+    }
+    
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const mat = new THREE.PointsMaterial({
+        color: 0xffeeaa, // 金白色高能粒子
+        size: 0.4,
+        transparent: true,
+        opacity: 0,
+        blending: THREE.AdditiveBlending
+    });
+    
+    const burst = new THREE.Points(geo, mat);
+    burst.name = 'fusionBurst';
+    burst.userData = { velocities: velocities, active: false };
+    scene.add(burst);
+
+    // 冲击波球体
+    const shockGeo = new THREE.SphereGeometry(1, 32, 32);
+    const shockMat = new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0,
+        blending: THREE.AdditiveBlending,
+        side: THREE.DoubleSide
+    });
+    const shockwave = new THREE.Mesh(shockGeo, shockMat);
+    shockwave.name = 'shockwave';
+    shockwave.visible = false;
+    scene.add(shockwave);
+}
+
+function updateFusionBurst() {
+    const burst = scene.getObjectByName('fusionBurst');
+    const shockwave = scene.getObjectByName('shockwave');
+    if (!burst || !burst.userData.active) return;
+    
+    // 更新粒子
+    const positions = burst.geometry.attributes.position.array;
+    const velocities = burst.userData.velocities;
+    
+    for(let i=0; i<velocities.length/3; i++) {
+        positions[i*3] += velocities[i*3];
+        positions[i*3+1] += velocities[i*3+1];
+        positions[i*3+2] += velocities[i*3+2];
+    }
+    burst.geometry.attributes.position.needsUpdate = true;
+    
+    // 粒子逐渐消失
+    if (burst.material.opacity > 0) {
+        burst.material.opacity *= 0.96;
+    }
+    
+    // 更新冲击波
+    if (shockwave && shockwave.visible) {
+        shockwave.scale.multiplyScalar(1.15); // 快速膨胀
+        if (shockwave.material.opacity > 0) {
+            shockwave.material.opacity *= 0.9;
+        } else {
+            shockwave.visible = false;
+        }
+    }
 }
 
 function createTarget() {
@@ -419,6 +510,7 @@ function updatePhysics() {
         animTimer++;
         
         updateCurrentParticles(true, 0.5); 
+        updateFusionBurst(); // 更新聚变粒子和冲击波
 
         // 剧烈闪烁
         plasmaColumn.material.color.setHex(Math.random() > 0.5 ? 0xffffff : 0x00ffff);
@@ -432,20 +524,48 @@ function updatePhysics() {
         const target = scene.getObjectByName('targetPellet');
         if (target) {
             // 靶丸被压缩到极小，然后发光
-            if (animTimer < 20) {
-                // 快速压缩
-                const s = 1 - (animTimer/20) * 0.8;
-                target.scale.setScalar(s);
+            if (animTimer < 30) {
+                // 压缩阶段 (0-30帧)
+                const s = 1 - (animTimer/30) * 0.9; // 压缩到 0.1
+                target.scale.setScalar(Math.max(s, 0.1));
+                target.material.emissiveIntensity = 0.5 + animTimer/10;
+            } else if (animTimer === 30) {
+                // 点火瞬间 (Ignition)
+                target.scale.setScalar(0.3); // 稍微热膨胀
+                target.material.emissive.setHex(0xffffff); // 白炽
+                target.material.emissiveIntensity = 10;
+                
+                // 触发粒子爆发和冲击波
+                const burst = scene.getObjectByName('fusionBurst');
+                if(burst) {
+                    burst.userData.active = true;
+                    burst.material.opacity = 1;
+                    // 重置粒子位置到中心
+                    const pos = burst.geometry.attributes.position.array;
+                    for(let i=0; i<pos.length; i++) pos[i] = 0;
+                    burst.geometry.attributes.position.needsUpdate = true;
+                }
+                
+                const shock = scene.getObjectByName('shockwave');
+                if(shock) {
+                    shock.visible = true;
+                    shock.scale.setScalar(0.1);
+                    shock.material.opacity = 0.8;
+                }
+                
             } else {
-                // 点火膨胀发光
-                target.scale.setScalar(0.2 + Math.random()*0.1);
-                target.material.emissive.setHex(0xffaa00);
-                target.material.emissiveIntensity = 2 + Math.sin(time*30);
+                // 燃烧阶段 (30+帧)
+                target.scale.setScalar(0.3 + Math.sin(time*50)*0.05);
+                target.material.emissiveIntensity = 5 + Math.sin(time*30)*2;
             }
         }
 
         // X射线爆发 (Bloom 增强)
-        composer.passes[1].strength = 3.0 + Math.sin(time*20);
+        if (animTimer > 30) {
+            composer.passes[1].strength = 4.0 + Math.sin(time*20);
+        } else {
+            composer.passes[1].strength = 2.0 + animTimer/15;
+        }
         
         updateUI("滞止 (STAGNATION)", 25, 0, "High Density (Fusion)");
         
