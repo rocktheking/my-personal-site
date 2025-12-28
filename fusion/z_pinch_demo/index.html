@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Z-箍缩 (Z-Pinch) 原理演示</title>
+    <style>
+        :root {
+            --bg-color: #050508;
+            --panel-bg: rgba(20, 25, 35, 0.9);
+            --text-color: #e0e0ff;
+            --accent-color: #00ffff; /* Z-Pinch 常用电蓝色/青色表示强电流 */
+            --plasma-color: #aa00ff;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        #ui-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 360px;
+            z-index: 2;
+            pointer-events: none;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #ui-container.collapsed {
+            transform: translateX(calc(-100% - 20px));
+        }
+
+        #ui-toggle {
+            position: absolute;
+            top: 0;
+            right: -40px;
+            width: 40px;
+            height: 40px;
+            background: var(--panel-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: none;
+            border-radius: 0 8px 8px 0;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            font-size: 1.2rem;
+            pointer-events: auto;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.2);
+        }
+        
+        /* Mobile optimization */
+        @media (max-width: 768px) {
+            #ui-container {
+                width: 70%;
+                max-width: 320px;
+                left: 10px;
+                top: 10px;
+            }
+            
+            .panel {
+                padding: 15px;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+            
+            h1 {
+                font-size: 1.1rem;
+                margin-bottom: 10px;
+            }
+            
+            .control-group {
+                gap: 8px;
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+            }
+            
+            .control-group h3, .info-box h3 {
+                font-size: 0.9rem;
+            }
+            
+            .info-box p {
+                font-size: 0.8rem;
+                margin-bottom: 8px;
+            }
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            margin-bottom: 15px;
+            pointer-events: auto;
+            font-weight: 800;
+        }
+
+        .panel {
+            background: var(--panel-bg);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            pointer-events: auto;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+        }
+
+        .control-group h3, .info-box h3 {
+            font-size: 1rem;
+            margin-top: 0;
+            color: #fff;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            background: linear-gradient(45deg, #00ffff, #0088ff);
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.2s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(0, 255, 255, 0.3);
+        }
+
+        .action-btn:hover {
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+            transform: translateY(-1px);
+        }
+
+        .action-btn:active {
+            transform: translateY(1px);
+        }
+
+        .process-status {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #00ffff;
+            margin-top: 5px;
+            padding: 8px 0;
+            text-align: center;
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 4px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: color 0.2s;
+            color: #bbb;
+        }
+
+        label:hover {
+            color: var(--accent-color);
+        }
+
+        input[type="checkbox"] {
+            accent-color: var(--accent-color);
+            width: 16px;
+            height: 16px;
+        }
+
+        .info-box p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+
+        .info-box b {
+            color: var(--accent-color);
+        }
+        
+        .status {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status p {
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .status span {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+    </style>
+    <!-- 引入 Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <div id="ui-container">
+        <div id="ui-toggle">◀</div>
+        <h1>Z-箍缩 (Z-Pinch) 原理</h1>
+        <div class="panel">
+            <div class="control-group">
+                <h3>脉冲控制</h3>
+                <div class="button-group">
+                    <button id="btn-fire" class="action-btn">发射脉冲 (FIRE)</button>
+                    <button id="btn-reset" class="action-btn" style="background: #444; color: #fff;">重置 (RESET)</button>
+                </div>
+                <div class="process-status">
+                    状态: <span id="status-text">就绪 (READY)</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h3>可视化层级</h3>
+                <label><input type="checkbox" id="toggle-wires" checked> 金属丝阵列 (Load)</label>
+                <label><input type="checkbox" id="toggle-current" checked> 轴向电流 J (Axial)</label>
+                <label><input type="checkbox" id="toggle-magnetic" checked> 角向磁场 B (Azimuthal)</label>
+                <label><input type="checkbox" id="toggle-force" checked> 洛伦兹力 F (J×B)</label>
+            </div>
+            
+            <div class="info-box">
+                <h3>原理说明</h3>
+                <p>1. <b>轴向电流 (J)</b>: 强脉冲电流（MA级）流过圆柱形金属丝阵列。</p>
+                <p>2. <b>角向磁场 (B)</b>: 电流产生强大的环形磁场。</p>
+                <p>3. <b>内向箍缩 (Pinch)</b>: 洛伦兹力 (<b>J × B</b>) 将等离子体高速向中心轴压缩。</p>
+                <p>4. <b>滞止 (Stagnation)</b>: 动能转化为热能，产生X射线和核聚变。</p>
+            </div>
+            <div class="status">
+                <p>电流强度: <span id="current-display">0</span> MA</p>
+                <p>内爆速度: <span id="velocity-display">0</span> km/s</p>
+                <p>核心密度: <span id="density-display">Low</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button for Fire -->
+    <button id="fab-fire" title="发射脉冲">⚡️</button>
+
+    <style>
+        #fab-fire {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            border: none;
+            color: black;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 255, 255, 0.5);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        #fab-fire:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 8px 30px rgba(0, 255, 255, 0.8);
+            background: #ccffff;
+        }
+        #fab-fire:active {
+            transform: scale(0.95);
+        }
+        @media (max-width: 768px) {
+            #fab-fire {
+                bottom: 20px;
+                right: 20px;
+                width: 56px;
+                height: 56px;
+                font-size: 24px;
+            }
+        }
+    </style>
+
+    <script>
+        const uiContainer = document.getElementById('ui-container');
+        const toggleBtn = document.getElementById('ui-toggle');
+        const fabFire = document.getElementById('fab-fire');
+        const btnFire = document.getElementById('btn-fire');
+        
+        toggleBtn.addEventListener('click', () => {
+            uiContainer.classList.toggle('collapsed');
+            toggleBtn.innerText = uiContainer.classList.contains('collapsed') ? '▶' : '◀';
+        });
+
+        fabFire.addEventListener('click', () => {
+            btnFire.click();
+            fabFire.style.transform = 'scale(0.9)';
+            setTimeout(() => fabFire.style.transform = '', 100);
+        });
+    </script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人造太阳：核聚变主流技术路线全景</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="logo">⚛️ FusionTech</div>
+        <div class="nav-links">
+            <a href="#principles">基本原理</a>
+            <a href="#triple-product">聚变三重积</a>
+            <a href="#routes">技术路线</a>
+        </div>
+    </nav>
+
+    <!-- 头部 Hero -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>人造太阳 <span class="subtitle">The Quest for Fusion Energy</span></h1>
+            <p>探索人类终极能源解决方案，解析五大主流核聚变技术路线</p>
+            <a href="#routes" class="cta-button">开始探索</a>
+        </div>
+        <div class="hero-bg"></div>
+    </header>
+
+    <!-- 第一部分：基本原理 -->
+    <section id="principles" class="section">
+        <div class="container">
+            <h2>一、可控核聚变核心原理</h2>
+            <div class="content-grid">
+                <div class="text-block">
+                    <p><b>极简概括</b>：可控核聚变是模仿<b>太阳能量产生机制</b>，将轻核（如氘、氚）在高温高压环境下聚合成重核（如氦）。在此过程中，微小的质量亏损会根据 $E=mc^2$ 转化为巨大的能量。</p>
+                    <p>其核心挑战在于<b>可控约束等离子体</b>，即让聚变持续、稳定地发生，且能量可控输出，这与氢弹的不可控爆炸有着本质区别。</p>
+                    
+                    <h3>氘-氚 (D-T) 反应示例</h3>
+                    <p>目前最容易实现的反应是氘（Deuterium）与氚（Tritium）的聚变：</p>
+                    <div class="reaction-box">
+                        <span class="element">D</span> + <span class="element">T</span> 
+                        <span class="arrow">→</span> 
+                        <span class="element">He</span> (3.5 MeV) + <span class="element">n</span> (14.1 MeV)
+                    </div>
+                    <p>产生的氦核（α粒子）携带20%能量维持等离子体温度，而中子携带80%能量用于发电。</p>
+                </div>
+                <div class="diagram-block">
+                    <!-- 简单的 CSS 示意图 -->
+                    <div class="fusion-diagram">
+                        <div class="particle d">D</div>
+                        <div class="particle t">T</div>
+                        <div class="particle he">He</div>
+                        <div class="particle n">n</div>
+                        <div class="energy-burst">💥 Energy</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第二部分：聚变三重积与Q值 -->
+    <section id="triple-product" class="section dark-bg">
+        <div class="container">
+            <h2>二、聚变三重积：核心判据</h2>
+            <p class="section-desc">要实现持续聚变，等离子体必须同时满足 3 个关键条件。三者乘积即为<b>聚变三重积</b>，只有达到临界阈值（约 $10^{21} K \cdot s \cdot m^{-3}$），反应才能持续自持。</p>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="icon">🌡️</div>
+                    <h3>离子温度 (T)</h3>
+                    <p>Temperature</p>
+                    <div class="desc">需达 <b>1亿℃以上</b>，让轻核具备足够动能突破原子核间的库仑斥力，发生有效碰撞。</div>
+                </div>
+                <div class="metric-card">
+                    <div class="icon">☁️</div>
+                    <h3>等离子体密度 (n)</h3>
+                    <p>Density</p>
+                    <div class="desc">单位体积内轻核数量足够多，大幅提升粒子间的碰撞聚变概率。</div>
+                </div>
+                <div class="metric-card">
+                    <div class="icon">⏱️</div>
+                    <h3>能量约束时间 (τ<sub>E</sub>)</h3>
+                    <p>Confinement Time</p>
+                    <div class="desc">等离子体保持高温高密度的时长，确保聚变产生的能量多于散失的能量。</div>
+                </div>
+            </div>
+
+            <!-- Q值部分 -->
+            <div class="q-value-section">
+                <h2>三、Q > 1：能量盈亏拐点</h2>
+                <p class="section-desc">Q 值 = 聚变输出能量 / 输入约束能量。它是衡量聚变能否商业化的关键门槛。</p>
+                
+                <div class="q-cards">
+                    <div class="q-card loss">
+                        <div class="q-title">Q < 1</div>
+                        <div class="q-status">能量亏损</div>
+                        <p>输入能量 > 输出能量。仅能做实验验证，无实际能源利用价值。</p>
+                    </div>
+                    <div class="q-card breakeven">
+                        <div class="q-title">Q = 1</div>
+                        <div class="q-status">收支平衡 (Breakeven)</div>
+                        <p>达到“点火条件”，聚变反应可自持，但无多余能量输出。</p>
+                    </div>
+                    <div class="q-card gain">
+                        <div class="q-title">Q > 1</div>
+                        <div class="q-status">能量增益 (Gain)</div>
+                        <p><b>商业化拐点</b>。输出 > 输入。ITER 目标 Q=10，商业电站需 Q≥30 才能覆盖成本并网发电。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container" style="height: auto; background: transparent; border: none; margin-top: 60px;">
+                <h3>技术路线决策树</h3>
+                <p>根据劳森判据 $n\tau_E T \ge C$，不同技术路线在三个参数上进行了不同的取舍：</p>
+                
+                <div class="fusion-tree">
+                    <!-- Root -->
+                    <div class="tree-root">
+                        <div class="node root-node">
+                            <div class="math">n\tau_E T \ge C</div>
+                            <div class="label">路线选择</div>
+                        </div>
+                    </div>
+
+                    <!-- Branches Container -->
+                    <div class="tree-branches">
+                        
+                        <!-- 1. 仿星器 (Green) -->
+                        <div class="branch-row">
+                            <div class="node time green">超长 τ<sub>E</sub></div>
+                            <div class="connector"></div>
+                            <div class="node temp green">中 T</div>
+                            <div class="connector"></div>
+                            <div class="node density green">中低 n</div>
+                            <div class="connector"></div>
+                            <div class="node result green">仿星器</div>
+                        </div>
+
+                        <!-- 2. 托卡马克 (Beige) -->
+                        <div class="branch-row">
+                            <div class="node time beige">长 τ<sub>E</sub></div>
+                            <div class="connector"></div>
+                            <div class="node temp beige">中高 T</div>
+                            <div class="connector"></div>
+                            <div class="node density beige">中低 n</div>
+                            <div class="connector"></div>
+                            <div class="node result beige">托卡马克</div>
+                        </div>
+
+                        <!-- 3. 球形托卡马克 (Pink) -->
+                        <div class="branch-row">
+                            <div class="node time pink">中长 τ<sub>E</sub></div>
+                            <div class="connector"></div>
+                            <div class="node temp pink">中高 T</div>
+                            <div class="connector"></div>
+                            <div class="node density pink">中 n</div>
+                            <div class="connector"></div>
+                            <div class="node result pink">球形托卡马克</div>
+                        </div>
+
+                        <!-- 4. FRC (Orange) -->
+                        <div class="branch-row">
+                            <div class="node time orange">中 τ<sub>E</sub></div>
+                            <div class="connector"></div>
+                            <div class="node temp orange">中高 T</div>
+                            <div class="connector"></div>
+                            <div class="node density orange">中 n</div>
+                            <div class="connector"></div>
+                            <div class="node result orange">场反位型 FRC</div>
+                        </div>
+
+                        <!-- 5. MTF / Z-Pinch (Purple) -->
+                        <div class="branch-row">
+                            <div class="node time purple">短 τ<sub>E</sub></div>
+                            <div class="connector"></div>
+                            <div class="node temp purple">中高 T</div>
+                            <div class="connector"></div>
+                            <div class="split-container">
+                                <div class="split-branch">
+                                    <div class="connector-elbow-up"></div>
+                                    <div class="node density purple">中高 n</div>
+                                    <div class="connector"></div>
+                                    <div class="node result purple">磁化靶 MTF</div>
+                                </div>
+                                <div class="split-branch">
+                                    <div class="connector-elbow-down"></div>
+                                    <div class="node density purple-dark">高 n</div>
+                                    <div class="connector"></div>
+                                    <div class="node result purple-dark">Z 箍缩</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 6. ICF / Kinetic (Red) -->
+                        <div class="branch-row">
+                            <div class="node time red">极短 τ<sub>E</sub></div>
+                            <div class="connector"></div>
+                            <div class="node density red">超高 n</div>
+                            <div class="connector"></div>
+                            <div class="split-container">
+                                <div class="split-branch">
+                                    <div class="connector-elbow-up"></div>
+                                    <div class="node temp red">超高 T</div>
+                                    <div class="connector"></div>
+                                    <div class="node result red">激光 ICF</div>
+                                </div>
+                                <div class="split-branch">
+                                    <div class="connector-elbow-down"></div>
+                                    <div class="node temp red-dark">中高 T</div>
+                                    <div class="connector"></div>
+                                    <div class="node result red-dark">动能 ICF</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第三部分：主流技术路线 -->
+    <section id="routes" class="section">
+        <div class="container">
+            <h2>五大主流技术路线演示</h2>
+            <p class="section-desc">点击下方卡片切换演示，或向下滚动查看详情。</p>
+            
+            <!-- 路线 1: 托卡马克 -->
+            <div class="route-block" id="tokamak">
+                <div class="route-header">
+                    <h3>1. 托卡马克 (Tokamak)</h3>
+                    <span class="tag mfe">磁约束 (MFE)</span>
+                </div>
+                <div class="route-content">
+                    <div class="route-info">
+                        <h4>原理</h4>
+                        <p>利用<b>螺旋磁场</b>约束等离子体。由<b>纵场线圈</b>产生环向磁场，<b>中心螺线管</b>感应出等离子体电流产生极向磁场。</p>
+                        <h4>三重积策略</h4>
+                        <ul>
+                            <li><b>密度 (n)</b>: 低 (~10<sup>20</sup> m<sup>-3</sup>)</li>
+                            <li><b>时间 (τ<sub>E</sub>)</b>: 长 (秒级甚至稳态)</li>
+                        </ul>
+                        <h4>代表项目</h4>
+                        <p>ITER, JET, EAST, HL-3</p>
+                    </div>
+                    <div class="demo-frame-container">
+                        <iframe src="./tokamak_demo/index.html" loading="lazy"></iframe>
+                        <div class="overlay-hint">点击右上角展开控制面板</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 路线 2: 仿星器 -->
+            <div class="route-block" id="stellarator">
+                <div class="route-header">
+                    <h3>2. 仿星器 (Stellarator)</h3>
+                    <span class="tag mfe">磁约束 (MFE)</span>
+                </div>
+                <div class="route-content">
+                    <div class="route-info">
+                        <h4>原理</h4>
+                        <p>完全依靠外部扭曲的<b>三维线圈</b>产生螺旋磁场，不需要等离子体电流，避免了电流驱动的不稳定性。</p>
+                        <h4>优势与挑战</h4>
+                        <p>优势是能够稳态运行，无破裂风险；挑战是线圈加工和安装精度要求极高。</p>
+                        <h4>代表项目</h4>
+                        <p>Wendelstein 7-X (德国)</p>
+                    </div>
+                    <div class="demo-frame-container">
+                        <iframe src="./stellarator_demo/index.html" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 路线 3: 激光惯性约束 -->
+            <div class="route-block" id="nif">
+                <div class="route-header">
+                    <h3>3. 激光惯性约束 (Laser ICF)</h3>
+                    <span class="tag icf">惯性约束 (ICF)</span>
+                </div>
+                <div class="route-content">
+                    <div class="route-info">
+                        <h4>原理</h4>
+                        <p>利用高能激光轰击靶丸（或黑腔），利用反作用力产生<b>内爆</b>，瞬间将燃料压缩到极高密度和温度。</p>
+                        <h4>三重积策略</h4>
+                        <ul>
+                            <li><b>密度 (n)</b>: 极高 (~10<sup>31</sup> m<sup>-3</sup>)</li>
+                            <li><b>时间 (τ<sub>E</sub>)</b>: 极短 (纳秒级)</li>
+                        </ul>
+                        <h4>代表项目</h4>
+                        <p>NIF (美国国家点火装置)</p>
+                    </div>
+                    <div class="demo-frame-container">
+                        <iframe src="./nif_demo/index.html" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 路线 4: Z-箍缩 -->
+            <div class="route-block" id="zpinch">
+                <div class="route-header">
+                    <h3>4. Z-箍缩 (Z-Pinch)</h3>
+                    <span class="tag icf">惯性/磁惯性</span>
+                </div>
+                <div class="route-content">
+                    <div class="route-info">
+                        <h4>原理</h4>
+                        <p>利用流过等离子体（或金属丝阵列）的强大<b>轴向电流</b>产生角向磁场，通过<b>洛伦兹力</b>自我压缩（箍缩）。</p>
+                        <h4>特点</h4>
+                        <p>效率高，能够产生强大的X射线源，是实现惯性聚变的一种高效方式。</p>
+                        <h4>代表项目</h4>
+                        <p>Z Machine (Sandia Labs)</p>
+                    </div>
+                    <div class="demo-frame-container">
+                        <iframe src="./z_pinch_demo/index.html" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 路线 5: 场反位型 -->
+            <div class="route-block" id="frc">
+                <div class="route-header">
+                    <h3>5. 场反位型 (FRC)</h3>
+                    <span class="tag mtf">磁惯性聚变 (MIF)</span>
+                </div>
+                <div class="route-content">
+                    <div class="route-info">
+                        <h4>原理</h4>
+                        <p>等离子体自身电流产生封闭磁场，形成一个独立的<b>磁等离子体团</b>。通过两端加速对撞，融合并压缩。</p>
+                        <h4>三重积策略</h4>
+                        <p>介于磁约束和惯性约束之间。追求<b>高 Beta 值</b>（磁场利用率高）和紧凑化。</p>
+                        <h4>代表项目</h4>
+                        <p>Helion Energy, TAE Technologies</p>
+                    </div>
+                    <div class="demo-frame-container">
+                        <iframe src="./frc_demo/index.html" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Nuclear Fusion Visualization Project. Created with Trae IDE.</p>
+    </footer>
+
+    <script>
+        // 初始化三重积图表
+        const ctx = document.getElementById('tripleProductChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: '磁约束 (Tokamak/Stellarator)',
+                    data: [{x: -1, y: 2}], // 示意坐标: Log(n) vs Log(time)
+                    backgroundColor: 'rgba(75, 192, 192, 1)',
+                    pointRadius: 10
+                }, {
+                    label: '惯性约束 (Laser ICF)',
+                    data: [{x: 2, y: -2}],
+                    backgroundColor: 'rgba(255, 99, 132, 1)',
+                    pointRadius: 10
+                }, {
+                    label: '磁惯性 (FRC/Z-Pinch)',
+                    data: [{x: 0.5, y: -0.5}],
+                    backgroundColor: 'rgba(255, 206, 86, 1)',
+                    pointRadius: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: { display: true, text: '密度 Density (Log Scale)', color: '#aaa' },
+                        grid: { color: '#333' },
+                        ticks: { display: false } // 示意图，隐藏具体数值
+                    },
+                    y: {
+                        title: { display: true, text: '约束时间 Confinement Time (Log Scale)', color: '#aaa' },
+                        grid: { color: '#333' },
+                        ticks: { display: false }
+                    }
+                },
+                plugins: {
+                    legend: { labels: { color: '#fff' } },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

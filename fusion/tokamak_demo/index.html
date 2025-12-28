@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>托卡马克 (Tokamak) 磁约束聚变演示</title>
+    <style>
+        :root {
+            --bg-color: #050508;
+            --panel-bg: rgba(20, 25, 40, 0.85);
+            --text-color: #d0d0ff;
+            --accent-color: #ffaa00; /* 聚变橙 */
+            --coil-color: #cd7f32; /* 铜色 */
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        #ui-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 360px;
+            z-index: 2;
+            pointer-events: none;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #ui-container.collapsed {
+            transform: translateX(calc(-100% - 20px));
+        }
+
+        #ui-toggle {
+            position: absolute;
+            top: 0;
+            right: -40px;
+            width: 40px;
+            height: 40px;
+            background: var(--panel-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: none;
+            border-radius: 0 8px 8px 0;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            font-size: 1.2rem;
+            pointer-events: auto;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            text-shadow: 0 0 15px rgba(255, 170, 0, 0.4);
+            margin-bottom: 15px;
+            pointer-events: auto;
+            font-weight: 800;
+        }
+
+        .panel {
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 170, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            pointer-events: auto;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+        }
+
+        .control-group h3 {
+            font-size: 1.1rem;
+            margin-top: 0;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255,255,255,0.05);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .toggle-row:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .toggle-row label {
+            cursor: pointer;
+            font-weight: bold;
+            flex: 1;
+        }
+
+        /* Custom Checkbox */
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--accent-color);
+        }
+
+        .info-box p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #b0b0cc;
+            margin-bottom: 12px;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .status-label {
+            font-size: 0.75rem;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .status-value {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        /* FAB */
+        #fab-fire {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            border: none;
+            color: white;
+            font-size: 32px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(255, 170, 0, 0.5);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        #fab-fire:hover {
+            transform: scale(1.1) rotate(180deg);
+            box-shadow: 0 8px 30px rgba(255, 170, 0, 0.8);
+            background: #ffcc00;
+        }
+        #fab-fire:active {
+            transform: scale(0.95);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            #ui-container {
+                width: 75%;
+                max-width: 320px;
+                left: 10px;
+                top: 10px;
+            }
+            #fab-fire {
+                bottom: 20px;
+                right: 20px;
+                width: 56px;
+                height: 56px;
+                font-size: 24px;
+            }
+        }
+    </style>
+    <!-- 引入 Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <div id="ui-container">
+        <div id="ui-toggle">◀</div>
+        <h1>托卡马克 (Tokamak)</h1>
+        <div class="panel">
+            <div class="control-group">
+                <h3>磁体线圈配置 (Coils)</h3>
+                <div class="toggle-row">
+                    <label for="check-tf">1. 纵场线圈 (Toroidal Field)</label>
+                    <input type="checkbox" id="check-tf">
+                </div>
+                <div class="toggle-row">
+                    <label for="check-cs">2. 中心螺线管 (Central Solenoid)</label>
+                    <input type="checkbox" id="check-cs">
+                </div>
+                <div class="toggle-row">
+                    <label for="check-pf">3. 极向场线圈 (Poloidal Field)</label>
+                    <input type="checkbox" id="check-pf">
+                </div>
+            </div>
+            
+            <div class="info-box">
+                <h3>磁约束原理</h3>
+                <p><b>纵场 (Toroidal)</b>: 由巨大的 D 型线圈产生主要的环形磁场，约束带电粒子。</p>
+                <p><b>极向场 (Poloidal)</b>: 由中心螺线管感应出的等离子体电流和外部 PF 线圈共同产生，用于扭曲磁感线。</p>
+                <p><b>螺旋磁场 (Helical)</b>: 两者叠加形成螺旋状磁笼，防止粒子逃逸。</p>
+            </div>
+
+            <div class="status-grid">
+                <div class="status-item">
+                    <div class="status-label">磁场构型</div>
+                    <div class="status-value" id="field-type">None</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">等离子体状态</div>
+                    <div class="status-value" id="plasma-status">Off</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button id="fab-fire" title="启动等离子体">☢️</button>
+
+    <script type="module" src="main.js"></script>
+    <script>
+        const uiContainer = document.getElementById('ui-container');
+        const toggleBtn = document.getElementById('ui-toggle');
+        
+        toggleBtn.addEventListener('click', () => {
+            uiContainer.classList.toggle('collapsed');
+            toggleBtn.innerText = uiContainer.classList.contains('collapsed') ? '▶' : '◀';
+        });
+    </script>
+</body>
+</html>

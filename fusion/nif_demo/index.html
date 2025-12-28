@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>激光惯性约束聚变 (NIF/ICF) 演示</title>
+    <style>
+        :root {
+            --bg-color: #000005;
+            --panel-bg: rgba(10, 15, 30, 0.85);
+            --text-color: #d0d0ff;
+            --accent-color: #4488ff; /* 激光蓝 */
+            --fusion-color: #ffaa00;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        #ui-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 380px;
+            z-index: 2;
+            pointer-events: none;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #ui-container.collapsed {
+            transform: translateX(calc(-100% - 20px));
+        }
+
+        #ui-toggle {
+            position: absolute;
+            top: 0;
+            right: -40px;
+            width: 40px;
+            height: 40px;
+            background: var(--panel-bg);
+            border: 1px solid rgba(68, 136, 255, 0.2);
+            border-left: none;
+            border-radius: 0 8px 8px 0;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(12px);
+            font-size: 1.2rem;
+            pointer-events: auto;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.2);
+        }
+        
+        /* Mobile optimization */
+        @media (max-width: 768px) {
+            #ui-container {
+                width: 75%;
+                max-width: 340px;
+                left: 10px;
+                top: 10px;
+            }
+            
+            .panel {
+                padding: 15px;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+            
+            h1 {
+                font-size: 1.1rem;
+                margin-bottom: 10px;
+            }
+            
+            .control-group {
+                gap: 8px;
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+            }
+            
+            .control-group h3, .info-box h3 {
+                font-size: 0.9rem;
+            }
+            
+            .info-box p {
+                font-size: 0.8rem;
+                margin-bottom: 8px;
+            }
+            
+            .status-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 5px;
+            }
+            
+            .status-value {
+                font-size: 0.9rem;
+            }
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            text-shadow: 0 0 15px rgba(68, 136, 255, 0.5);
+            margin-bottom: 15px;
+            pointer-events: auto;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .panel {
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid rgba(68, 136, 255, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            pointer-events: auto;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+        }
+
+        .control-group h3, .info-box h3 {
+            font-size: 1.1rem;
+            margin-top: 0;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 5px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #2266ff, #00ccff);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(34, 102, 255, 0.3);
+        }
+
+        .action-btn:hover {
+            box-shadow: 0 6px 20px rgba(34, 102, 255, 0.5);
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        .action-btn:active {
+            transform: translateY(1px);
+        }
+
+        .process-status {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-top: 8px;
+            padding: 10px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 6px;
+            border: 1px solid rgba(68, 136, 255, 0.3);
+            text-shadow: 0 0 5px rgba(68, 136, 255, 0.5);
+        }
+
+        .info-box p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #b0b0cc;
+            margin-bottom: 12px;
+        }
+
+        .info-box b {
+            color: #fff;
+        }
+        
+        .status-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .status-label {
+            font-size: 0.75rem;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .status-value {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+        
+        .legend {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
+        }
+    </style>
+    <!-- 引入 Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <div id="ui-container">
+        <div id="ui-toggle">◀</div>
+        <h1>激光惯性约束聚变 (ICF)</h1>
+        <div class="panel">
+            <div class="control-group">
+                <h3>点火控制</h3>
+                <div class="button-group">
+                    <button id="btn-fire" class="action-btn">发射激光 (LASER)</button>
+                    <button id="btn-reset" class="action-btn" style="background: linear-gradient(135deg, #444, #666);">重置 (RESET)</button>
+                </div>
+                <div class="process-status">
+                    STATUS: <span id="status-text">SYSTEM READY</span>
+                </div>
+            </div>
+            
+            <div class="info-box">
+                <h3>间接驱动原理 (NIF)</h3>
+                <p>1. <b>激光注入</b>: 192束高能激光射入金制圆筒 (Hohlraum) 的开口。</p>
+                <p>2. <b>X射线转换</b>: 激光加热圆筒内壁，产生均匀的 X 射线浴。</p>
+                <p>3. <b>烧蚀内爆</b>: X 射线烧蚀靶丸表面，产生火箭效应，使燃料层向内高速内爆。</p>
+                <p>4. <b>点火燃烧</b>: 核心达到极高密度和温度，触发热核聚变。</p>
+            </div>
+
+            <div class="status-grid">
+                <div class="status-item">
+                    <div class="status-label">激光能量</div>
+                    <div class="status-value" id="energy-display">0 MJ</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">核心密度</div>
+                    <div class="status-value" id="density-display">Low</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">内爆速度</div>
+                    <div class="status-value" id="velocity-display">0 km/s</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">聚变产出</div>
+                    <div class="status-value" id="yield-display">0</div>
+                </div>
+            </div>
+            <div class="legend">* 视角已剖切 Hohlraum 以显示内部结构</div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button for Fire -->
+    <button id="fab-fire" title="发射激光">💥</button>
+
+    <style>
+        #fab-fire {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(68, 136, 255, 0.5);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        #fab-fire:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 8px 30px rgba(68, 136, 255, 0.8);
+            background: #66aaff;
+        }
+        #fab-fire:active {
+            transform: scale(0.95);
+        }
+        @media (max-width: 768px) {
+            #fab-fire {
+                bottom: 20px;
+                right: 20px;
+                width: 56px;
+                height: 56px;
+                font-size: 24px;
+            }
+        }
+    </style>
+
+    <script>
+        const uiContainer = document.getElementById('ui-container');
+        const toggleBtn = document.getElementById('ui-toggle');
+        const fabFire = document.getElementById('fab-fire');
+        const btnFire = document.getElementById('btn-fire');
+        
+        toggleBtn.addEventListener('click', () => {
+            uiContainer.classList.toggle('collapsed');
+            toggleBtn.innerText = uiContainer.classList.contains('collapsed') ? '▶' : '◀';
+        });
+
+        fabFire.addEventListener('click', () => {
+            btnFire.click();
+            fabFire.style.transform = 'scale(0.9)';
+            setTimeout(() => fabFire.style.transform = '', 100);
+        });
+    </script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>
