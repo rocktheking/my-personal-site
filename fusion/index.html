@@ -12,9 +12,10 @@
     <nav>
         <div class="logo">⚛️ FusionTech</div>
         <div class="nav-links">
-            <a href="#principles">基本原理</a>
-            <a href="#triple-product">聚变三重积</a>
-            <a href="#routes">技术路线</a>
+            <a href="index.html#principles">基本原理</a>
+            <a href="index.html#triple-product">聚变三重积</a>
+            <a href="index.html#routes">技术路线</a>
+            <a href="research.html" class="active">深入研究</a>
         </div>
     </nav>
 
@@ -47,14 +48,6 @@
                     <p>产生的氦核（α粒子）携带20%能量维持等离子体温度，而中子携带80%能量用于发电。</p>
                 </div>
                 <div class="diagram-block">
-                    <!-- 简单的 CSS 示意图 -->
-                    <div class="fusion-diagram">
-                        <div class="particle d">D</div>
-                        <div class="particle t">T</div>
-                        <div class="particle he">He</div>
-                        <div class="particle n">n</div>
-                        <div class="energy-burst">💥 Energy</div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -345,57 +338,5 @@
     <footer>
         <p>© 2025 Nuclear Fusion Visualization Project. Created with Trae IDE.</p>
     </footer>
-
-    <script>
-        // 初始化三重积图表
-        const ctx = document.getElementById('tripleProductChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'scatter',
-            data: {
-                datasets: [{
-                    label: '磁约束 (Tokamak/Stellarator)',
-                    data: [{x: -1, y: 2}], // 示意坐标: Log(n) vs Log(time)
-                    backgroundColor: 'rgba(75, 192, 192, 1)',
-                    pointRadius: 10
-                }, {
-                    label: '惯性约束 (Laser ICF)',
-                    data: [{x: 2, y: -2}],
-                    backgroundColor: 'rgba(255, 99, 132, 1)',
-                    pointRadius: 10
-                }, {
-                    label: '磁惯性 (FRC/Z-Pinch)',
-                    data: [{x: 0.5, y: -0.5}],
-                    backgroundColor: 'rgba(255, 206, 86, 1)',
-                    pointRadius: 10
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        title: { display: true, text: '密度 Density (Log Scale)', color: '#aaa' },
-                        grid: { color: '#333' },
-                        ticks: { display: false } // 示意图，隐藏具体数值
-                    },
-                    y: {
-                        title: { display: true, text: '约束时间 Confinement Time (Log Scale)', color: '#aaa' },
-                        grid: { color: '#333' },
-                        ticks: { display: false }
-                    }
-                },
-                plugins: {
-                    legend: { labels: { color: '#fff' } },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.dataset.label;
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    </script>
 </body>
 </html>
