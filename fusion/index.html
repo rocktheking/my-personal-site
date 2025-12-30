@@ -6,16 +6,24 @@
     <title>人造太阳：核聚变主流技术路线全景</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
 <body>
     <!-- 导航栏 -->
     <nav>
-        <div class="logo">⚛️ FusionTech</div>
+        <div class="logo">⚛️ 罗博士看核聚变</div>
         <div class="nav-links">
             <a href="index.html#principles">基本原理</a>
             <a href="index.html#triple-product">聚变三重积</a>
             <a href="index.html#routes">技术路线</a>
-            <a href="research.html" class="active">深入研究</a>
+            <a href="research.html" class="active">罗博深度</a>
         </div>
     </nav>
 
@@ -33,22 +41,18 @@
     <section id="principles" class="section">
         <div class="container">
             <h2>一、可控核聚变核心原理</h2>
-            <div class="content-grid">
-                <div class="text-block">
-                    <p><b>极简概括</b>：可控核聚变是模仿<b>太阳能量产生机制</b>，将轻核（如氘、氚）在高温高压环境下聚合成重核（如氦）。在此过程中，微小的质量亏损会根据 $E=mc^2$ 转化为巨大的能量。</p>
-                    <p>其核心挑战在于<b>可控约束等离子体</b>，即让聚变持续、稳定地发生，且能量可控输出，这与氢弹的不可控爆炸有着本质区别。</p>
-                    
-                    <h3>氘-氚 (D-T) 反应示例</h3>
-                    <p>目前最容易实现的反应是氘（Deuterium）与氚（Tritium）的聚变：</p>
-                    <div class="reaction-box">
-                        <span class="element">D</span> + <span class="element">T</span> 
-                        <span class="arrow">→</span> 
-                        <span class="element">He</span> (3.5 MeV) + <span class="element">n</span> (14.1 MeV)
-                    </div>
-                    <p>产生的氦核（α粒子）携带20%能量维持等离子体温度，而中子携带80%能量用于发电。</p>
+            <div class="text-block">
+                <p><b>极简概括</b>：可控核聚变是模仿<b>太阳能量产生机制</b>，将轻核（如氘、氚）在高温高压环境下聚合成重核（如氦）。在此过程中，微小的质量亏损会根据 $E=mc^2$ 转化为巨大的能量。</p>
+                <p>其核心挑战在于<b>可控约束等离子体</b>，即让聚变持续、稳定地发生，且能量可控输出，这与氢弹的不可控爆炸有着本质区别。</p>
+                
+                <h3>氘-氚 (D-T) 反应示例</h3>
+                <p>目前最容易实现的反应是氘（Deuterium）与氚（Tritium）的聚变：</p>
+                <div class="reaction-box">
+                    <span class="element">D</span> + <span class="element">T</span> 
+                    <span class="arrow">→</span> 
+                    <span class="element">He</span> (3.5 MeV) + <span class="element">n</span> (14.1 MeV)
                 </div>
-                <div class="diagram-block">
-                </div>
+                <p>产生的氦核（α粒子）携带20%能量维持等离子体温度，而中子携带80%能量用于发电。</p>
             </div>
         </div>
     </section>

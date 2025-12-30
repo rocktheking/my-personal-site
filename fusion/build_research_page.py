@@ -9,6 +9,14 @@ head_part = """<!DOCTYPE html>
     <title>深入研究 - 人造太阳：核聚变主流技术路线全景</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         .research-container {
             max-width: 900px;
@@ -65,12 +73,12 @@ head_part = """<!DOCTYPE html>
 <body>
     <!-- 导航栏 -->
     <nav>
-        <div class="logo">⚛️ FusionTech</div>
+        <div class="logo">⚛️ 罗博士看核聚变</div>
         <div class="nav-links">
             <a href="index.html#principles">基本原理</a>
             <a href="index.html#triple-product">聚变三重积</a>
             <a href="index.html#routes">技术路线</a>
-            <a href="research.html" class="active">深入研究</a>
+            <a href="research.html" class="active">罗博深度</a>
         </div>
     </nav>
 
