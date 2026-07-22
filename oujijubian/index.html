@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>偶极场粒子精细运动 - 深度解析</title>
+    <style>
+        :root {
+            --bg-dark: #0a0e14;
+            --accent-blue: #00d2ff;
+            --accent-gold: #ffcc00;
+            --text-light: #e0e0e0;
+            --panel-bg: rgba(20, 25, 35, 0.85);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--bg-dark);
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            color: var(--text-light);
+        }
+
+        #container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, #1a2533 0%, #0a0e14 100%);
+        }
+
+        canvas {
+            display: block;
+        }
+
+        /* 电影感字幕 */
+        #subtitle-overlay {
+            position: absolute;
+            bottom: 10%;
+            width: 100%;
+            text-align: center;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .subtitle-content {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(90deg, transparent, var(--panel-bg), transparent);
+            backdrop-filter: blur(5px);
+        }
+
+        .zh { font-size: 24px; font-weight: 500; margin-bottom: 5px; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .en { font-size: 14px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-blue); opacity: 0.8; }
+
+        /* 右侧物理参数面板 */
+        #data-panel {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 280px;
+            background: var(--panel-bg);
+            border-left: 2px solid var(--accent-blue);
+            padding: 25px;
+            border-radius: 4px;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .data-item { margin-bottom: 20px; }
+        .data-label { font-size: 12px; color: var(--accent-blue); margin-bottom: 5px; text-transform: uppercase; }
+        .data-value { font-family: 'Courier New', monospace; font-size: 18px; color: var(--accent-gold); }
+
+        /* 顶部标题 */
+        #title-tag {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .dot { width: 10px; height: 10px; background: var(--accent-gold); border-radius: 50%; margin-right: 15px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+
+        h1 { font-size: 20px; font-weight: 300; letter-spacing: 4px; margin: 0; }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <div id="title-tag">
+        <div class="dot"></div>
+        <h1>PARTICLE DYNAMICS IN DIPOLE FIELD</h1>
+    </div>
+
+    <canvas id="view"></canvas>
+
+    <div id="data-panel">
+        <div class="data-item">
+            <div class="data-label">运动模式 / Motion Mode</div>
+            <div id="mode-val" class="data-value">初始化...</div>
+        </div>
+        <div class="data-item">
+            <div class="data-label">Larmor 半径 / Larmor Radius</div>
+            <div id="radius-val" class="data-value">0.12 nm</div>
+        </div>
+        <div class="data-item">
+            <div class="data-label">磁场梯度 / ∇B</div>
+            <div id="grad-val" class="data-value">2.4 T/m</div>
+        </div>
+        <div class="data-item">
+            <div class="data-label">相对速度 / Velocity</div>
+            <div id="vel-val" class="data-value">0.15 c</div>
+        </div>
+    </div>
+
+    <div id="subtitle-overlay">
+        <div class="subtitle-content">
+            <div id="sub-zh" class="zh">正在进入单粒子微观视角...</div>
+            <div id="sub-en" class="en">Entering single-particle microscopic view...</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('view');
+    const ctx = canvas.getContext('2d');
+    const subZh = document.getElementById('sub-zh');
+    const subEn = document.getElementById('sub-en');
+    const modeVal = document.getElementById('mode-val');
+
+    let width, height;
+    let time = 0;
+    const DURATION = 60 * 60; // 60秒
+
+    // 粒子轨迹存储
+    let trail = [];
+    const MAX_TRAIL = 600;
+
+    // 物理参数
+    let state = {
+        zoom: 1,
+        focusOnParticle: false,
+        showFieldLines: true,
+        rotationY: 0.5,
+        rotationX: 0.2
+    };
+
+    const script = [
+        { t: 0, zh: "在偶极场中，单粒子的运动极具结构性。", en: "In a dipole field, single particle motion is highly structured.", mode: "全景概览" },
+        { t: 5, zh: "首先是第一种运动：绕磁力线的‘回旋运动’。", en: "First: The 'Gyration' around magnetic field lines.", mode: "回旋运动 (Gyration)" },
+        { t: 12, zh: "由于洛伦兹力作用，粒子以拉莫尔半径做高速圆周运动。", en: "Lorentz force causes high-speed circular motion with Larmor radius.", mode: "回旋运动 (Gyration)" },
+        { t: 18, zh: "第二种运动：沿磁力线往返的‘弹跳运动’。", en: "Second: The 'Bounce' motion along the field line.", mode: "弹跳往返 (Bounce)" },
+        { t: 25, zh: "当粒子靠近磁极时，磁场变强形成‘磁镜’将其反射。", en: "Stronger fields near poles act as 'Magnetic Mirrors', reflecting particles.", mode: "磁镜反射 (Mirroring)" },
+        { t: 32, zh: "第三种运动：缓慢的‘环向漂移’。", en: "Third: The slow 'Azimuthal Drift'.", mode: "磁漂移 (Drift)" },
+        { t: 40, zh: "这是由磁场梯度和曲率引起的，使粒子环绕中心磁体旋转。", en: "Caused by field gradient and curvature, circling the central magnet.", mode: "环向漂移 (Drift)" },
+        { t: 48, zh: "三种运动叠加，形成了一个完美的‘磁约束壳’。", en: "The superposition of three motions forms a perfect confinement shell.", mode: "稳态约束" },
+        { t: 55, zh: "这就是悬浮偶极场高效约束高温等离子体的物理基础。", en: "This is the physical basis for efficient plasma confinement in LDR.", mode: "模拟完成" }
+    ];
+
+    function init() {
+        window.addEventListener('resize', resize);
+        resize();
+        animate();
+    }
+
+    function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    }
+
+    // 3D 投影函数
+    function project(x, y, z) {
+        // 旋转
+        let x1 = x * Math.cos(state.rotationY) - z * Math.sin(state.rotationY);
+        let z1 = x * Math.sin(state.rotationY) + z * Math.cos(state.rotationY);
+        
+        let y2 = y * Math.cos(state.rotationX) - z1 * Math.sin(state.rotationX);
+        let z2 = y * Math.sin(state.rotationX) + z1 * Math.cos(state.rotationX);
+
+        const perspective = 1000;
+        const scale = perspective / (perspective + z2);
+        return {
+            x: width / 2 + x1 * scale,
+            y: height / 2 + y2 * scale,
+            s: scale
+        };
+    }
+
+    // 获取偶极场磁力线上的点
+    function getDipolePoint(theta, phi, L) {
+        // L 是磁壳参数 (半径)
+        // r = L * sin^2(theta) 是理想偶极线方程
+        let r = L * Math.pow(Math.sin(theta), 2);
+        return {
+            x: r * Math.sin(theta) * Math.cos(phi),
+            y: r * Math.cos(theta),
+            z: r * Math.sin(theta) * Math.sin(phi)
+        };
+    }
+
+    function drawCoil() {
+        const segments = 100;
+        const r = 120;
+        ctx.beginPath();
+        for(let i=0; i<=segments; i++) {
+            let angle = (i/segments) * Math.PI * 2;
+            let p = project(Math.cos(angle)*r, 0, Math.sin(angle)*r);
+            if(i===0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+        }
+        ctx.strokeStyle = '#2c3e50';
+        ctx.lineWidth = 12;
+        ctx.stroke();
+        
+        // 发光核心
+        ctx.strokeStyle = varColor('--accent-blue', 0.5);
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    }
+
+    function varColor(hex, alpha) {
+        return hex === '--accent-blue' ? `rgba(0, 210, 255, ${alpha})` : `rgba(255, 204, 0, ${alpha})`;
+    }
+
+    function animate() {
+        ctx.fillStyle = '#0a0e14';
+        ctx.fillRect(0, 0, width, height);
+
+        time += 0.016; // 约 60fps
+        const sec = time % 60;
+
+        // 更新状态
+        const curScript = [...script].reverse().find(s => sec >= s.t);
+        if(curScript) {
+            subZh.innerText = curScript.zh;
+            subEn.innerText = curScript.en;
+            modeVal.innerText = curScript.mode;
+        }
+
+        // 动态旋转视角
+        state.rotationY += 0.002;
+
+        // 绘制背景磁力线
+        if(state.showFieldLines) {
+            ctx.lineWidth = 1;
+            for(let p = 0; p < 8; p++) {
+                let phi = (p / 8) * Math.PI * 2;
+                ctx.beginPath();
+                ctx.strokeStyle = 'rgba(0, 210, 255, 0.1)';
+                for(let t = 0.1; t < Math.PI - 0.1; t += 0.1) {
+                    let pt = getDipolePoint(t, phi, 300);
+                    let pos = project(pt.x, pt.y, pt.z);
+                    if(t === 0.1) ctx.moveTo(pos.x, pos.y); else ctx.lineTo(pos.x, pos.y);
+                }
+                ctx.stroke();
+            }
+        }
+
+        drawCoil();
+
+        // --- 核心：单粒子物理计算 ---
+        
+        // 1. 弹跳运动 (Bounce) - 沿 theta 方向
+        // 在 sec 5-18秒主要展示回旋，之后展示弹跳
+        let bounceFreq = 0.5;
+        let theta = (Math.PI/2) + Math.sin(time * bounceFreq) * 1.0; 
+        
+        // 2. 漂移运动 (Drift) - 沿 phi 方向
+        let driftSpeed = (sec > 32) ? 0.2 : 0.05;
+        let phi = time * driftSpeed;
+
+        // 3. 回旋运动 (Gyration)
+        let gyroFreq = (sec > 5) ? 15 : 0; // 频率增加展示精细结构
+        let gyroRadius = (sec > 12) ? 15 : 2;
+        // 模拟拉莫尔半径随磁场强度(theta)变化: 靠近极点磁场强，半径变小
+        let localBScale = Math.abs(Math.cos(theta)) * 2 + 1;
+        let dynamicGyroRadius = gyroRadius / localBScale;
+
+        // 基础位置 (磁力线上)
+        let basePt = getDipolePoint(theta, phi, 300);
+        
+        // 计算磁力线切向和法向以进行回旋投影 (简化处理)
+        let gyroX = Math.cos(time * gyroFreq) * dynamicGyroRadius;
+        let gyroY = Math.sin(time * gyroFreq) * dynamicGyroRadius;
+
+        // 最终合成坐标
+        let finalX = basePt.x + gyroX;
+        let finalY = basePt.y;
+        let finalZ = basePt.z + gyroY;
+
+        let pPos = project(finalX, finalY, finalZ);
+
+        // 记录轨迹
+        trail.push({x: finalX, y: finalY, z: finalZ, alpha: 1.0});
+        if(trail.length > MAX_TRAIL) trail.shift();
+
+        // 绘制轨迹
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+        for(let i=1; i<trail.length; i++) {
+            let p1 = project(trail[i-1].x, trail[i-1].y, trail[i-1].z);
+            let p2 = project(trail[i].x, trail[i].y, trail[i].z);
+            
+            // 距离感
+            let alpha = (i / trail.length) * 0.8;
+            ctx.strokeStyle = `rgba(255, 204, 0, ${alpha})`;
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            if(i % 20 === 0) ctx.stroke(); // 分段绘制提高性能
+        }
+        ctx.stroke();
+
+        // 绘制粒子
+        ctx.beginPath();
+        ctx.arc(pPos.x, pPos.y, 4 * pPos.s, 0, Math.PI * 2);
+        ctx.fillStyle = '#fff';
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = varColor('--accent-gold', 1);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // 更新仪表盘
+        if(Math.random() > 0.8) {
+            document.getElementById('radius-val').innerText = (dynamicGyroRadius * 0.01).toFixed(3) + " m";
+            document.getElementById('grad-val').innerText = (localBScale * 1.2).toFixed(2) + " T/m";
+            document.getElementById('vel-val').innerText = (0.1 + Math.sin(time)*0.02).toFixed(3) + " c";
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    init();
+</script>
+</body>
+</html>
