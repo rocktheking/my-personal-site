@@ -435,7 +435,6 @@
     const bgmAudio = new Audio();
     bgmAudio.loop = true;
     bgmAudio.preload = 'auto';
-    bgmAudio.src = './musictown-cinematic-atmosphere-score-2-22136.mp3';
     const narrationAudio = new Audio();
     narrationAudio.preload = 'auto';
 
@@ -450,7 +449,24 @@
         { t: 48, zh: "三种运动叠加，形成了一个完美的‘磁约束壳’。", en: "The superposition of three motions forms a perfect confinement shell.", mode: "稳态约束" },
         { t: 55, zh: "这就是悬浮偶极场高效约束高温等离子体的物理基础。", en: "This is the physical basis for efficient plasma confinement in LDR.", mode: "模拟完成" }
     ];
-    const narrationTracks = script.map((_, index) => `./tts_assets/narration_${String(index + 1).padStart(2, '0')}.mp3`);
+    const ASSET_ROOT = getAssetRoot();
+    const DEFAULT_BGM_PATH = resolveAssetUrl('musictown-cinematic-atmosphere-score-2-22136.mp3');
+    const narrationTracks = script.map((_, index) => resolveAssetUrl(`tts_assets/narration_${String(index + 1).padStart(2, '0')}.mp3`));
+    bgmAudio.src = DEFAULT_BGM_PATH;
+
+    function getAssetRoot() {
+        const { origin, pathname } = window.location;
+        const normalizedPath = pathname.endsWith('/')
+            ? pathname
+            : pathname.endsWith('.html')
+                ? pathname.slice(0, pathname.lastIndexOf('/') + 1)
+                : `${pathname}/`;
+        return `${origin}${normalizedPath}`;
+    }
+
+    function resolveAssetUrl(relativePath) {
+        return new URL(relativePath, ASSET_ROOT).href;
+    }
 
     function init() {
         window.addEventListener('resize', resize);
@@ -778,7 +794,7 @@
             narrationAudio.src = narrationTracks[index];
             narrationAudio.currentTime = 0;
             narrationAudio.play().catch(() => {
-                fallbackSpeak(text);
+                audioStatus.textContent = `配音文件加载失败：${narrationTracks[index]}`;
             });
             return;
         }
